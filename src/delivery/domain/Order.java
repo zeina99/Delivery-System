@@ -55,4 +55,15 @@ public class Order {
     public void setTimeSlot(TimeSlots timeSlot) {
         this.timeSlot = timeSlot;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", orderType=" + orderType +
+                ", timeSlot=" + timeSlot +
+                ", items=" + items +
+                '}';
+    }
 }
