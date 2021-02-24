@@ -10,16 +10,14 @@ public class OrderGenerator {
     private int total_orders;
     private int order_id;
     private Inventory inventory;
-    private OrderType orderType;
-    private TimeSlots timeslot;
 
     private Random random = new Random();
 
     public OrderGenerator() {
         this.orders = new ArrayList<>();
-        total_orders = 100;
-        order_id = 1;
-        inventory = new Inventory();
+        this.total_orders = 100;
+        this.order_id = 1;
+        this.inventory = new Inventory();
 
 
     }
@@ -34,12 +32,13 @@ public class OrderGenerator {
 
         // generate 100 orders
         for (int i = 0; i < total_orders; i++) {
+
             // order params
             Customer randomCustomer = inventory.fetchRandomCustomer();
-            orderType = OrderType.getRandomOrderType();
-            timeslot = TimeSlots.getRandomTimeSlot();
+            OrderType orderType = OrderType.getRandomOrderType();
+            TimeSlots timeslot = TimeSlots.getRandomTimeSlot();
 
-            Order order = new Order(order_id,randomCustomer, orderType, timeslot);
+            // -- generating random order items --
 
             // get random order items count for curr order
             int orderItemsCount = random.nextInt(14);
@@ -50,7 +49,9 @@ public class OrderGenerator {
                 OrderItem item  = new OrderItem( orderItemId, order_id, randomCategory);
                 orderItems.add(item);
             }
-            // add order to orders list
+
+            // creating the order and adding to list
+            Order order = new Order(order_id,randomCustomer, orderType, timeslot, orderItems);
             this.orders.add(order);
 
             order_id++;
