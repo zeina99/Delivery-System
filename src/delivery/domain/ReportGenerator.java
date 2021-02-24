@@ -24,7 +24,7 @@ public class ReportGenerator {
         this.boxDescriptionList = this.inventory.getBoxDescriptions();
     }
     public void generateLoadingReport(){
-        
+
 
     }
     public void generateBoxContentReport(){
@@ -44,7 +44,7 @@ public class ReportGenerator {
 
         // loop over all time slots
         for (TimeSlots timeslot:
-             this.orderMap.keySet()) {
+                this.orderMap.keySet()) {
 
             List<Order> orders = orderMap.get(timeslot);
 
@@ -131,7 +131,7 @@ public class ReportGenerator {
                     }
 
                     allBoxSizesIndex++;
-               }
+                }
 
 
             }

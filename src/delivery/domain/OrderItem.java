@@ -9,11 +9,11 @@ public class OrderItem {
         this.id = id;
         this.orderID = orderID;
         this.category = category;
-         volume = this.setVolume();
+        this.volume = this.setVolume();
     }
 
     private double setVolume() {
-       return this.category.getVolume();
+        return this.category.getVolume();
     }
 
     public double getVolume() {
