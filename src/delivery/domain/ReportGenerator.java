@@ -61,7 +61,6 @@ public class ReportGenerator {
             }
 
             // loop over array of orders for curr timeslot;
-
             for (Order order :
                     orders) {
 
@@ -103,6 +102,7 @@ public class ReportGenerator {
                             // adding items to box
                             box.addItem(orderItemsSortedByVolume.get(orderItemsIndex));
                             //orderItemsSortedByVolume.remove(orderItemsIndex);
+                            boxVolToUse =- orderItemsSortedByVolume.get(orderItemsIndex).getVolume();
                             orderItemsIndex++;
                         }
 
@@ -125,6 +125,7 @@ public class ReportGenerator {
                             // adding items to box
                             box.addItem(orderItemsSortedByVolume.get(orderItemsIndex));
                             //orderItemsSortedByVolume.remove(orderItemsIndex);
+                            boxVolToUse =- orderItemsSortedByVolume.get(orderItemsIndex).getVolume();
                             orderItemsIndex++;
                         }
                         allBoxSizesIndex = 0;

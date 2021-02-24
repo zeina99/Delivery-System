@@ -15,6 +15,7 @@ public class Inventory {
     private List<Driver> driverList;
     private List<Picker> prickerList;
     private List<Manager> managerList;
+
     // orders and orderitems
     private Map<TimeSlots, List<Order>> orders;
     private List<OrderItem> orderItems;
