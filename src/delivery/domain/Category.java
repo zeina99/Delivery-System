@@ -3,7 +3,7 @@ package delivery.domain;
 public class Category {
     private int id;
     private String type;
-    private double volume;
+    private int volume;
 
     public Category(int id, String type, int volume) {
         this.id = id;
@@ -27,11 +27,11 @@ public class Category {
         this.type = type;
     }
 
-    public double getVolume() {
+    public int getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
     }
 }
