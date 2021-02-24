@@ -3,7 +3,7 @@ package delivery.domain;
 public class BoxDescription {
     private int id;
     private String size_label;
-    private double volume;
+    private int volume;
 
 
     public BoxDescription(int id, String size_label, int volume){
@@ -22,11 +22,11 @@ public class BoxDescription {
         this.id = id;
     }
 
-    public double getVolume() {
+    public int getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
     }
 
