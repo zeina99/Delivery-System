@@ -7,7 +7,7 @@ public class BoxDescription {
     private double volume;
 
 
-    public BoxDescription(int id, String size_label, int volume){
+    public BoxDescription(int id, String size_label, double volume){
         this.id = id;
         this.size_label = size_label;
         this.volume = volume;
