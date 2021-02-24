@@ -6,9 +6,11 @@ import java.util.List;
 public class Order {
     private int id;
     private Customer customer;
-    private  OrderType orderType;
+    private OrderType orderType;
     private TimeSlots timeSlot;
     private List<OrderItem> items;
+    // TODO: inform rest about this change
+    private double deliveryFee;
 
     public Order(int id, Customer customer, OrderType orderType, TimeSlots timeSlot) {
         this.id = id;
@@ -16,7 +18,13 @@ public class Order {
         this.orderType = orderType;
         this.timeSlot = timeSlot;
         this.items = new ArrayList<>();
+        this.deliveryFee = 0;
     }
+    public void setDeliveryFee(int deliveryFee) {
+        // if order type is STORE, apply discount, else no discount
+        this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
+    }
+
     public void addItem(OrderItem item){
         this.items.add(item);
     }
