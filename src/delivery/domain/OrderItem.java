@@ -4,20 +4,11 @@ public class OrderItem {
     private int id;
     private int orderID;
     private Category category;
-    private double volume;
+
     public OrderItem(int id, int orderID, Category category){
         this.id = id;
         this.orderID = orderID;
         this.category = category;
-         volume = this.setVolume();
-    }
-
-    private double setVolume() {
-       return this.category.getVolume();
-    }
-
-    public double getVolume() {
-        return volume;
     }
 
     public Category getCategory() {
