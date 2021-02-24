@@ -4,10 +4,10 @@ import java.sql.*;
 public class Connect {
 
 
-    public static void connect() {
+    public static Connection cnct() {
         Connection conn = null;
         try {
-            // db parameters
+            // path to the database
             String url = "jdbc:sqlite:C:/Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
             // create a connection to the database
             conn = DriverManager.getConnection(url);
@@ -25,11 +25,15 @@ public class Connect {
                 System.out.println(ex.getMessage());
             }
         }
+        return conn;
     }
 
 
+
+
+
     public static void main(String[] args) {
-        connect();
+        cnct();
     }
 
 }

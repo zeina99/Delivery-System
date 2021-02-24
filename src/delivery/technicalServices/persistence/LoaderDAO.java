@@ -30,4 +30,11 @@ public class LoaderDAO implements GenericDAO<Loader> {
 
         return null;
     }
+
+    public static void main(String[] args) {
+//
+//        DriverDAO tst = new DriverDAO();
+//        String sql = "SELECT ID, Name FROM Loader";
+//        GenericDAO.ViewAll(tst, sql);
+    }
 }

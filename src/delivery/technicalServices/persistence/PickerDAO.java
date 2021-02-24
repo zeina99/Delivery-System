@@ -29,4 +29,11 @@ public class PickerDAO implements GenericDAO<Picker> {
     public List<Picker> getAll() {
         return null;
     }
+
+    public static void main(String[] args) {
+
+//        DriverDAO tst = new DriverDAO();
+//        String sql = "SELECT ID, Name FROM Picker";
+//        GenericDAO.ViewAll(tst, sql);
+    }
 }
