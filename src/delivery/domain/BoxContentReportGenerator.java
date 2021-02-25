@@ -54,7 +54,6 @@ public class BoxContentReportGenerator {
             // picking boxes for order
             // allBoxSizes Sorted descending , starting with largest box size
             List<Double> allBoxSizes = reportGenerator.getInventory().getAllBoxSizesSorted();
-            double boxVolToUse;
             int allBoxSizesIndex = 0;
 
             // order items descending by item volume
@@ -70,14 +69,18 @@ public class BoxContentReportGenerator {
     }
 
     private int fillBoxes(int boxID, List<Box> boxList, double totalOrderVolume, List<Double> allBoxSizes, int allBoxSizesIndex, List<OrderItem> orderItemsSortedByVolume, int orderItemsIndex) {
+
         double boxVolRemaining;
+
         while (totalOrderVolume > 0) {
             //--- get a box just greater than total order volume in if statements ---
 
             // if total order volume is less than current box size and greater than next box size, get curr box
             if (totalOrderVolume < allBoxSizes.get(allBoxSizesIndex) && (totalOrderVolume > allBoxSizes.get(allBoxSizesIndex + 1)))
             {
+                // start of box filling, starting box volume
                 boxVolRemaining = allBoxSizes.get(allBoxSizesIndex);
+                // remaining order volume reduced according to box volume selected
                 totalOrderVolume =- allBoxSizes.get(allBoxSizesIndex);
 
                 // start filling order items to box until box is full
