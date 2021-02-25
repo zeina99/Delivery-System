@@ -20,14 +20,14 @@ public class Inventory {
     private Map<TimeSlots, List<Order>> orders;
     private List<OrderItem> orderItems;
 
-    OrderGenerator generator = new OrderGenerator();
+    OrderGenerator orderGenerator = new OrderGenerator();
 
     public Inventory() {
-        generator.generateOrders();
+        orderGenerator.generateOrders();
 
         this.allVans = fetchAllVans();
         this.boxDescriptions = fetchAllBoxDescriptions();
-        this.orders = fetchAllOrders(generator.getOrders());
+        this.orders = fetchAllOrdersMap(orderGenerator.getOrders());
     }
 
     public List<Van> fetchAllVans(){
@@ -66,7 +66,7 @@ public class Inventory {
         Customer cus = new Customer(1, "Jane");
         return cus;
     }
-    private Map<TimeSlots, List<Order>> fetchAllOrders(List<Order> orders){
+    private Map<TimeSlots, List<Order>> fetchAllOrdersMap(List<Order> orders){
         Map<TimeSlots, List<Order>> orderMap = new TreeMap<>();
 
         // populate the map with timeslots and empty lists
