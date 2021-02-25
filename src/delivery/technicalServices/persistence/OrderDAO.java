@@ -1,11 +1,12 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Customer;
+import delivery.domain.Order;
 
 import java.sql.*;
 import java.util.List;
 
-public class CustomerDAO implements GenericDAO<Customer> {
+public class OrderDAO implements  GenericDAO<Order> {
+
 
     private Connection connect() {
         // SQLite connection string
@@ -19,7 +20,6 @@ public class CustomerDAO implements GenericDAO<Customer> {
         }
         return conn;
     }
-
     public void closeConnection(Connection conn){
         try {
             if (conn != null) {
@@ -31,14 +31,16 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public void insert(Customer object) {
-        String sql = "INSERT INTO Customer(Name) VALUES(?)";
+    public void insert(Order object) {
+        String sql = "INSERT INTO Order(Customer_ID,Order_Type,Time_Slot) VALUES(?,?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setString(1, object.getName());
-            Pstmt.executeUpdate();
+            Pstmt.setObject(1, object.getCustomer());
+            Pstmt.setObject(2, object.getOrderType());
+            Pstmt.setObject(3, object.getTimeSlot());
 
+            Pstmt.executeUpdate();
             closeConnection(New);
         }
 
@@ -49,19 +51,24 @@ public class CustomerDAO implements GenericDAO<Customer> {
 
     @Override
     public void update(int id, String name, int pin) {
-        String sql = "UPDATE Customer SET Name = ?, PIN = ? WHERE ID = ?";
+
+    }
+
+    ////__________________________
+
+    public void UpdateOrder(int Customer_id, String Type, String Time){
+        String sql = "UPDATE Order SET Customer_ID = ?, Order_Type = ?, Time_Slot = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
 
             // set the corresponding param
 
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
+            Pstmt.setInt(1, Customer_id);
+            Pstmt.setString(2, Type);    ////or Pstmt.setObject??
+            Pstmt.setString(3, Time);
             // update
             Pstmt.executeUpdate();
-
             closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -70,7 +77,7 @@ public class CustomerDAO implements GenericDAO<Customer> {
 
     @Override
     public void delete(int dID) {
-        String sql = "DELETE FROM Customer WHERE ID = ?";
+        String sql = "DELETE FROM Order WHERE ID = ?";
 
         try (Connection del = this.connect();
              PreparedStatement Pstmt = del.prepareStatement(sql)) {
@@ -87,8 +94,8 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public Customer getById(int pk) {
-        String sql = "SELECT ID, Name FROM Customer WHERE ID = ?";
+    public Order getById(int pk) {
+        String sql = "SELECT * FROM Order WHERE ID = ?";
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
@@ -98,11 +105,13 @@ public class CustomerDAO implements GenericDAO<Customer> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \t Name: ");
+            System.out.println("Order ID:  \tCustomer ID:   \tOrder Type:   \tTime Slot:");
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t");
+                        rs.getObject("Customer_ID") + "\t" +
+                        rs.getObject("Order_Type") + "\t" +
+                        rs.getObject("Time_Slot"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -112,43 +121,26 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public List<Customer> getAll() {
-        String sql = "SELECT * FROM Customer";
+    public List<Order> getAll() {
+        String sql = "SELECT * FROM Order";
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name:  ");
+            System.out.println("Order ID: \t \t Customer ID: \t \t Order Type: \t \t Time Slot:");
             System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t");
+                System.out.println(rs.getInt("ID") +  "\t   " +
+                        rs.getObject("Customer_ID") + "\t" +
+                        rs.getObject("Order_Type") + "\t" +
+                        rs.getObject("Time_Slot"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        CustomerDAO customer = new CustomerDAO();
-        System.out.println("\n");
-        customer.getAll();
-        System.out.println("______________________________________");
-        customer.getById(4);
-        System.out.println("______________________________________");
-        //Driver New = new Driver("Gustav",47579);
-        // driver.insert(New);
-        //System.out.println("Added a row to the database.");
-        //System.out.println("______________________________________");
-//        customer.delete(8);
-//        System.out.println("Deleted a row form the database.");
-//        System.out.println("______________________________________");
-//        customer.update(11,"Josh", 41555);
-//        System.out.println("Updated a row in the database");
-//        System.out.println("______________________________________");
     }
 }

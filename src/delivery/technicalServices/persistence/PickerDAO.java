@@ -20,6 +20,16 @@ public class PickerDAO implements GenericDAO<Picker> {
         return conn;
     }
 
+    public void closeConnection(Connection conn){
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     @Override
     public void insert(Picker object) {
         String sql = "INSERT INTO PICKER(Name,PIN) VALUES(?,?)";
@@ -29,6 +39,8 @@ public class PickerDAO implements GenericDAO<Picker> {
             Pstmt.setString(1, object.getName());
             Pstmt.setInt(2,object.getPin());
             Pstmt.executeUpdate();
+
+            closeConnection(New);
         }
 
         catch (SQLException e) {
@@ -38,7 +50,22 @@ public class PickerDAO implements GenericDAO<Picker> {
 
     @Override
     public void update(int id, String name, int pin) {
+        String sql = "UPDATE PICKER SET Name = ?, PIN = ? WHERE ID = ?";
 
+        try (Connection up = this.connect();
+             PreparedStatement Pstmt = up.prepareStatement(sql)) {
+
+            // set the corresponding param
+
+            Pstmt.setString(1, name);
+            Pstmt.setInt(2, pin);
+            Pstmt.setInt(3, id);
+            // update
+            Pstmt.executeUpdate();
+            closeConnection(up);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -53,6 +80,7 @@ public class PickerDAO implements GenericDAO<Picker> {
             // execute the delete statement
             Pstmt.executeUpdate();
 
+            closeConnection(del);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -62,8 +90,8 @@ public class PickerDAO implements GenericDAO<Picker> {
     public Picker getById(int pk) {
         String sql = "SELECT ID, Name, PIN " +"FROM PICKER WHERE ID = ?";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql)){
+        try (Connection One = this.connect();
+             PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
@@ -77,6 +105,7 @@ public class PickerDAO implements GenericDAO<Picker> {
                         rs.getString("Name") + "\t \t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(One);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -87,8 +116,8 @@ public class PickerDAO implements GenericDAO<Picker> {
     public List<Picker> getAll() {
         String sql = "SELECT * FROM PICKER";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
+        try (Connection ALL = this.connect();
+             Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             System.out.println("ID: \t \t Name: \t \t PIN: ");
@@ -99,6 +128,7 @@ public class PickerDAO implements GenericDAO<Picker> {
                         rs.getString("Name") + "\t" +  "\t" + "\t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(ALL);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } return null;

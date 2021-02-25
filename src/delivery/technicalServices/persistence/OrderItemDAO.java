@@ -1,11 +1,11 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Customer;
+import delivery.domain.OrderItem;
 
 import java.sql.*;
 import java.util.List;
 
-public class CustomerDAO implements GenericDAO<Customer> {
+public class OrderItemDAO implements GenericDAO<OrderItem> {
 
     private Connection connect() {
         // SQLite connection string
@@ -31,12 +31,13 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public void insert(Customer object) {
-        String sql = "INSERT INTO Customer(Name) VALUES(?)";
+    public void insert(OrderItem object) {
+        String sql = "INSERT INTO Order_ID(Order_ID,Category_ID) VALUES(?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(1, object.getOrderID());
+            Pstmt.setObject(2,object.getCategory());
             Pstmt.executeUpdate();
 
             closeConnection(New);
@@ -49,28 +50,12 @@ public class CustomerDAO implements GenericDAO<Customer> {
 
     @Override
     public void update(int id, String name, int pin) {
-        String sql = "UPDATE Customer SET Name = ?, PIN = ? WHERE ID = ?";
 
-        try (Connection up = this.connect();
-             PreparedStatement Pstmt = up.prepareStatement(sql)) {
-
-            // set the corresponding param
-
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
-            // update
-            Pstmt.executeUpdate();
-
-            closeConnection(up);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     @Override
     public void delete(int dID) {
-        String sql = "DELETE FROM Customer WHERE ID = ?";
+        String sql = "DELETE FROM Order_Item WHERE ID = ?";
 
         try (Connection del = this.connect();
              PreparedStatement Pstmt = del.prepareStatement(sql)) {
@@ -87,8 +72,8 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public Customer getById(int pk) {
-        String sql = "SELECT ID, Name FROM Customer WHERE ID = ?";
+    public OrderItem getById(int pk) {
+        String sql = "SELECT * FROM Order_Item WHERE ID = ?";
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
@@ -98,11 +83,12 @@ public class CustomerDAO implements GenericDAO<Customer> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \t Name: ");
+            System.out.println("ID: \tOrder ID: \tCategory ID: ");
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t");
+                        rs.getInt("Order_ID") + "\t" +
+                        rs.getInt("Category_ID"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -112,43 +98,25 @@ public class CustomerDAO implements GenericDAO<Customer> {
     }
 
     @Override
-    public List<Customer> getAll() {
-        String sql = "SELECT * FROM Customer";
+    public List<OrderItem> getAll() {
+        String sql = "SELECT * FROM Order_Item";
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name:  ");
+            System.out.println("ID: \t \t Order ID: \t \t Category ID: ");
             System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t");
+                System.out.println(rs.getInt("ID") +  "\t   " +
+                        rs.getInt("Order_ID") + "\t" +
+                        rs.getInt("Category_ID"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        CustomerDAO customer = new CustomerDAO();
-        System.out.println("\n");
-        customer.getAll();
-        System.out.println("______________________________________");
-        customer.getById(4);
-        System.out.println("______________________________________");
-        //Driver New = new Driver("Gustav",47579);
-        // driver.insert(New);
-        //System.out.println("Added a row to the database.");
-        //System.out.println("______________________________________");
-//        customer.delete(8);
-//        System.out.println("Deleted a row form the database.");
-//        System.out.println("______________________________________");
-//        customer.update(11,"Josh", 41555);
-//        System.out.println("Updated a row in the database");
-//        System.out.println("______________________________________");
     }
 }

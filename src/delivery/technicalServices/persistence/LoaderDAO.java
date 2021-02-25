@@ -21,6 +21,15 @@ public class LoaderDAO implements GenericDAO<Loader> {
         return conn;
     }
 
+    public void closeConnection(Connection conn){
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     @Override
     public void insert(Loader object) {
@@ -31,6 +40,8 @@ public class LoaderDAO implements GenericDAO<Loader> {
             Pstmt.setString(1, object.getName());
             Pstmt.setInt(2,object.getPin());
             Pstmt.executeUpdate();
+
+            closeConnection(New);
         }
 
         catch (SQLException e) {
@@ -40,7 +51,23 @@ public class LoaderDAO implements GenericDAO<Loader> {
 
     @Override
     public void update(int id, String name, int pin) {
+        String sql = "UPDATE Loader SET Name = ?, PIN = ? WHERE ID = ?";
 
+        try (Connection up = this.connect();
+             PreparedStatement Pstmt = up.prepareStatement(sql)) {
+
+            // set the corresponding param
+
+            Pstmt.setString(1, name);
+            Pstmt.setInt(2, pin);
+            Pstmt.setInt(3, id);
+            // update
+            Pstmt.executeUpdate();
+
+            closeConnection(up);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -55,6 +82,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
             // execute the delete statement
             Pstmt.executeUpdate();
 
+            closeConnection(del);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -64,8 +92,8 @@ public class LoaderDAO implements GenericDAO<Loader> {
     public Loader getById(int pk) {
         String sql = "SELECT ID, Name, PIN " +"FROM Loader WHERE ID = ?";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql)){
+        try (Connection One = this.connect();
+             PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
@@ -79,6 +107,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
                         rs.getString("Name") + "\t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(One);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -89,8 +118,8 @@ public class LoaderDAO implements GenericDAO<Loader> {
     public List<Loader> getAll() {
         String sql = "SELECT * FROM Loader";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
+        try (Connection ALL = this.connect();
+             Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             System.out.println("ID: \t \t Name: \t \t PIN: ");
@@ -101,6 +130,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
                         rs.getString("Name") + "\t" +  "\t" + "\t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(ALL);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

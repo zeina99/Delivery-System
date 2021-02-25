@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DriverDAO  extends DAO implements GenericDAO<Driver> {
+public class DriverDAO  implements GenericDAO<Driver> {
 
 
     private Connection connect() {
@@ -24,6 +24,16 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
         return conn;
     }
 
+    public void closeConnection(Connection conn){
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
     @Override
     public void insert(Driver object) {
         String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
@@ -33,6 +43,8 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
             Pstmt.setString(1, object.getName());
             Pstmt.setInt(2,object.getPin());
             Pstmt.executeUpdate();
+
+            closeConnection(New);
         }
 
         catch (SQLException e) {
@@ -42,7 +54,7 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
 
     @Override
     public void update(int id, String name, int pin) {
-        String sql = "UPDATE Driver SET Name = ?," +" PIN = ?," +" WHERE ID = ?";
+        String sql = "UPDATE Driver SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
@@ -51,9 +63,11 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
 
             Pstmt.setString(1, name);
             Pstmt.setInt(2, pin);
-            //Pstmt.setInt(3, id);
+            Pstmt.setInt(3, id);
             // update
             Pstmt.executeUpdate();
+
+            closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -71,6 +85,7 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
             // execute the delete statement
             Pstmt.executeUpdate();
 
+            closeConnection(del);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -79,10 +94,10 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
 
     @Override
     public Driver getById(int pk) {
-        String sql = "SELECT ID, Name, PIN " +"FROM Driver WHERE ID = ?";
+        String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql)){
+        try (Connection One = this.connect();
+             PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
@@ -96,6 +111,7 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
                         rs.getString("Name") + "\t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(One);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -106,8 +122,8 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
     public List<Driver> getAll() {
         String sql = "SELECT * FROM Driver";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
+        try (Connection ALL = this.connect();
+             Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             System.out.println("ID: \t \t Name: \t \t PIN: ");
@@ -118,6 +134,7 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
                         rs.getString("Name") + "\t" +  "\t" + "\t" +
                         rs.getInt("PIN"));
             }
+            closeConnection(ALL);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -135,14 +152,14 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
         System.out.println("______________________________________");
         //Driver New = new Driver("Gustav",47579);
        // driver.insert(New);
-        System.out.println("Added a row to the database.");
-        System.out.println("______________________________________");
-        driver.delete(8);
-        System.out.println("Deleted a row form the database.");
-        System.out.println("______________________________________");
-        driver.update(11,"Josh", 41555);
-        System.out.println("Updated a row in the database");
-        System.out.println("______________________________________");
+//        System.out.println("Added a row to the database.");
+//        System.out.println("______________________________________");
+//        driver.delete(8);
+//        System.out.println("Deleted a row form the database.");
+//        System.out.println("______________________________________");
+//        driver.update(11,"Josh", 41555);
+//        System.out.println("Updated a row in the database");
+//        System.out.println("______________________________________");
 
     }
 }
