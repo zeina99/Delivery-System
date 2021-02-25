@@ -3,15 +3,26 @@ package delivery.technicalServices.persistence;
 import delivery.domain.Driver;
 import org.w3c.dom.ls.LSOutput;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DriverDAO implements GenericDAO<Driver> {
+public class DriverDAO  extends DAO implements GenericDAO<Driver> {
+
+
+    private Connection connect() {
+        // SQLite connection string
+        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
+
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
 
     @Override
     public void insert(Driver object) {
@@ -31,59 +42,57 @@ public class DriverDAO implements GenericDAO<Driver> {
     @Override
     public Driver getById(int pk) {
         Driver did = null;
-        String sql = "SELECT ID FROM Driver";
-        try (Connection ID = Connect.cnct();
+        String sql = "SELECT ID, Name, PIN " +"FROM Driver WHERE ID = ?";
 
-             Statement stmt  = ID.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
-            did.setId(rs.getInt("ID"));
-            did.setName(rs.getString("Name"));
-            did.setPin(rs.getInt("PIN"));
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt  = conn.prepareStatement(sql)){
 
+            // set the value
+            pstmt.setInt(1,pk);
+            //
+            ResultSet rs  = pstmt.executeQuery();
 
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("ID") +  "\t" +
+                        rs.getString("Name") + "\t" +
+                        rs.getDouble("PIN"));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return did;
+
+        return null;
     }
 
     @Override
     public List<Driver> getAll() {
+        String sql = "SELECT * FROM Driver";
 
-       String sql = "SELECT * FROM Driver";
-       List<Driver> driverslist = new ArrayList<>();
-
-
-        try (Connection ALL = Connect.cnct();
-             Statement stmt  = ALL.createStatement();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println(rs);
             // loop through the result set
             while (rs.next()) {
-                Driver driver = new Driver(rs.getInt("ID"), rs.getString("Name"), rs.getInt("PIN"));
-                System.out.println(rs.getInt("ID"));
-                System.out.println(rs.getString("Name"));
-                System.out.println(rs.getInt("PIN"));
-
-                //System.out.println();
-                driverslist.add(driver);
+                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
+                        rs.getString("Name") + "\t" +  "\t" + "\t" +
+                        rs.getInt("PIN"));
             }
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return driverslist;
+        return null;
     }
 
-
     public static void main(String[] args) {
-
-        DriverDAO tst = new DriverDAO();
-        //tst.getAll();
-        System.out.println(tst.getAll());
-
-
+        DriverDAO driver = new DriverDAO();
+        driver.getAll();
+        System.out.println("************");
+        driver.getById(5);
 
     }
 }
+
+
+

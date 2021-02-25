@@ -21,10 +21,8 @@ public class CreateDB {
         return conn;
     }
 
-
-
     public void selectAll(){
-        String sql = "SELECT * FROM Driver";
+        String sql = "SELECT * FROM PICKER";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -42,9 +40,11 @@ public class CreateDB {
     }
 
 
+
     public static void main(String[] args) {
         CreateDB app = new CreateDB();
         app.selectAll();
+
     }
 
 }
