@@ -12,7 +12,7 @@ public class ReportGenerator {
     private List<BoxDescription> boxDescriptionList;
     private List<Van> vanList;
     private List<Order> unaccommodatedOrders;
-    private Inventory inventory;
+    private Inventory inventory = new Inventory();
 
     public ReportGenerator() {
 
@@ -21,7 +21,6 @@ public class ReportGenerator {
         this.boxList = new ArrayList<>();
         this.vanList = new ArrayList<>();
         this.unaccommodatedOrders = new ArrayList<>();
-        this.inventory = new Inventory();
         this.boxDescriptionList = this.inventory.getBoxDescriptions();
     }
     public void generateLoadingReport(){
