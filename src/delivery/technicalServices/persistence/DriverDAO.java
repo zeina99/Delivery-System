@@ -28,11 +28,31 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
     public void insert(Driver object) {
         String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
 
-        try (Connection New = this.connect();
-             PreparedStatement Pstmt = New.prepareStatement(sql)) {
-//            Pstmt.setInt(1, object.getId());
-            Pstmt.setString(2, object.getName());
-            Pstmt.setInt(3,object.getPin());
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
+
+            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(2,object.getPin());
+            Pstmt.executeUpdate();
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(int id, String name, int pin) {
+        String sql = "UPDATE Driver SET Name = ?," +" PIN = ?," +" WHERE ID = ?";
+
+        try (Connection up = this.connect();
+             PreparedStatement Pstmt = up.prepareStatement(sql)) {
+
+            // set the corresponding param
+
+            Pstmt.setString(1, name);
+            Pstmt.setInt(2, pin);
+            //Pstmt.setInt(3, id);
+            // update
             Pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -40,18 +60,25 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
     }
 
     @Override
-    public void update(Driver object) {
+    public void delete(int dID) {
+        String sql = "DELETE FROM Driver WHERE ID = ?";
 
+        try (Connection del = this.connect();
+             PreparedStatement Pstmt = del.prepareStatement(sql)) {
+
+            // set the corresponding param
+            Pstmt.setInt(1, dID);
+            // execute the delete statement
+            Pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    @Override
-    public void delete(Driver object) {
-
-    }
 
     @Override
     public Driver getById(int pk) {
-        Driver did = null;
         String sql = "SELECT ID, Name, PIN " +"FROM Driver WHERE ID = ?";
 
         try (Connection conn = this.connect();
@@ -62,16 +89,16 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
+            System.out.println("ID: \tName: \tPIN: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" +
+                System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Name") + "\t" +
                         rs.getInt("PIN"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return null;
     }
 
@@ -83,6 +110,8 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
+            System.out.println("ID: \t \t Name: \t \t PIN: ");
+            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
@@ -92,17 +121,28 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return null;
     }
 
+
     public static void main(String[] args) {
         DriverDAO driver = new DriverDAO();
+        System.out.println("\n");
         driver.getAll();
-        System.out.println("************");
-        driver.getById(5);
-        System.out.println("************");
-        Driver New = new Driver(11,"Sara",55555);
-        //driver.insert(New);
+        System.out.println("______________________________________");
+        driver.getById(4);
+        System.out.println("______________________________________");
+        //Driver New = new Driver("Gustav",47579);
+       // driver.insert(New);
+        System.out.println("Added a row to the database.");
+        System.out.println("______________________________________");
+        driver.delete(8);
+        System.out.println("Deleted a row form the database.");
+        System.out.println("______________________________________");
+        driver.update(11,"Josh", 41555);
+        System.out.println("Updated a row in the database");
+        System.out.println("______________________________________");
 
     }
 }

@@ -14,9 +14,9 @@ public interface GenericDAO<T> {
 
      void insert(T object);
 
-     void update(T object);
+     void update(int id, String name, int pin);
 
-     void delete(T object);
+     void delete(int dID);
 
      T getById(int pk);
 
