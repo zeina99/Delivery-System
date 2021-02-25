@@ -63,8 +63,8 @@ public class Inventory {
 
     public Customer fetchRandomCustomer() {
         // TODO: change this later to get a random customer
-        Customer cus = new Customer(1, "Jane");
-        return cus;
+        
+        return new Customer(1, "Jane");
     }
     private Map<TimeSlots, List<Order>> fetchAllOrdersMap(List<Order> orders){
         Map<TimeSlots, List<Order>> orderMap = new TreeMap<>();
@@ -72,7 +72,7 @@ public class Inventory {
         // populate the map with timeslots and empty lists
         for (TimeSlots timeslot :
                 TimeSlots.values()) {
-            orderMap.put(timeslot, new ArrayList<Order>());
+            orderMap.put(timeslot, new ArrayList<>());
         }
 
         // populate the treemap with orders
