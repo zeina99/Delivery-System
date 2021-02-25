@@ -29,17 +29,20 @@ public class ReportGenerator {
     }
     public void generateBoxContentReport(){
         //TODO: refactor this into a class and methods
-        //Map {
+        //Map includes ( 
         // TimeSlot: [order, order, order, order]
         // TimeSlot: [order, order, order, order]
-        // }
+        // )
 
         // max orders per van is 9
 
         // box id
 
-        // loop over all time slots
+        // list of boxes including order items - includes all orders for the day
         List<Box> boxList = boxContentReportGenerator.generateBoxContentList();
+
+        // create a txt report showing details of box contents
+
 
     }
     public void generateRevenueReport(){
