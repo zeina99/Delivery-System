@@ -140,7 +140,7 @@ public class BoxContentReportGenerator {
             int numOfExtraOrders = timeslotOrders - timeslotMaxOrders;
 
 
-            for (int i = timeslotOrders; i < timeslotOrders - numOfExtraOrders; i--) {
+            for (int i = timeslotOrders; i > timeslotOrders - numOfExtraOrders; i--) {
                 reportGenerator.getUnaccommodatedOrders().add(orders.remove(i));
             }
         }
