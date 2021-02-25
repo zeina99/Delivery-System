@@ -26,7 +26,17 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
 
     @Override
     public void insert(Driver object) {
+        String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
 
+        try (Connection New = this.connect();
+             PreparedStatement Pstmt = New.prepareStatement(sql)) {
+//            Pstmt.setInt(1, object.getId());
+            Pstmt.setString(2, object.getName());
+            Pstmt.setInt(3,object.getPin());
+            Pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -56,7 +66,7 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t" +
                         rs.getString("Name") + "\t" +
-                        rs.getDouble("PIN"));
+                        rs.getInt("PIN"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -90,6 +100,9 @@ public class DriverDAO  extends DAO implements GenericDAO<Driver> {
         driver.getAll();
         System.out.println("************");
         driver.getById(5);
+        System.out.println("************");
+        Driver New = new Driver(11,"Sara",55555);
+        //driver.insert(New);
 
     }
 }
