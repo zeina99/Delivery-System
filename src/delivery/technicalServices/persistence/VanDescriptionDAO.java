@@ -37,7 +37,7 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getSize_label());
-            Pstmt.setInt(2,object.getVolume());
+            Pstmt.setDouble(2,object.getVolume());
             Pstmt.executeUpdate();
 
             closeConnection(New);
@@ -50,7 +50,21 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(VanDescription object) {
+        String sql = "UPDATE Van_Description SET Size_Label = ?, Volume = ? WHERE ID = ?";
+
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
+
+            Pstmt.setString(1, object.getSize_label());
+            Pstmt.setDouble(2,object.getVolume());
+            Pstmt.executeUpdate();
+
+            closeConnection(New);
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
@@ -89,7 +103,7 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getInt("Volume"));
+                        rs.getDouble("Volume"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -100,7 +114,7 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
 
     @Override
     public List<VanDescription> getAll() {
-        String sql = "SELECT * FROM Van_Descrition";
+        String sql = "SELECT * FROM Van_Description";
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
@@ -112,7 +126,7 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getInt("Volume"));
+                        rs.getDouble("Volume"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {

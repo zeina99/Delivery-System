@@ -1,5 +1,6 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Driver;
 import delivery.domain.Manager;
 
 import java.sql.*;
@@ -49,7 +50,7 @@ public class ManagerDAO implements GenericDAO<Manager> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(Manager object) {
         String sql = "UPDATE Manager SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
@@ -57,11 +58,12 @@ public class ManagerDAO implements GenericDAO<Manager> {
 
             // set the corresponding param
 
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
+            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(2, object.getPin());
+            Pstmt.setInt(3, object.getId());
             // update
             Pstmt.executeUpdate();
+
             closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -149,7 +151,7 @@ public class ManagerDAO implements GenericDAO<Manager> {
         manager.delete(8);
         System.out.println("Deleted a row form the database.");
         System.out.println("______________________________________");
-        manager.update(11,"Josh", 11555);
+        //manager.update(11,"Josh", 11555);
         System.out.println("Updated a row in the database");
         System.out.println("______________________________________");
     }

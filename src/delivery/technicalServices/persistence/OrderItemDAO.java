@@ -49,8 +49,22 @@ public class OrderItemDAO implements GenericDAO<OrderItem> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(OrderItem object) {
+        String sql = "UPDATE Order_Item SET Order_ID = ? , Category_ID = ? WHERE ID = ?";
 
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
+
+            Pstmt.setInt(1, object.getOrderID());
+            Pstmt.setInt(2, object.getCategory().getId());
+            Pstmt.setInt(3, object.getId());
+
+            Pstmt.executeUpdate();
+            closeConnection(New);
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

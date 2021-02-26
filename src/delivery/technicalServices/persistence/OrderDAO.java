@@ -1,5 +1,6 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Driver;
 import delivery.domain.Order;
 
 import java.sql.*;
@@ -36,9 +37,9 @@ public class OrderDAO implements  GenericDAO<Order> {
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setObject(1, object.getCustomer());
-            Pstmt.setObject(2, object.getOrderType());
-            Pstmt.setObject(3, object.getTimeSlot());
+            Pstmt.setInt(1, object.getCustomer().getId());
+            Pstmt.setString(2, object.getOrderType().toString());
+            Pstmt.setString(3, object.getTimeSlot().toString());
 
             Pstmt.executeUpdate();
             closeConnection(New);
@@ -50,13 +51,7 @@ public class OrderDAO implements  GenericDAO<Order> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
-
-    }
-
-    ////__________________________
-
-    public void UpdateOrder(int Customer_id, String Type, String Time){
+    public void update(Order object) {
         String sql = "UPDATE Order SET Customer_ID = ?, Order_Type = ?, Time_Slot = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
@@ -64,16 +59,39 @@ public class OrderDAO implements  GenericDAO<Order> {
 
             // set the corresponding param
 
-            Pstmt.setInt(1, Customer_id);
-            Pstmt.setString(2, Type);    ////or Pstmt.setObject??
-            Pstmt.setString(3, Time);
+            Pstmt.setInt(1, object.getCustomer().getId());
+            Pstmt.setString(2, object.getOrderType().toString());
+            Pstmt.setString(3, object.getTimeSlot().toString());
+            Pstmt.setInt(4, object.getId());
             // update
             Pstmt.executeUpdate();
+
             closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
+    ////__________________________
+
+//    public void UpdateOrder(int Customer_id, String Type, String Time){
+//        String sql = "UPDATE Order SET Customer_ID = ?, Order_Type = ?, Time_Slot = ? WHERE ID = ?";
+//
+//        try (Connection up = this.connect();
+//             PreparedStatement Pstmt = up.prepareStatement(sql)) {
+//
+//            // set the corresponding param
+//
+//            Pstmt.setInt(1, Customer_id);
+//            Pstmt.setString(2, Type);    ////or Pstmt.setObject??
+//            Pstmt.setString(3, Time);
+//            // update
+//            Pstmt.executeUpdate();
+//            closeConnection(up);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     @Override
     public void delete(int dID) {
@@ -109,9 +127,9 @@ public class OrderDAO implements  GenericDAO<Order> {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getObject("Customer_ID") + "\t" +
-                        rs.getObject("Order_Type") + "\t" +
-                        rs.getObject("Time_Slot"));
+                        rs.getInt("Customer_ID") + "\t" +
+                        rs.getString("Order_Type") + "\t" +
+                        rs.getString("Time_Slot"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -133,9 +151,9 @@ public class OrderDAO implements  GenericDAO<Order> {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getObject("Customer_ID") + "\t" +
-                        rs.getObject("Order_Type") + "\t" +
-                        rs.getObject("Time_Slot"));
+                        rs.getInt("Customer_ID") + "\t" +
+                        rs.getString("Order_Type") + "\t" +
+                        rs.getString("Time_Slot"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {

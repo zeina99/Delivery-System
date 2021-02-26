@@ -47,27 +47,46 @@ public class CustomerDAO implements GenericDAO<Customer> {
         }
     }
 
+    // @Override
+    // public void update(int id, String name, int pin) {
+    //     String sql = "UPDATE Customer SET Name = ?, PIN = ? WHERE ID = ?";
+
+    //     try (Connection up = this.connect();
+    //          PreparedStatement Pstmt = up.prepareStatement(sql)) {
+
+    //         // set the corresponding param
+
+    //         Pstmt.setString(1, name);
+    //         Pstmt.setInt(2, pin);
+    //         Pstmt.setInt(3, id);
+    //         // update
+    //         Pstmt.executeUpdate();
+
+    //         closeConnection(up);
+    //     } catch (SQLException e) {
+    //         System.out.println(e.getMessage());
+    //     }
+    // }
     @Override
-    public void update(int id, String name, int pin) {
-        String sql = "UPDATE Customer SET Name = ?, PIN = ? WHERE ID = ?";
+	public void update(Customer object) {
+		// TODO Auto-generated method stub
+	    String sql = "UPDATE Customer SET Name = ?  WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
 
             // set the corresponding param
 
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
+            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(2, object.getId());
             // update
             Pstmt.executeUpdate();
 
             closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
-    }
-
+        }	
+	}
     @Override
     public void delete(int dID) {
         String sql = "DELETE FROM Customer WHERE ID = ?";
@@ -151,4 +170,6 @@ public class CustomerDAO implements GenericDAO<Customer> {
 //        System.out.println("Updated a row in the database");
 //        System.out.println("______________________________________");
     }
+
+	
 }

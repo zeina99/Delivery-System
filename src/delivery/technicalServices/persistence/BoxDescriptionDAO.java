@@ -37,7 +37,7 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getSize_label());
-            Pstmt.setInt(2,object.getVolume());
+            Pstmt.setDouble(2, object.getVolume());
             Pstmt.executeUpdate();
 
             closeConnection(New);
@@ -48,10 +48,26 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
         }
     }
 
-    @Override
-    public void update(int id, String name, int pin) {
+	@Override
+	public void update(BoxDescription object) {
+		// TODO Auto-generated method stub
+        String sql = "UPDATE Box_Description SET Size_Label = ? , Volume = ? WHERE ID = ?";
 
-    }
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
+
+            Pstmt.setString(1, object.getSize_label());
+            Pstmt.setDouble(2, object.getVolume());
+            Pstmt.setInt(3, object.getId());
+
+            Pstmt.executeUpdate();
+            closeConnection(New);
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		
+	}
 
     @Override
     public void delete(int dID) {
@@ -87,8 +103,8 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getInt("Volume"));
+                        rs.getString("Size_Label") + "\t  \t" +
+                        rs.getDouble("Volume"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -110,8 +126,8 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getInt("Volume"));
+                        rs.getString("Size_Label") + "\t  \t" +
+                        rs.getDouble("Volume"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {
@@ -120,4 +136,5 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
 
         return null;
     }
+
 }

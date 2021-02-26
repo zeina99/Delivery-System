@@ -53,7 +53,7 @@ public class DriverDAO  implements GenericDAO<Driver> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(Driver object) {
         String sql = "UPDATE Driver SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
@@ -61,9 +61,9 @@ public class DriverDAO  implements GenericDAO<Driver> {
 
             // set the corresponding param
 
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
+            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(2, object.getPin());
+            Pstmt.setInt(3, object.getId());
             // update
             Pstmt.executeUpdate();
 

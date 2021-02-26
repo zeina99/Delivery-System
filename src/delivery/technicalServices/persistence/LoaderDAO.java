@@ -1,5 +1,6 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Driver;
 import delivery.domain.Loader;
 import delivery.domain.Picker;
 
@@ -50,7 +51,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(Loader object) {
         String sql = "UPDATE Loader SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
@@ -58,9 +59,9 @@ public class LoaderDAO implements GenericDAO<Loader> {
 
             // set the corresponding param
 
-            Pstmt.setString(1, name);
-            Pstmt.setInt(2, pin);
-            Pstmt.setInt(3, id);
+            Pstmt.setString(1, object.getName());
+            Pstmt.setInt(2, object.getPin());
+            Pstmt.setInt(3, object.getId());
             // update
             Pstmt.executeUpdate();
 

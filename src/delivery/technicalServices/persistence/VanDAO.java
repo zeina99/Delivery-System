@@ -49,8 +49,20 @@ public class VanDAO implements GenericDAO<Van> {
     }
 
     @Override
-    public void update(int id, String name, int pin) {
+    public void update(Van object) {
+        String sql = "UPDATE VAN SET Van_Description_ID = ?, Driver_ID = ? WHERE ID = ?";
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
+           Pstmt.setInt(1, object.getVanDescription().getId());
+           Pstmt.setInt(2, object.getDriver_id());
+           Pstmt.setInt(3, object.getId());
+
+            closeConnection(New);
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

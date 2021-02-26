@@ -37,7 +37,7 @@ public class CategoryDAO implements GenericDAO<Category> {
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getType());
-            Pstmt.setInt(2,object.getVolume());
+            Pstmt.setDouble(2,object.getVolume());
             Pstmt.executeUpdate();
 
             closeConnection(New);
@@ -48,11 +48,26 @@ public class CategoryDAO implements GenericDAO<Category> {
         }
     }
 
-    @Override
-    public void update(int id, String name, int pin) {
+	@Override
+	public void update(Category object) {
+		// TODO Auto-generated method stub
+        String sql = "UPDATE Category SET Category_Type = ? , Volume = ? WHERE ID = ?";
 
-    }
+        try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
+            Pstmt.setString(1, object.getType());
+            Pstmt.setDouble(2, object.getVolume());
+            Pstmt.setInt(3, object.getId());
+
+            Pstmt.executeUpdate();
+            closeConnection(New);
+        }
+
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+		
+	}
     @Override
     public void delete(int dID) {
         String sql = "DELETE FROM Category WHERE ID = ?";
@@ -88,7 +103,7 @@ public class CategoryDAO implements GenericDAO<Category> {
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Category_Type") + "\t" +
-                        rs.getInt("Volume"));
+                        rs.getDouble("Volume"));
             }
             closeConnection(One);
         } catch (SQLException e) {
@@ -111,7 +126,7 @@ public class CategoryDAO implements GenericDAO<Category> {
             while (rs.next()) {
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Category_Type") + "\t" +
-                        rs.getInt("Volume"));
+                        rs.getDouble("Volume"));
             }
             closeConnection(ALL);
         } catch (SQLException e) {
@@ -120,4 +135,5 @@ public class CategoryDAO implements GenericDAO<Category> {
 
         return null;
     }
+
 }
