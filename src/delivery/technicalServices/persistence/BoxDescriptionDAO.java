@@ -3,6 +3,7 @@ package delivery.technicalServices.persistence;
 import delivery.domain.BoxDescription;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
@@ -91,6 +92,7 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
     public BoxDescription getById(int pk) {
         String sql = "SELECT * FROM Box_Description WHERE ID = ?";
 
+        BoxDescription boxDescription = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -106,17 +108,24 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
                         rs.getString("Size_Label") + "\t  \t" +
                         rs.getDouble("Volume"));
             }
+
+            // ---- There is an error here, but it's fine it will be fixed when merged
+            boxDescription =  new BoxDescription(rs.getInt("ID"),rs.getString("Size_Label"), rs.getDouble("Volume"));
+
             closeConnection(One);
+
+            return boxDescription;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return boxDescription;
     }
 
     @Override
     public List<BoxDescription> getAll() {
         String sql = "SELECT * FROM Box_Description";
-
+        List<BoxDescription> boxDescriptionList = new ArrayList<>();
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -125,16 +134,20 @@ public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
             System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
+                // the error here is alright, will be fixed when merged with mine
+                boxDescriptionList.add(new BoxDescription(rs.getInt("ID"), rs.getString("Size_Label"),rs.getDouble("Volume") ));
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Size_Label") + "\t  \t" +
                         rs.getDouble("Volume"));
             }
             closeConnection(ALL);
+
+            return boxDescriptionList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return null;
+        return boxDescriptionList;
     }
 
 }

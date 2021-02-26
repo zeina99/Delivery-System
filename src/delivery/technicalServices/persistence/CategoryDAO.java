@@ -3,6 +3,7 @@ package delivery.technicalServices.persistence;
 import delivery.domain.Category;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDAO implements GenericDAO<Category> {
@@ -89,7 +90,7 @@ public class CategoryDAO implements GenericDAO<Category> {
     @Override
     public Category getById(int pk) {
         String sql = "SELECT * FROM Category WHERE ID = ?";
-
+        Category category = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -98,24 +99,27 @@ public class CategoryDAO implements GenericDAO<Category> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
+
             System.out.println("ID: \tCategory Type: \tVolume (in cubic foot): ");
             // loop through the result set
             while (rs.next()) {
+                category = new Category(rs.getInt("ID"),rs.getString("Category_Type"), rs.getDouble("Volume"));
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Category_Type") + "\t" +
                         rs.getDouble("Volume"));
             }
             closeConnection(One);
+            return category;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return category;
     }
 
     @Override
     public List<Category> getAll() {
         String sql = "SELECT * FROM Category";
-
+        List<Category> categoryList  = new ArrayList<>();
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -124,16 +128,20 @@ public class CategoryDAO implements GenericDAO<Category> {
             System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
+                categoryList.add(new Category(rs.getInt("ID"), rs.getString("Category_Type"),rs.getDouble("Volume") ));
+
                 System.out.println(rs.getInt("ID") +  "\t   " +
                         rs.getString("Category_Type") + "\t" +
                         rs.getDouble("Volume"));
             }
+
             closeConnection(ALL);
+            return categoryList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return null;
+        return categoryList;
     }
 
 }
