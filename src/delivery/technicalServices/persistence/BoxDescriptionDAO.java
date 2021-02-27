@@ -6,30 +6,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoxDescriptionDAO implements GenericDAO<BoxDescription> {
+public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<BoxDescription> {
 
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
-
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
-    public void closeConnection(Connection conn){
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+//    private Connection connect() {
+//        // SQLite connection string
+//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
+//        //jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db
+//
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return conn;
+//    }
+//
+//    public void closeConnection(Connection conn){
+//        try {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     @Override
     public void insert(BoxDescription object) {

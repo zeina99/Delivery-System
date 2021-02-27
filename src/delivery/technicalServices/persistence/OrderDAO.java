@@ -7,34 +7,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO implements  GenericDAO<Order> {
+public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
 
 
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
-
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-    public void closeConnection(Connection conn){
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+//    private Connection connect() {
+//        // SQLite connection string
+//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
+//
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return conn;
+//    }
+//    public void closeConnection(Connection conn){
+//        try {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     @Override
     public void insert(Order object) {
-        String sql = "INSERT INTO Order(Customer_ID,Order_Type,Time_Slot) VALUES(?,?,?)";
+        String sql = "INSERT INTO Order (Customer_ID,Order_Type,Time_Slot) VALUES(?,?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 

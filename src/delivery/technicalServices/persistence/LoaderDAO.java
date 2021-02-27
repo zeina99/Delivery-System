@@ -9,30 +9,30 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoaderDAO implements GenericDAO<Loader> {
+public class LoaderDAO extends ConnectionFactory implements GenericDAO<Loader> {
 
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
-
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
-    public void closeConnection(Connection conn){
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+//    private Connection connect() {
+//        // SQLite connection string
+//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
+//
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return conn;
+//    }
+//
+//    public void closeConnection(Connection conn){
+//        try {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     @Override
     public void insert(Loader object) {
@@ -149,7 +149,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
     public static void main(String[] args) {
         LoaderDAO loader = new LoaderDAO();
         System.out.println("\n");
-        loader.getAll();
+        System.out.println(loader.getAll());
         System.out.println("______________________________________");
         loader.getById(4);
         System.out.println("______________________________________");
@@ -157,7 +157,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
         //loader.insert(New);
         System.out.println("Added a row to the database.");
         System.out.println("______________________________________");
-        loader.delete(8);
+       // loader.delete(8);
         System.out.println("Deleted a row form the database.");
         System.out.println("______________________________________");
         //loader.update(11,"Frank", 31555);

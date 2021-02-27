@@ -6,30 +6,30 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickerDAO implements GenericDAO<Picker> {
+public class PickerDAO extends ConnectionFactory implements GenericDAO<Picker> {
 
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
-
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
-    public void closeConnection(Connection conn){
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+//    private Connection connect() {
+//        // SQLite connection string
+//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
+//
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return conn;
+//    }
+//
+//    public void closeConnection(Connection conn){
+//        try {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     @Override
     public void insert(Picker object) {

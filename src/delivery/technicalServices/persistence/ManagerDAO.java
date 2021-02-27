@@ -8,30 +8,30 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerDAO implements GenericDAO<Manager> {
+public class ManagerDAO extends ConnectionFactory implements GenericDAO<Manager> {
 
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db";
-
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-
-    public void closeConnection(Connection conn){
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
+//    private Connection connect() {
+//        // SQLite connection string
+//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
+//
+//        Connection conn = null;
+//        try {
+//            conn = DriverManager.getConnection(url);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return conn;
+//    }
+//
+//    public void closeConnection(Connection conn){
+//        try {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
 
     @Override
     public void insert(Manager object) {
@@ -92,7 +92,7 @@ public class ManagerDAO implements GenericDAO<Manager> {
 
     @Override
     public Manager getById(int pk) {
-        String sql = "SELECT ID, Name, PIN " +"FROM Manager WHERE ID = ?";
+        String sql = "SELECT ID, Name, PIN FROM Manager WHERE ID = ?";
         Manager manager = null;
 
         try (Connection One = this.connect();
@@ -149,7 +149,7 @@ public class ManagerDAO implements GenericDAO<Manager> {
         System.out.println("\n");
         manager.getAll();
         System.out.println("______________________________________");
-        manager.getById(4);
+        System.out.println(manager.getById(2));
         System.out.println("______________________________________");
 //        Manager New = new Manager("Gustav",17579);
 //        manager.insert(New);
