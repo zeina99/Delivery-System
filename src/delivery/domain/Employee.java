@@ -5,12 +5,17 @@ public abstract class Employee {
     private String name;
     private int pin;
 
-    public Employee(int id, String name, int pin) {
+    protected Employee(int id, String name, int pin) {
         this.id = id;
         this.name = name;
         this.pin = pin;
     }
     public Employee(String name, int pin) {
+        this.name = name;
+        this.pin = pin;
+    }
+
+    protected Employee(String name, int pin) {
         this.name = name;
         this.pin = pin;
     }

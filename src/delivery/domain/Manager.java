@@ -6,4 +6,7 @@ public class Manager extends Employee{
         super(id, name, pin);
     }
 
+    public Manager(String name, int pin) {
+        super(name, pin);
+    }
 }

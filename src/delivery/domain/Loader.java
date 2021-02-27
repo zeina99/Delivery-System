@@ -6,4 +6,7 @@ public class Loader extends Employee{
         super(id, name, pin);
     }
 
+    public Loader(String name, int pin) {
+        super(name, pin);
+    }
 }

@@ -1,14 +1,15 @@
+
 package delivery.domain;
 
 public class BoxDescription {
     private int id;
-    private String size_label;
+    private String sizeLabel;
     private double volume;
 
 
-    public BoxDescription(int id, String size_label, double volume){
+    public BoxDescription(int id, String sizeLabel, double volume){
         this.id = id;
-        this.size_label = size_label;
+        this.sizeLabel = sizeLabel;
         this.volume = volume;
     }
 
@@ -30,11 +31,11 @@ public class BoxDescription {
         this.volume = volume;
     }
 
-    public String getSize_label() {
-        return size_label;
+    public String getSizeLabel() {
+        return sizeLabel;
     }
 
-    public void setSize_label(String size_label) {
-        this.size_label = size_label;
+    public void setSize_label(String sizeLabel) {
+        this.sizeLabel = sizeLabel;
     }
 }
