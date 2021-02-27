@@ -1,2 +1,6 @@
 .idea
 .gradle
+/out
+*.iml
+.DS_Store
+sqlite-jdbc-3.32.3.2.jar
