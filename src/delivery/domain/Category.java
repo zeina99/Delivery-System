@@ -6,7 +6,7 @@ public class Category {
     private String type;
     private double volume;
 
-    public Category(int id, String type, int volume) {
+    public Category(int id, String type, double volume) {
         this.id = id;
         this.type = type;
         this.volume = volume;
