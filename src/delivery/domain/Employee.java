@@ -10,6 +10,10 @@ public abstract class Employee {
         this.name = name;
         this.pin = pin;
     }
+    public Employee(String name, int pin) {
+        this.name = name;
+        this.pin = pin;
+    }
 
     protected Employee(String name, int pin) {
         this.name = name;

@@ -1,21 +1,19 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Category;
+import delivery.domain.*;
 import delivery.domain.Driver;
-import org.w3c.dom.ls.LSOutput;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
+public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
 
-/////Heeyyy it's me SARA!
+
 //    private Connection connect() {
 //        // SQLite connection string
 //        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-//        //jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db
+//
 //        Connection conn = null;
 //        try {
 //            conn = DriverManager.getConnection(url);
@@ -24,7 +22,6 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 //        }
 //        return conn;
 //    }
-//
 //    public void closeConnection(Connection conn){
 //        try {
 //            if (conn != null) {
@@ -36,15 +33,16 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 //    }
 
     @Override
-    public void insert(Driver object) {
-        String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
+    public void insert(Order object) {
+        String sql = "INSERT INTO Order (Customer_ID,Order_Type,Time_Slot) VALUES(?,?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setString(1, object.getName());
-            Pstmt.setInt(2,object.getPin());
-            Pstmt.executeUpdate();
+            Pstmt.setInt(1, object.getCustomer().getId());
+            Pstmt.setString(2, object.getOrderType().toString());
+            Pstmt.setString(3, object.getTimeSlot().toString());
 
+            Pstmt.executeUpdate();
             closeConnection(New);
         }
 
@@ -54,17 +52,18 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
     }
 
     @Override
-    public void update(Driver object) {
-        String sql = "UPDATE Driver SET Name = ?, PIN = ? WHERE ID = ?";
+    public void update(Order object) {
+        String sql = "UPDATE Order SET Customer_ID = ?, Order_Type = ?, Time_Slot = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
 
             // set the corresponding param
 
-            Pstmt.setString(1, object.getName());
-            Pstmt.setInt(2, object.getPin());
-            Pstmt.setInt(3, object.getId());
+            Pstmt.setInt(1, object.getCustomer().getId());
+            Pstmt.setString(2, object.getOrderType().toString());
+            Pstmt.setString(3, object.getTimeSlot().toString());
+            Pstmt.setInt(4, object.getId());
             // update
             Pstmt.executeUpdate();
 
@@ -76,7 +75,7 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
     @Override
     public void delete(int dID) {
-        String sql = "DELETE FROM Driver WHERE ID = ?";
+        String sql = "DELETE FROM Order WHERE ID = ?";
 
         try (Connection del = this.connect();
              PreparedStatement Pstmt = del.prepareStatement(sql)) {
@@ -92,11 +91,12 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
         }
     }
 
-
     @Override
-    public Driver getById(int pk) {
-        String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
-        Driver driver = null;
+    public Order getById(int pk) {
+        String sql = "SELECT * FROM Order WHERE ID = ?";
+        Order order = null;
+        CustomerDAO Customer = new CustomerDAO();
+
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -104,25 +104,29 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
             pstmt.setInt(1,pk);
             ResultSet rs  = pstmt.executeQuery();
 
-                driver = new Driver(
+            // loop through the result set
+            while (rs.next()) {
+                order = new Order(
                         rs.getInt("ID"),
-                        rs.getString("Name"),
-                        rs.getInt("PIN")
+                        Customer.getById(rs.getInt("Customer_ID")),
+                        OrderType.valueOf(rs.getString("Order_Type")),
+                        TimeSlots.valueOf(rs.getString("Time_Slot"))
                 );
 
-
+            }
             closeConnection(One);
-            return driver;
+            return order;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return driver;
+        return order;
     }
 
     @Override
-    public List<Driver> getAll() {
-        String sql = "SELECT * FROM Driver";
-        List<Driver> DriverList  = new ArrayList<>();
+    public List<Order> getAll() {
+        String sql = "SELECT * FROM Order";
+        List<Order> orderlist = new ArrayList<>();
+        CustomerDAO Customer = new CustomerDAO();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
@@ -130,44 +134,19 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
             // loop through the result set
             while (rs.next()) {
-                DriverList.add(new Driver(
+                orderlist.add(new Order(
                         rs.getInt("ID"),
-                        rs.getString("Name"),
-                        rs.getInt("PIN"))
+                        Customer.getById(rs.getInt("Customer_ID")),
+                        OrderType.valueOf(rs.getString("Order_Type")),
+                        TimeSlots.valueOf(rs.getString("Time_Slot")))
                 );
 
             }
             closeConnection(ALL);
-            return DriverList;
+            return orderlist;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-        return DriverList;
-    }
-
-
-    public static void main(String[] args) {
-//        DriverDAO driver = new DriverDAO();
-//        System.out.println("\n");
-//        System.out.println(driver.getAll());
-//        System.out.println("______________________________________");
-//        driver.getById(4);
-//        System.out.println("______________________________________");
-//        Driver New = new Driver("Nerd",49999);
-//        driver.insert(New);
-//        System.out.println("Added a row to the database.");
-//        System.out.println("______________________________________");
-//        driver.delete(26);
-//        System.out.println("Deleted a row form the database.");
-//        System.out.println("______________________________________");
-//        Driver d = new Driver("Sam",44444);
-//        driver.update(d);
-//        System.out.println("Updated a row in the database");
-//        System.out.println("______________________________________");
-
+        return orderlist;
     }
 }
-
-
-

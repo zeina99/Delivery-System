@@ -1,21 +1,17 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Category;
-import delivery.domain.Driver;
-import org.w3c.dom.ls.LSOutput;
+import delivery.domain.Picker;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
+public class PickerDAO extends ConnectionFactory implements GenericDAO<Picker> {
 
-/////Heeyyy it's me SARA!
 //    private Connection connect() {
 //        // SQLite connection string
 //        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-//        //jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db
+//
 //        Connection conn = null;
 //        try {
 //            conn = DriverManager.getConnection(url);
@@ -36,8 +32,8 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 //    }
 
     @Override
-    public void insert(Driver object) {
-        String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
+    public void insert(Picker object) {
+        String sql = "INSERT INTO PICKER(Name,PIN) VALUES(?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
@@ -54,8 +50,8 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
     }
 
     @Override
-    public void update(Driver object) {
-        String sql = "UPDATE Driver SET Name = ?, PIN = ? WHERE ID = ?";
+    public void update(Picker object) {
+        String sql = "UPDATE PICKER SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
@@ -65,9 +61,9 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
             Pstmt.setString(1, object.getName());
             Pstmt.setInt(2, object.getPin());
             Pstmt.setInt(3, object.getId());
+
             // update
             Pstmt.executeUpdate();
-
             closeConnection(up);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -76,7 +72,7 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
     @Override
     public void delete(int dID) {
-        String sql = "DELETE FROM Driver WHERE ID = ?";
+        String sql = "DELETE FROM PICKER WHERE ID = ?";
 
         try (Connection del = this.connect();
              PreparedStatement Pstmt = del.prepareStatement(sql)) {
@@ -92,45 +88,45 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
         }
     }
 
-
     @Override
-    public Driver getById(int pk) {
-        String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
-        Driver driver = null;
+    public Picker getById(int pk) {
+        String sql = "SELECT ID, Name, PIN " +"FROM PICKER WHERE ID = ?";
+        Picker picker = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
+            //
             ResultSet rs  = pstmt.executeQuery();
 
-                driver = new Driver(
+            // loop through the result set
+            while (rs.next()) {
+                picker = new Picker(
                         rs.getInt("ID"),
                         rs.getString("Name"),
-                        rs.getInt("PIN")
-                );
+                        rs.getInt("PIN"));
 
-
+            }
             closeConnection(One);
-            return driver;
+            return picker;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return driver;
+        return picker;
     }
 
     @Override
-    public List<Driver> getAll() {
-        String sql = "SELECT * FROM Driver";
-        List<Driver> DriverList  = new ArrayList<>();
-
+    public List<Picker> getAll() {
+        String sql = "SELECT * FROM PICKER";
+        List<Picker> PickerList = new ArrayList<>();
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
             // loop through the result set
             while (rs.next()) {
-                DriverList.add(new Driver(
+                PickerList.add(new Picker(
                         rs.getInt("ID"),
                         rs.getString("Name"),
                         rs.getInt("PIN"))
@@ -138,36 +134,30 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
             }
             closeConnection(ALL);
-            return DriverList;
+            return PickerList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
-
-        return DriverList;
+        } return PickerList;
     }
 
-
     public static void main(String[] args) {
-//        DriverDAO driver = new DriverDAO();
-//        System.out.println("\n");
-//        System.out.println(driver.getAll());
+        PickerDAO picker = new PickerDAO();
+        System.out.println("\n");
+        picker.getAll();
+        System.out.println("______________________________________");
+        picker.getById(4);
+        System.out.println("______________________________________");
+        //Picker New = new Picker("Gustav",27579);
+        // picker.insert(New);
+        //System.out.println("Added a row to the database.");
 //        System.out.println("______________________________________");
-//        driver.getById(4);
-//        System.out.println("______________________________________");
-//        Driver New = new Driver("Nerd",49999);
-//        driver.insert(New);
-//        System.out.println("Added a row to the database.");
-//        System.out.println("______________________________________");
-//        driver.delete(26);
+//        picker.delete(8);
 //        System.out.println("Deleted a row form the database.");
 //        System.out.println("______________________________________");
-//        Driver d = new Driver("Sam",44444);
-//        driver.update(d);
+//        picker.update(11,"Josh", 21555);
 //        System.out.println("Updated a row in the database");
 //        System.out.println("______________________________________");
 
     }
+
 }
-
-
-

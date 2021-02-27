@@ -1,21 +1,19 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Category;
 import delivery.domain.Driver;
-import org.w3c.dom.ls.LSOutput;
+import delivery.domain.Loader;
+import delivery.domain.Manager;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
+public class ManagerDAO extends ConnectionFactory implements GenericDAO<Manager> {
 
-/////Heeyyy it's me SARA!
 //    private Connection connect() {
 //        // SQLite connection string
 //        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-//        //jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db
+//
 //        Connection conn = null;
 //        try {
 //            conn = DriverManager.getConnection(url);
@@ -36,8 +34,8 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 //    }
 
     @Override
-    public void insert(Driver object) {
-        String sql = "INSERT INTO Driver(Name,PIN) VALUES(?,?)";
+    public void insert(Manager object) {
+        String sql = "INSERT INTO Manager(Name,PIN) VALUES(?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
@@ -54,8 +52,8 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
     }
 
     @Override
-    public void update(Driver object) {
-        String sql = "UPDATE Driver SET Name = ?, PIN = ? WHERE ID = ?";
+    public void update(Manager object) {
+        String sql = "UPDATE Manager SET Name = ?, PIN = ? WHERE ID = ?";
 
         try (Connection up = this.connect();
              PreparedStatement Pstmt = up.prepareStatement(sql)) {
@@ -76,7 +74,7 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
     @Override
     public void delete(int dID) {
-        String sql = "DELETE FROM Driver WHERE ID = ?";
+        String sql = "DELETE FROM Manager WHERE ID = ?";
 
         try (Connection del = this.connect();
              PreparedStatement Pstmt = del.prepareStatement(sql)) {
@@ -92,37 +90,39 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
         }
     }
 
-
     @Override
-    public Driver getById(int pk) {
-        String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
-        Driver driver = null;
+    public Manager getById(int pk) {
+        String sql = "SELECT ID, Name, PIN FROM Manager WHERE ID = ?";
+        Manager manager = null;
+
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
+            //
             ResultSet rs  = pstmt.executeQuery();
 
-                driver = new Driver(
+            // loop through the result set
+            while (rs.next()) {
+                manager = new Manager(
                         rs.getInt("ID"),
                         rs.getString("Name"),
                         rs.getInt("PIN")
                 );
-
-
+            }
             closeConnection(One);
-            return driver;
+            return manager;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return driver;
+        return manager;
     }
 
     @Override
-    public List<Driver> getAll() {
-        String sql = "SELECT * FROM Driver";
-        List<Driver> DriverList  = new ArrayList<>();
+    public List<Manager> getAll() {
+        String sql = "SELECT * FROM Manager";
+        List<Manager> managerList = new ArrayList<>();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
@@ -130,44 +130,36 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 
             // loop through the result set
             while (rs.next()) {
-                DriverList.add(new Driver(
+                managerList.add(new Manager(
                         rs.getInt("ID"),
                         rs.getString("Name"),
                         rs.getInt("PIN"))
                 );
-
             }
             closeConnection(ALL);
-            return DriverList;
+            return managerList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-        return DriverList;
+        return managerList;
     }
-
 
     public static void main(String[] args) {
-//        DriverDAO driver = new DriverDAO();
-//        System.out.println("\n");
-//        System.out.println(driver.getAll());
-//        System.out.println("______________________________________");
-//        driver.getById(4);
-//        System.out.println("______________________________________");
-//        Driver New = new Driver("Nerd",49999);
-//        driver.insert(New);
-//        System.out.println("Added a row to the database.");
-//        System.out.println("______________________________________");
-//        driver.delete(26);
-//        System.out.println("Deleted a row form the database.");
-//        System.out.println("______________________________________");
-//        Driver d = new Driver("Sam",44444);
-//        driver.update(d);
-//        System.out.println("Updated a row in the database");
-//        System.out.println("______________________________________");
-
+        ManagerDAO manager = new ManagerDAO();
+        System.out.println("\n");
+        manager.getAll();
+        System.out.println("______________________________________");
+        System.out.println(manager.getById(2));
+        System.out.println("______________________________________");
+//        Manager New = new Manager("Gustav",17579);
+//        manager.insert(New);
+        System.out.println("Added a row to the database.");
+        System.out.println("______________________________________");
+        manager.delete(8);
+        System.out.println("Deleted a row form the database.");
+        System.out.println("______________________________________");
+        //manager.update(11,"Josh", 11555);
+        System.out.println("Updated a row in the database");
+        System.out.println("______________________________________");
     }
 }
-
-
-
