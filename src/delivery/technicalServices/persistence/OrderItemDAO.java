@@ -1,8 +1,10 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Category;
 import delivery.domain.OrderItem;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderItemDAO implements GenericDAO<OrderItem> {
@@ -88,6 +90,8 @@ public class OrderItemDAO implements GenericDAO<OrderItem> {
     @Override
     public OrderItem getById(int pk) {
         String sql = "SELECT * FROM Order_Item WHERE ID = ?";
+        OrderItem orderitem = null;
+        CategoryDAO Category = new CategoryDAO();
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
@@ -96,41 +100,46 @@ public class OrderItemDAO implements GenericDAO<OrderItem> {
             pstmt.setInt(1,pk);
             //
             ResultSet rs  = pstmt.executeQuery();
-
-            System.out.println("ID: \tOrder ID: \tCategory ID: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Order_ID") + "\t" +
-                        rs.getInt("Category_ID"));
+                orderitem = new OrderItem(
+                        rs.getInt("ID"),
+                        rs.getInt("Order_ID"),
+                        Category.getById(rs.getInt("Category_ID"))
+                );
             }
             closeConnection(One);
+            return orderitem;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return orderitem;
     }
 
     @Override
     public List<OrderItem> getAll() {
         String sql = "SELECT * FROM Order_Item";
+        List<OrderItem> orderitemlist = new ArrayList<>();
+        CategoryDAO category = null;
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Order ID: \t \t Category ID: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Order_ID") + "\t" +
-                        rs.getInt("Category_ID"));
+                orderitemlist.add(new OrderItem(
+                        rs.getInt("ID"),
+                        rs.getInt("Order_ID"),
+                        category.getById(rs.getInt("Category_ID")))
+                );
+
             }
             closeConnection(ALL);
+            return orderitemlist;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return orderitemlist;
     }
 }

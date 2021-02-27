@@ -1,10 +1,12 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Customer;
 import delivery.domain.Driver;
 import delivery.domain.Loader;
 import delivery.domain.Picker;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoaderDAO implements GenericDAO<Loader> {
@@ -92,7 +94,7 @@ public class LoaderDAO implements GenericDAO<Loader> {
     @Override
     public Loader getById(int pk) {
         String sql = "SELECT ID, Name, PIN " +"FROM Loader WHERE ID = ?";
-
+        Loader loader = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -104,38 +106,44 @@ public class LoaderDAO implements GenericDAO<Loader> {
             System.out.println("ID: \tName: \tPIN: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t" +
+                loader = new Loader(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
                         rs.getInt("PIN"));
+
             }
             closeConnection(One);
+            return loader;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return loader;
     }
 
     @Override
     public List<Loader> getAll() {
         String sql = "SELECT * FROM Loader";
+        List<Loader> LoaderList  = new ArrayList<>();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name: \t \t PIN: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t" +
-                        rs.getInt("PIN"));
+                LoaderList.add(new Loader(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN"))
+                );
+
             }
             closeConnection(ALL);
+            return LoaderList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return LoaderList;
     }
 
     public static void main(String[] args) {

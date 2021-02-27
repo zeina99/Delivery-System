@@ -1,8 +1,10 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Van;
 import delivery.domain.VanDescription;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VanDescriptionDAO implements GenericDAO<VanDescription> {
@@ -89,7 +91,7 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
     @Override
     public VanDescription getById(int pk) {
         String sql = "SELECT * FROM Van_Description WHERE ID = ?";
-
+        VanDescription vandescription = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -98,40 +100,41 @@ public class VanDescriptionDAO implements GenericDAO<VanDescription> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \tSize Label: \tVolume: ");
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getDouble("Volume"));
-            }
+                vandescription = new VanDescription(
+                        rs.getInt("ID"),
+                        rs.getString("Size_Label"),
+                        rs.getInt("Volume")
+                );
+
             closeConnection(One);
+            return vandescription;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return vandescription;
     }
 
     @Override
     public List<VanDescription> getAll() {
         String sql = "SELECT * FROM Van_Description";
-
+        List<VanDescription> vanDescriptionList = new ArrayList<>();
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Size Label: \t \t Volume: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Size_Label") + "\t  \t" +
-                        rs.getDouble("Volume"));
+                vanDescriptionList.add(new VanDescription(
+                        rs.getInt("ID"),
+                        rs.getString("Size_Label"),
+                        rs.getInt("Volume"))
+                );
             }
             closeConnection(ALL);
+            return vanDescriptionList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return vanDescriptionList;
     }
 }

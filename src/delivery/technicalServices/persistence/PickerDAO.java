@@ -3,6 +3,7 @@ package delivery.technicalServices.persistence;
 import delivery.domain.Picker;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PickerDAO implements GenericDAO<Picker> {
@@ -90,7 +91,7 @@ public class PickerDAO implements GenericDAO<Picker> {
     @Override
     public Picker getById(int pk) {
         String sql = "SELECT ID, Name, PIN " +"FROM PICKER WHERE ID = ?";
-
+        Picker picker = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -99,40 +100,44 @@ public class PickerDAO implements GenericDAO<Picker> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \tName: \tPIN: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t \t" +
+                picker = new Picker(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
                         rs.getInt("PIN"));
+
             }
             closeConnection(One);
+            return picker;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return picker;
     }
 
     @Override
     public List<Picker> getAll() {
         String sql = "SELECT * FROM PICKER";
-
+        List<Picker> PickerList = new ArrayList<>();
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name: \t \t PIN: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t" +
-                        rs.getInt("PIN"));
+                PickerList.add(new Picker(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN"))
+                );
+
             }
             closeConnection(ALL);
+            return PickerList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } return null;
+        } return PickerList;
     }
 
     public static void main(String[] args) {

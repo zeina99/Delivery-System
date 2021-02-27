@@ -1,9 +1,11 @@
 package delivery.technicalServices.persistence;
 
 import delivery.domain.Driver;
+import delivery.domain.Loader;
 import delivery.domain.Manager;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerDAO implements GenericDAO<Manager> {
@@ -91,6 +93,7 @@ public class ManagerDAO implements GenericDAO<Manager> {
     @Override
     public Manager getById(int pk) {
         String sql = "SELECT ID, Name, PIN " +"FROM Manager WHERE ID = ?";
+        Manager manager = null;
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
@@ -100,41 +103,45 @@ public class ManagerDAO implements GenericDAO<Manager> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \tName: \tPIN: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t" +
-                        rs.getInt("PIN"));
+                manager = new Manager(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN")
+                );
             }
             closeConnection(One);
+            return manager;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return manager;
     }
 
     @Override
     public List<Manager> getAll() {
         String sql = "SELECT * FROM Manager";
+        List<Manager> managerList = new ArrayList<>();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name: \t \t PIN: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t" +
-                        rs.getInt("PIN"));
+                managerList.add(new Manager(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN"))
+                );
             }
             closeConnection(ALL);
+            return managerList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return managerList;
     }
 
     public static void main(String[] args) {

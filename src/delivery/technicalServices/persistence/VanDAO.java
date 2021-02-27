@@ -3,6 +3,7 @@ package delivery.technicalServices.persistence;
 import delivery.domain.Van;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VanDAO implements GenericDAO<Van> {
@@ -86,49 +87,57 @@ public class VanDAO implements GenericDAO<Van> {
     @Override
     public Van getById(int pk) {
         String sql = "SELECT * FROM Van WHERE ID = ?";
+        Van van = null;
+        VanDescriptionDAO VanDes = new VanDescriptionDAO();
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
-            //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \tVan Description ID: \tDriver ID: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getObject("Van_Description_ID") + "\t" +        ////Int or Object??
-                        rs.getInt("Driver_ID"));
+                van = new Van(
+                        rs.getInt("ID"),
+                        VanDes.getById(rs.getInt("Van_Description_ID")),
+                        rs.getInt("Driver_ID")
+                );
+
             }
             closeConnection(One);
+            return van;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return van;
     }
 
     @Override
     public List<Van> getAll() {
         String sql = "SELECT * FROM Van";
+        List<Van> vanlist = new ArrayList<>();
+        VanDescriptionDAO VanDes = new VanDescriptionDAO();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \tVan Description ID:\t \tDriver ID: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getObject("Van_Description_ID") + "\t" +        ////Int or Object??
-                        rs.getInt("Driver_ID"));
+                vanlist.add(new Van(
+                        rs.getInt("ID"),
+                        VanDes.getById(rs.getInt("Van_Description_ID")),
+                        rs.getInt("Driver_ID"))
+                );
+
             }
             closeConnection(ALL);
+            return vanlist;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return vanlist;
     }
 }

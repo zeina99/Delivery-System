@@ -96,17 +96,15 @@ public class CategoryDAO implements GenericDAO<Category> {
 
             // set the value
             pstmt.setInt(1,pk);
-            //
             ResultSet rs  = pstmt.executeQuery();
 
-
-            System.out.println("ID: \tCategory Type: \tVolume (in cubic foot): ");
             // loop through the result set
             while (rs.next()) {
-                category = new Category(rs.getInt("ID"),rs.getString("Category_Type"), rs.getDouble("Volume"));
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Category_Type") + "\t" +
+                category = new Category(
+                        rs.getInt("ID"),
+                        rs.getString("Category_Type"),
                         rs.getDouble("Volume"));
+
             }
             closeConnection(One);
             return category;
@@ -124,15 +122,13 @@ public class CategoryDAO implements GenericDAO<Category> {
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Category Type: \tVolume (in cubic foot): ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                categoryList.add(new Category(rs.getInt("ID"), rs.getString("Category_Type"),rs.getDouble("Volume") ));
-
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Category_Type") + "\t" +
-                        rs.getDouble("Volume"));
+                categoryList.add(new Category(
+                        rs.getInt("ID"),
+                        rs.getString("Category_Type"),
+                        rs.getDouble("Volume") )
+                );
             }
 
             closeConnection(ALL);

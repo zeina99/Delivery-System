@@ -1,9 +1,10 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.*;
 import delivery.domain.Driver;
-import delivery.domain.Order;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAO implements  GenericDAO<Order> {
@@ -72,27 +73,6 @@ public class OrderDAO implements  GenericDAO<Order> {
         }
     }
 
-    ////__________________________
-
-//    public void UpdateOrder(int Customer_id, String Type, String Time){
-//        String sql = "UPDATE Order SET Customer_ID = ?, Order_Type = ?, Time_Slot = ? WHERE ID = ?";
-//
-//        try (Connection up = this.connect();
-//             PreparedStatement Pstmt = up.prepareStatement(sql)) {
-//
-//            // set the corresponding param
-//
-//            Pstmt.setInt(1, Customer_id);
-//            Pstmt.setString(2, Type);    ////or Pstmt.setObject??
-//            Pstmt.setString(3, Time);
-//            // update
-//            Pstmt.executeUpdate();
-//            closeConnection(up);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
     @Override
     public void delete(int dID) {
         String sql = "DELETE FROM Order WHERE ID = ?";
@@ -114,51 +94,59 @@ public class OrderDAO implements  GenericDAO<Order> {
     @Override
     public Order getById(int pk) {
         String sql = "SELECT * FROM Order WHERE ID = ?";
+        Order order = null;
+        CustomerDAO Customer = new CustomerDAO();
 
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
-            //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("Order ID:  \tCustomer ID:   \tOrder Type:   \tTime Slot:");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Customer_ID") + "\t" +
-                        rs.getString("Order_Type") + "\t" +
-                        rs.getString("Time_Slot"));
+                order = new Order(
+                        rs.getInt("ID"),
+                        Customer.getById(rs.getInt("Customer_ID")),
+                        OrderType.valueOf(rs.getString("Order_Type")),
+                        TimeSlots.valueOf(rs.getString("Time_Slot"))
+                );
+
             }
             closeConnection(One);
+            return order;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return order;
     }
 
     @Override
     public List<Order> getAll() {
         String sql = "SELECT * FROM Order";
+        List<Order> orderlist = new ArrayList<>();
+        CustomerDAO Customer = new CustomerDAO();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("Order ID: \t \t Customer ID: \t \t Order Type: \t \t Time Slot:");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getInt("Customer_ID") + "\t" +
-                        rs.getString("Order_Type") + "\t" +
-                        rs.getString("Time_Slot"));
+                orderlist.add(new Order(
+                        rs.getInt("ID"),
+                        Customer.getById(rs.getInt("Customer_ID")),
+                        OrderType.valueOf(rs.getString("Order_Type")),
+                        TimeSlots.valueOf(rs.getString("Time_Slot")))
+                );
+
             }
             closeConnection(ALL);
+            return orderlist;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return orderlist;
     }
 }

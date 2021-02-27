@@ -1,8 +1,10 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Category;
 import delivery.domain.Customer;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO implements GenericDAO<Customer> {
@@ -47,26 +49,6 @@ public class CustomerDAO implements GenericDAO<Customer> {
         }
     }
 
-    // @Override
-    // public void update(int id, String name, int pin) {
-    //     String sql = "UPDATE Customer SET Name = ?, PIN = ? WHERE ID = ?";
-
-    //     try (Connection up = this.connect();
-    //          PreparedStatement Pstmt = up.prepareStatement(sql)) {
-
-    //         // set the corresponding param
-
-    //         Pstmt.setString(1, name);
-    //         Pstmt.setInt(2, pin);
-    //         Pstmt.setInt(3, id);
-    //         // update
-    //         Pstmt.executeUpdate();
-
-    //         closeConnection(up);
-    //     } catch (SQLException e) {
-    //         System.out.println(e.getMessage());
-    //     }
-    // }
     @Override
 	public void update(Customer object) {
 		// TODO Auto-generated method stub
@@ -108,7 +90,7 @@ public class CustomerDAO implements GenericDAO<Customer> {
     @Override
     public Customer getById(int pk) {
         String sql = "SELECT ID, Name FROM Customer WHERE ID = ?";
-
+        Customer customer = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
@@ -117,39 +99,45 @@ public class CustomerDAO implements GenericDAO<Customer> {
             //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \t Name: ");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t");
+                customer = new Customer(
+                        rs.getInt("ID"),
+                        rs.getString("Name")
+                );
+
             }
             closeConnection(One);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return customer;
     }
 
     @Override
     public List<Customer> getAll() {
         String sql = "SELECT * FROM Customer";
+        List<Customer> CustomerList  = new ArrayList<>();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name:  ");
-            System.out.println("______________________________________");
+
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t");
+                CustomerList.add(new Customer(
+                        rs.getInt("ID"),
+                        rs.getString("Name") )
+                );
+
             }
             closeConnection(ALL);
+            return CustomerList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return CustomerList;
     }
 
     public static void main(String[] args) {
@@ -159,16 +147,17 @@ public class CustomerDAO implements GenericDAO<Customer> {
         System.out.println("______________________________________");
         customer.getById(4);
         System.out.println("______________________________________");
-        //Driver New = new Driver("Gustav",47579);
-        // driver.insert(New);
-        //System.out.println("Added a row to the database.");
-        //System.out.println("______________________________________");
-//        customer.delete(8);
-//        System.out.println("Deleted a row form the database.");
-//        System.out.println("______________________________________");
-//        customer.update(11,"Josh", 41555);
-//        System.out.println("Updated a row in the database");
-//        System.out.println("______________________________________");
+//        Customer New = new Customer();
+//        customer.insert(New);
+        System.out.println("Added a row to the database.");
+        System.out.println("______________________________________");
+        customer.delete(14);
+        System.out.println("Deleted a row form the database.");
+        System.out.println("______________________________________");
+        Customer c = new Customer(17, "Samy");
+        customer.update(c);
+        System.out.println("Updated a row in the database");
+        System.out.println("______________________________________");
     }
 
 	

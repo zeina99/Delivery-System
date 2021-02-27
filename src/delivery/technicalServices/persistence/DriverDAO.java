@@ -1,5 +1,6 @@
 package delivery.technicalServices.persistence;
 
+import delivery.domain.Category;
 import delivery.domain.Driver;
 import org.w3c.dom.ls.LSOutput;
 
@@ -95,69 +96,73 @@ public class DriverDAO  implements GenericDAO<Driver> {
     @Override
     public Driver getById(int pk) {
         String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
-
+        Driver driver = null;
         try (Connection One = this.connect();
              PreparedStatement pstmt  = One.prepareStatement(sql)){
 
             // set the value
             pstmt.setInt(1,pk);
-            //
             ResultSet rs  = pstmt.executeQuery();
 
-            System.out.println("ID: \tName: \tPIN: ");
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t   " +
-                        rs.getString("Name") + "\t" +
-                        rs.getInt("PIN"));
-            }
+                driver = new Driver(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN")
+                );
+
+
             closeConnection(One);
+            return driver;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return driver;
     }
 
     @Override
     public List<Driver> getAll() {
         String sql = "SELECT * FROM Driver";
+        List<Driver> DriverList  = new ArrayList<>();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
 
-            System.out.println("ID: \t \t Name: \t \t PIN: ");
-            System.out.println("______________________________________");
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + "\t" + "\t" +
-                        rs.getString("Name") + "\t" +  "\t" + "\t" +
-                        rs.getInt("PIN"));
+                DriverList.add(new Driver(
+                        rs.getInt("ID"),
+                        rs.getString("Name"),
+                        rs.getInt("PIN"))
+                );
+
             }
             closeConnection(ALL);
+            return DriverList;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return null;
+        return DriverList;
     }
 
 
     public static void main(String[] args) {
-        DriverDAO driver = new DriverDAO();
-        System.out.println("\n");
-        driver.getAll();
-        System.out.println("______________________________________");
-        driver.getById(4);
-        System.out.println("______________________________________");
-        //Driver New = new Driver("Gustav",47579);
-       // driver.insert(New);
+//        DriverDAO driver = new DriverDAO();
+//        System.out.println("\n");
+//        System.out.println(driver.getAll());
+//        System.out.println("______________________________________");
+//        driver.getById(4);
+//        System.out.println("______________________________________");
+//        Driver New = new Driver("Nerd",49999);
+//        driver.insert(New);
 //        System.out.println("Added a row to the database.");
 //        System.out.println("______________________________________");
-//        driver.delete(8);
+//        driver.delete(26);
 //        System.out.println("Deleted a row form the database.");
 //        System.out.println("______________________________________");
-//        driver.update(11,"Josh", 41555);
+//        Driver d = new Driver("Sam",44444);
+//        driver.update(d);
 //        System.out.println("Updated a row in the database");
 //        System.out.println("______________________________________");
 
