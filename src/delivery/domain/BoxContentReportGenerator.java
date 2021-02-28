@@ -53,7 +53,7 @@ public class BoxContentReportGenerator {
 
             // picking boxes for order
             // allBoxSizes Sorted descending , starting with largest box size
-            List<Double> allBoxSizes = reportGenerator.getInventory().getAllBoxSizesSorted();
+            List<Double> allBoxSizes = reportGenerator.getInventory().getAllBoxVolumesSorted();
             int allBoxSizesIndex = 0;
 
             // order items descending by item volume

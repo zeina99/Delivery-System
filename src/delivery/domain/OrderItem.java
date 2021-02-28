@@ -15,7 +15,7 @@ public class OrderItem {
     public OrderItem(int orderID, Category category) {
         this.orderID = orderID;
         this.category = category;
-        this.volume = volume;
+        this.volume = this.setVolume();
     }
 
     private double setVolume() {
@@ -48,5 +48,15 @@ public class OrderItem {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", orderID=" + orderID +
+                ", category=" + category +
+                ", volume=" + volume +
+                '}';
     }
 }
