@@ -21,7 +21,7 @@ public class ReportGenerator {
         this.boxList = new ArrayList<>();
         this.vanList = new ArrayList<>();
         this.unaccommodatedOrders = new ArrayList<>();
-        this.boxDescriptionList = this.inventory.getBoxDescriptions();
+        this.boxDescriptionList = this.inventory.getBoxDescriptionList();
     }
     public void generateLoadingReport(){
 
