@@ -10,10 +10,6 @@ public abstract class Employee {
         this.name = name;
         this.pin = pin;
     }
-    public Employee(String name, int pin) {
-        this.name = name;
-        this.pin = pin;
-    }
 
     protected Employee(String name, int pin) {
         this.name = name;
@@ -42,5 +38,14 @@ public abstract class Employee {
 
     public void setPin(int pin) {
         this.pin = pin;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pin=" + pin +
+                '}';
     }
 }

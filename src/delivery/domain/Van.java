@@ -35,4 +35,12 @@ public class Van {
         this.driver_id = driver_id;
     }
 
+    @Override
+    public String toString() {
+        return "Van{" +
+                "id=" + id +
+                ", vanDescription=" + vanDescription +
+                ", driver_id=" + driver_id +
+                '}';
+    }
 }

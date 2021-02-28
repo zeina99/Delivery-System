@@ -9,4 +9,8 @@ public class Manager extends Employee{
     public Manager(String name, int pin) {
         super(name, pin);
     }
+    @Override
+    public String toString() {
+        return "Manager " + super.toString();
+    }
 }

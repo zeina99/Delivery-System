@@ -10,7 +10,10 @@ public class Driver extends Employee{
         super(id, name, pin);
 
     }
-    public Driver(String name, int pin){
-        super(name, pin);
+
+
+    @Override
+    public String toString() {
+        return "Driver " + super.toString();
     }
 }

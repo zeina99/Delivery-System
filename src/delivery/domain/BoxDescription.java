@@ -38,4 +38,13 @@ public class BoxDescription {
     public void setSize_label(String sizeLabel) {
         this.sizeLabel = sizeLabel;
     }
+
+    @Override
+    public String toString() {
+        return "BoxDescription{" +
+                "id=" + id +
+                ", sizeLabel='" + sizeLabel + '\'' +
+                ", volume=" + volume +
+                '}';
+    }
 }
