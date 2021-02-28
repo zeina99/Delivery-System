@@ -38,7 +38,7 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setString(1, object.getSize_label());
+            Pstmt.setString(1, object.getSizeLabel());
             Pstmt.setDouble(2, object.getVolume());
             Pstmt.executeUpdate();
 
@@ -57,7 +57,7 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
-            Pstmt.setString(1, object.getSize_label());
+            Pstmt.setString(1, object.getSizeLabel());
             Pstmt.setDouble(2, object.getVolume());
             Pstmt.setInt(3, object.getId());
 
@@ -118,7 +118,34 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
         }
         return boxDescription;
     }
+    public BoxDescription getBoxDescriptionFromVol(double volume){
+        String sql = "SELECT * FROM Box_Description WHERE Volume = ?";
+        BoxDescription boxDescription = null;
 
+        try (Connection One = this.connect();
+             PreparedStatement pstmt  = One.prepareStatement(sql)){
+
+            // set the value
+            pstmt.setDouble(1,volume);
+
+            ResultSet rs  = pstmt.executeQuery();
+
+            boxDescription =  new BoxDescription(
+                    rs.getInt("ID"),
+                    rs.getString("Size_Label"),
+                    rs.getDouble("Volume")
+            );
+
+            closeConnection(One);
+
+            return boxDescription;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return boxDescription;
+
+    }
     @Override
     public List<BoxDescription> getAll() {
         String sql = "SELECT * FROM Box_Description";

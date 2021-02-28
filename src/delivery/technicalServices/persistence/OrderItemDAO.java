@@ -146,7 +146,7 @@ public class OrderItemDAO extends ConnectionFactory implements GenericDAO<OrderI
 
     public List<OrderItem> getOrderItemsByOrderId(int orderID) {
         String sql = "SELECT * FROM Order_Item WHERE Order_ID = ?";
-        
+
         List<OrderItem> orderItemList = new ArrayList<>();
         CategoryDAO categoryDAO = new CategoryDAO();
 
