@@ -20,11 +20,20 @@ public class Order {
         this.orderType = orderType;
         this.timeSlot = timeSlot;
         this.items = items;
-        this.deliveryFee = 0;
+        this.deliveryFee = setDeliveryFee();
     }
-    public void setDeliveryFee(int deliveryFee) {
+
+    public Order(Customer customer, OrderType orderType, TimeSlots timeSlot, List<OrderItem> items) {
+        this.customer = customer;
+        this.orderType = orderType;
+        this.timeSlot = timeSlot;
+        this.items = items;
+        this.deliveryFee = setDeliveryFee();
+    }
+
+    public Double setDeliveryFee() {
         // if order type is STORE, apply discount, else no discount
-        this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
+        return this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
     }
 
 
@@ -78,6 +87,7 @@ public class Order {
                 '}';
     }
 
+    // TODO: test and make sure its working
     public List<OrderItem> getItemsSortedDesc() {
         List<OrderItem> sortedItems = items.stream().sorted(Comparator.comparing(OrderItem::getVolume).reversed()).collect(Collectors.toList());
         return sortedItems;

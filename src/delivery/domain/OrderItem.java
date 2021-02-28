@@ -12,6 +12,12 @@ public class OrderItem {
         this.volume = this.setVolume();
     }
 
+    public OrderItem(int orderID, Category category) {
+        this.orderID = orderID;
+        this.category = category;
+        this.volume = volume;
+    }
+
     private double setVolume() {
         return this.category.getVolume();
     }
