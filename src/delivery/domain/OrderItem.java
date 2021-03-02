@@ -5,7 +5,8 @@ public class OrderItem {
     private int orderID;
     private Category category;
     private double volume;
-    public OrderItem(int id, int orderID, Category category){
+
+    public OrderItem(int id, int orderID, Category category) {
         this.id = id;
         this.orderID = orderID;
         this.category = category;
@@ -52,7 +53,7 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "OrderItem{" +
+        return "\nOrderItem{" +
                 "id=" + id +
                 ", orderID=" + orderID +
                 ", category=" + category +

@@ -20,7 +20,6 @@ public class Order {
         this.orderType = orderType;
         this.timeSlot = timeSlot;
         this.items = items;
-        this.deliveryFee = setDeliveryFee();
     }
 
     public Order(Customer customer, OrderType orderType, TimeSlots timeSlot, List<OrderItem> items) {
@@ -28,10 +27,10 @@ public class Order {
         this.orderType = orderType;
         this.timeSlot = timeSlot;
         this.items = items;
-        this.deliveryFee = setDeliveryFee();
     }
 
-    public Double setDeliveryFee() {
+    // TODO: set delivery fee when order items are added to boxes
+    public Double setDeliveryFee(double deliveryFee) {
         // if order type is STORE, apply discount, else no discount
         return this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
     }
@@ -78,19 +77,22 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "\nOrder{" +
                 "id=" + id +
                 ", customer=" + customer +
                 ", orderType=" + orderType +
                 ", timeSlot=" + timeSlot +
                 ", items=" + items +
+                ", deliveryFee=" + deliveryFee +
                 '}';
     }
 
-    // TODO: test and make sure its working
     public List<OrderItem> getItemsSortedDesc() {
+        // order items descending by volume
         List<OrderItem> sortedItems = items.stream().sorted(Comparator.comparing(OrderItem::getVolume).reversed()).collect(Collectors.toList());
         return sortedItems;
 
     }
+
+
 }
