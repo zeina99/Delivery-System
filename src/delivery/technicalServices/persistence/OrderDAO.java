@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
+public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
 
 
 //    private Connection connect() {
@@ -44,9 +44,7 @@ public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
 
             Pstmt.executeUpdate();
             closeConnection(New);
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -98,11 +96,11 @@ public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
         CustomerDAO Customer = new CustomerDAO();
         OrderItemDAO orderItemDAO = new OrderItemDAO();
         try (Connection One = this.connect();
-             PreparedStatement pstmt  = One.prepareStatement(sql)){
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
 
             // set the value
-            pstmt.setInt(1,pk);
-            ResultSet rs  = pstmt.executeQuery();
+            pstmt.setInt(1, pk);
+            ResultSet rs = pstmt.executeQuery();
 
             // loop through the result set
             while (rs.next()) {
@@ -130,8 +128,8 @@ public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
         CustomerDAO customer = new CustomerDAO();
         OrderItemDAO orderItemDAO = new OrderItemDAO();
         try (Connection ALL = this.connect();
-             Statement stmt  = ALL.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+             Statement stmt = ALL.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {
@@ -140,7 +138,7 @@ public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
                         customer.getById(rs.getInt("Customer_ID")),
                         OrderType.valueOf(rs.getString("Order_Type")),
                         TimeSlots.valueOf(rs.getString("Time_Slot")),
-                        orderItemDAO.getAll())
+                        orderItemDAO.getOrderItemsByOrderId(rs.getInt("ID")))
                 );
 
             }
@@ -166,9 +164,7 @@ public class OrderDAO extends ConnectionFactory implements  GenericDAO<Order> {
             }
 
             closeConnection(New);
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
