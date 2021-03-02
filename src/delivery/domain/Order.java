@@ -35,6 +35,9 @@ public class Order {
         return this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
     }
 
+    public double getDeliveryFee() {
+        return deliveryFee;
+    }
 
     public void addItem(OrderItem item){
         this.items.add(item);

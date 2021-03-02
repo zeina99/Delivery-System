@@ -5,15 +5,21 @@ public class BoxDescription {
     private int id;
     private String sizeLabel;
     private double volume;
+    private final double boxRate;
 
 
-    public BoxDescription(int id, String sizeLabel, double volume){
+    public BoxDescription(int id, String sizeLabel, double volume, double boxRate){
         this.id = id;
         this.sizeLabel = sizeLabel;
         this.volume = volume;
+        this.boxRate = boxRate;
     }
 
-    // getters and setters
+
+    public double getBoxRate() {
+        return boxRate;
+    }
+// getters and setters
 
     public int getId() {
         return id;
@@ -45,6 +51,7 @@ public class BoxDescription {
                 "id=" + id +
                 ", sizeLabel='" + sizeLabel + '\'' +
                 ", volume=" + volume +
+                ", boxRate=" + boxRate +
                 '}';
     }
 }

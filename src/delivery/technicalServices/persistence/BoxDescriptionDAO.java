@@ -34,42 +34,41 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
 
     @Override
     public void insert(BoxDescription object) {
-        String sql = "INSERT INTO Box_Description(Size_Label,Volume) VALUES(?,?)";
+        String sql = "INSERT INTO Box_Description(Size_Label,Volume,Rate) VALUES(?,?,?)";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getSizeLabel());
             Pstmt.setDouble(2, object.getVolume());
+            Pstmt.setDouble(3, object.getBoxRate());
             Pstmt.executeUpdate();
 
             closeConnection(New);
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-	@Override
-	public void update(BoxDescription object) {
-		// TODO Auto-generated method stub
-        String sql = "UPDATE Box_Description SET Size_Label = ? , Volume = ? WHERE ID = ?";
+    @Override
+    public void update(BoxDescription object) {
+        // TODO Auto-generated method stub
+        String sql = "UPDATE Box_Description SET Size_Label = ? , Volume = ? , Rate = ? WHERE ID = ?";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getSizeLabel());
             Pstmt.setDouble(2, object.getVolume());
-            Pstmt.setInt(3, object.getId());
+            Pstmt.setDouble(3, object.getBoxRate());
+            Pstmt.setInt(4, object.getId());
+
 
             Pstmt.executeUpdate();
             closeConnection(New);
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-		
-	}
+
+    }
 
     @Override
     public void delete(int dID) {
@@ -95,19 +94,20 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
         BoxDescription boxDescription = null;
 
         try (Connection One = this.connect();
-             PreparedStatement pstmt  = One.prepareStatement(sql)){
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
 
             // set the value
-            pstmt.setInt(1,pk);
+            pstmt.setInt(1, pk);
             //
-            ResultSet rs  = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
-                // ---- There is an error here, but it's fine it will be fixed when merged
-                boxDescription =  new BoxDescription(
-                        rs.getInt("ID"),
-                        rs.getString("Size_Label"),
-                        rs.getDouble("Volume")
-                );
+            // ---- There is an error here, but it's fine it will be fixed when merged
+            boxDescription = new BoxDescription(
+                    rs.getInt("ID"),
+                    rs.getString("Size_Label"),
+                    rs.getDouble("Volume"),
+                    rs.getDouble("Rate")
+            );
 
             closeConnection(One);
 
@@ -118,22 +118,24 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
         }
         return boxDescription;
     }
-    public BoxDescription getBoxDescriptionFromVol(double volume){
+
+    public BoxDescription getBoxDescriptionFromVol(double volume) {
         String sql = "SELECT * FROM Box_Description WHERE Volume = ?";
         BoxDescription boxDescription = null;
 
         try (Connection One = this.connect();
-             PreparedStatement pstmt  = One.prepareStatement(sql)){
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
 
             // set the value
-            pstmt.setDouble(1,volume);
+            pstmt.setDouble(1, volume);
 
-            ResultSet rs  = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
 
-            boxDescription =  new BoxDescription(
+            boxDescription = new BoxDescription(
                     rs.getInt("ID"),
                     rs.getString("Size_Label"),
-                    rs.getDouble("Volume")
+                    rs.getDouble("Volume"),
+                    rs.getDouble("Rate")
             );
 
             closeConnection(One);
@@ -146,22 +148,24 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
         return boxDescription;
 
     }
+
     @Override
     public List<BoxDescription> getAll() {
         String sql = "SELECT * FROM Box_Description";
         List<BoxDescription> boxDescriptionList = new ArrayList<>();
 
         try (Connection ALL = this.connect();
-             Statement stmt  = ALL.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+             Statement stmt = ALL.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {
                 // the error here is alright, will be fixed when merged with mine
                 boxDescriptionList.add(new BoxDescription(
-                        rs.getInt("ID"),
-                        rs.getString("Size_Label"),
-                        rs.getDouble("Volume"))
+                                rs.getInt("ID"),
+                                rs.getString("Size_Label"),
+                                rs.getDouble("Volume"),
+                        rs.getDouble("Rate"))
                 );
 
             }
