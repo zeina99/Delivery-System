@@ -6,113 +6,114 @@ import java.util.*;
 
 public class Inventory {
 
-    private List<Van> allVans;
-    private List<VanDescription> vanDescriptionList;
-    private List<Customer> customerList;
+//    private List<Van> allVans;
+//    private List<VanDescription> vanDescriptionList;
+//    private List<Customer> customerList;
+//
+//    private List<BoxDescription> boxDescriptionList;
+//    private List<Category> categoryList;
+//
+//    // employees
+//    private List<Loader> loaderList;
+//    private List<Driver> driverList;
+//    private List<Picker> pickerList;
+//    private List<Manager> managerList;
+//
+//    // orders and orderitems
+//    private Map<TimeSlots, List<Order>> orders;
+//    private List<OrderItem> orderItems;
 
-    private List<BoxDescription> boxDescriptionList;
-    private List<Category> categoryList;
-
-    // employees
-    private List<Loader> loaderList;
-    private List<Driver> driverList;
-    private List<Picker> pickerList;
-    private List<Manager> managerList;
-
-    // orders and orderitems
-    private Map<TimeSlots, List<Order>> orders;
-    private List<OrderItem> orderItems;
-
-
+//  remove fetch functions??? and make DAO calls in each get method? or leave as is since all calls will be done once program is started.
+    // but this might cause memory issues, incase of large data -- dont want to keep the whole database in memory!!!!
     public Inventory() {
 
         // vans
-        this.allVans = fetchAllVans();
-        this.vanDescriptionList = fetchVanDescriptions();
-
-        // box description
-        this.boxDescriptionList = fetchAllBoxDescriptions();
-
-        // orders, categories, customers
-        this.orders = fetchAllOrdersMap();
-        this.orderItems = fetchAllOrderItems();
-        this.categoryList = fetchAllCategories();
-        this.customerList = fetchAllCustomers();
-
-        // employees
-        this.loaderList = fetchAllLoaders();
-        this.managerList = fetchAllManagers();
-        this.pickerList = fetchAllPickers();
-        this.driverList = fetchAllDrivers();
+//        this.allVans = getAllVans();
+//        this.vanDescriptionList = getVanDescriptions();
+//
+//        // box description
+//        this.boxDescriptionList = getAllBoxDescriptions();
+//
+//        // orders, categories, customers
+//        this.orders = getAllOrdersMap();
+//        this.orderItems = getAllOrderItems();
+//        this.categoryList = getAllCategories();
+//        this.customerList = getAllCustomers();
+//
+//        // employees
+//        this.loaderList = getAllLoaders();
+//        this.managerList = getAllManagers();
+//        this.pickerList = getAllPickers();
+//        this.driverList = getAllDrivers();
     }
 
     // fetching from DAO classes
 
-    private List<Van> fetchAllVans() {
+    public List<Van> getAllVans() {
 
         VanDAO vanDAO = new VanDAO();
 
         return vanDAO.getAll();
     }
 
-    private List<Category> fetchAllCategories() {
+    public List<Category> getAllCategories() {
 
         CategoryDAO categoryDAO = new CategoryDAO();
 
         return categoryDAO.getAll();
     }
 
-    private List<VanDescription> fetchVanDescriptions() {
+    public List<VanDescription> getVanDescriptions() {
 
         VanDescriptionDAO vanDescriptionDAO = new VanDescriptionDAO();
 
         return vanDescriptionDAO.getAll();
     }
 
-    private List<Customer> fetchAllCustomers() {
+    public List<Customer> getAllCustomers() {
 
         CustomerDAO customerDAO = new CustomerDAO();
         return customerDAO.getAll();
     }
 
-    private List<Driver> fetchAllDrivers() {
+    public List<Driver> getAllDrivers() {
 
         DriverDAO driverDAO = new DriverDAO();
 
         return driverDAO.getAll();
     }
 
-    private List<Picker> fetchAllPickers() {
+    public List<Picker> getAllPickers() {
         PickerDAO pickerDAO = new PickerDAO();
 
         return pickerDAO.getAll();
     }
 
-    private List<Loader> fetchAllLoaders() {
+    public List<Loader> getAllLoaders() {
         LoaderDAO loaderDAO = new LoaderDAO();
 
         return loaderDAO.getAll();
     }
 
-    private List<Manager> fetchAllManagers() {
+    public List<Manager> getAllManagers() {
         ManagerDAO managerDAO = new ManagerDAO();
 
         return managerDAO.getAll();
     }
 
-    private List<Order> fetchAllOrders() {
+    private List<Order> getAllOrders() {
         OrderDAO orderDAO = new OrderDAO();
 
         return orderDAO.getAll();
     }
 
-    private List<OrderItem> fetchAllOrderItems() {
+    public List<OrderItem> getAllOrderItems() {
         OrderItemDAO orderItemDAO = new OrderItemDAO();
 
         return orderItemDAO.getAll();
     }
 
-    private List<BoxDescription> fetchAllBoxDescriptions() {
+    public List<BoxDescription> getAllBoxDescriptions() {
 
         BoxDescriptionDAO boxDescriptionDAO = new BoxDescriptionDAO();
 
@@ -120,7 +121,7 @@ public class Inventory {
 
     }
 
-    private Map<TimeSlots, List<Order>> fetchAllOrdersMap() {
+    public Map<TimeSlots, List<Order>> getAllOrdersMap() {
         Map<TimeSlots, List<Order>> orderMap = new TreeMap<>();
 
         // populate the map with timeslots and empty lists
@@ -130,9 +131,8 @@ public class Inventory {
         }
 
         // populate the treemap with orders
-        // TODO: check that treemap is ordered correctly by timeslots
         for (Order order :
-                this.fetchAllOrders()) {
+                this.getAllOrders()) {
             switch (order.getTimeSlot()) {
                 case NINE_TWELVE:
                     orderMap.get(TimeSlots.NINE_TWELVE).add(order);
@@ -156,8 +156,10 @@ public class Inventory {
     // public methods for getting random selection from list
     public Category getRandomCategory() {
 
+        List<Category> categoryList = this.getAllCategories();
+
         // pick a random number ranging from 1 to category length
-        int categoryLength = this.categoryList.size();
+        int categoryLength = categoryList.size();
         Random random = new Random();
 
         // return category with randomly chosen index
@@ -166,21 +168,21 @@ public class Inventory {
     }
 
     public Customer getRandomCustomer() {
-
+        List<Customer> customerList = getAllCustomers();
         // pick a random number ranging from 1 to customer length
-        int customerListLength = this.customerList.size();
+        int customerListLength = customerList.size();
         Random random = new Random();
         int ranCustomerIndex = random.nextInt(customerListLength);
 
         // return customer with randomly chosen index
-        return this.customerList.get(ranCustomerIndex);
+        return customerList.get(ranCustomerIndex);
     }
 
     public Double getLargestSizeBox() {
 
         // returns box with largest volume
 
-        List<BoxDescription> boxDescriptionList = this.getBoxDescriptionList();
+        List<BoxDescription> boxDescriptionList = this.getAllBoxDescriptions();
 
         List<Double> volumes = new ArrayList<>();
         for (BoxDescription box :
@@ -192,10 +194,12 @@ public class Inventory {
 
     // return a sorted list by volume, descending order
     public List<Double> getAllBoxVolumesSorted() {
+        List<BoxDescription> boxDescriptionList = this.getAllBoxDescriptions();
+
         List<Double> boxVolumes = new ArrayList<>();
 
         for (BoxDescription boxdesc :
-                this.boxDescriptionList) {
+                boxDescriptionList) {
             boxVolumes.add(boxdesc.getVolume());
         }
         Collections.sort(boxVolumes);
@@ -210,55 +214,8 @@ public class Inventory {
         return boxDescriptionDAO.getBoxDescriptionFromVol(boxVolToUse);
     }
 
-    // getters
-    public List<Customer> getCustomerList() {
-        return customerList;
-    }
-
-    public List<BoxDescription> getBoxDescriptionList() {
-        return boxDescriptionList;
-    }
-
-    public List<VanDescription> getVanDescriptionList() {
-        return vanDescriptionList;
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public Map<TimeSlots, List<Order>> getOrders() {
-        return orders;
-    }
-
-    public List<Category> getCategoryList() {
-        return categoryList;
-    }
-
-
-    public List<Loader> getLoaderList() {
-        return loaderList;
-    }
-
-    public List<Driver> getDriverList() {
-        return driverList;
-    }
-
-    public List<Picker> getPickerList() {
-        return pickerList;
-    }
-
-    public List<Manager> getManagerList() {
-        return managerList;
-    }
-
-    public List<Van> getAllVans() {
-        return allVans;
-    }
-
-
     public static void main(String[] args) {
         Inventory inventory = new Inventory();
-        System.out.println(inventory.fetchVanDescriptions());
+
     }
 }
