@@ -24,7 +24,6 @@ public class OrderGenerator {
         this.allOrderItems = new ArrayList<>();
 
 
-
     }
 
     public List<Order> getOrders() {
@@ -33,7 +32,7 @@ public class OrderGenerator {
 
     public void generateOrders() {
 
-         List<OrderItem> orderItems;
+        List<OrderItem> orderItems;
 
         // generate 100 orders
         for (int i = 0; i < total_orders; i++) {
@@ -53,7 +52,7 @@ public class OrderGenerator {
                 Category randomCategory = inventory.getRandomCategory();
                 OrderItem item = new OrderItem(order_id, randomCategory);
                 orderItems.add(item);
-                allOrderItems.add(item);
+                this.allOrderItems.add(item);
 
             }
 
@@ -66,7 +65,8 @@ public class OrderGenerator {
 
 
     }
-    private void saveToDatabase(){
+
+    private void saveToDatabase() {
         OrderDAO orderDAO = new OrderDAO();
         orderDAO.insertAll(this.orders);
 
@@ -78,9 +78,11 @@ public class OrderGenerator {
         OrderGenerator gen = new OrderGenerator();
         gen.generateOrders();
         List<Order> or = gen.getOrders();
-        for (Order order :
-                or) {
-            System.out.println(order);
-        }
+        System.out.println(gen.getOrders().size());
+       // gen.saveToDatabase();
+//        for (Order order :
+//                or) {
+//            System.out.println(order);
+//        }
     }
 }
