@@ -121,7 +121,7 @@ public class OrderItemDAO extends ConnectionFactory implements GenericDAO<OrderI
     public List<OrderItem> getAll() {
         String sql = "SELECT * FROM Order_Item";
         List<OrderItem> orderitemlist = new ArrayList<>();
-        CategoryDAO category = null;
+        CategoryDAO category = new CategoryDAO();
 
         try (Connection ALL = this.connect();
              Statement stmt  = ALL.createStatement();
