@@ -2,26 +2,32 @@ package delivery.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class BoxContentReportGenerator {
+public class BoxContentListGenerator {
 
     private final ReportGenerator reportGenerator;
     private Inventory inventory = new Inventory();
     // box id
     private int boxID;
-    private List<Box> boxList;
+    private Map<TimeSlots, List<Box>> timeslotBoxMap;
     private final List<Double> boxVolumes;
     private int boxVolumesIndex;
     private int orderItemsIndex;
     private double totalOrderVolume;
     private double boxesCostPerOrder;
     private double boxVolRemaining;
+    private final int NUMOFVANS = 6;
+    private final int ORDERS_PER_VAN = 8;
+    // max orders per van is 9
+    private final int MAX_ORDERS_IN_TIMESLOT = ORDERS_PER_VAN * NUMOFVANS;
 
-    public BoxContentReportGenerator(ReportGenerator reportGenerator) {
+    public BoxContentListGenerator(ReportGenerator reportGenerator) {
 
         this.reportGenerator = reportGenerator;
         this.boxID = 1;
-        this.boxList = new ArrayList<>();
+        this.timeslotBoxMap = populateTimeSlotBoxMap();
 
         // allBoxSizes Sorted descending , starting with largest box size
         this.boxVolumes = inventory.getAllBoxVolumesSorted();
@@ -29,12 +35,19 @@ public class BoxContentReportGenerator {
 
     }
 
-    public List<Box> generateBoxContentList() {
+    private Map<TimeSlots, List<Box>> populateTimeSlotBoxMap(){
+        Map<TimeSlots, List<Box>> timeslotBoxMap = new TreeMap<>();
+        for (TimeSlots timeslot :
+                TimeSlots.values()) {
+            timeslotBoxMap.put(timeslot, new ArrayList<>());
+        }
+        return timeslotBoxMap;
+    }
 
-        int numOfVans = 6;
 
-        // max orders per van is 9
-        int timeslotMaxOrders = 9 * numOfVans;
+    public Map<TimeSlots, List<Box>> generateBoxContentList() {
+
+
 
         // loop over all time slots
         for (TimeSlots timeslot :
@@ -44,17 +57,17 @@ public class BoxContentReportGenerator {
             List<Order> timeslotOrders = inventory.getAllOrdersMap().get(timeslot);
 
             // defer extra orders to unaccomodated list
-            deferExtraOrders(timeslotMaxOrders, timeslotOrders);
+            deferExtraOrders(MAX_ORDERS_IN_TIMESLOT, timeslotOrders);
 
             // loop over array of orders for curr timeslot
             // here we try to fill boxes with order items for each order
-            fillOrderItemsInBox(timeslotOrders);
+            fillOrderItemsInBox(timeslotOrders, timeslot);
 
         }
-        return boxList;
+        return timeslotBoxMap;
     }
 
-    private void fillOrderItemsInBox(List<Order> timeslotOrders) {
+    private void fillOrderItemsInBox(List<Order> timeslotOrders, TimeSlots timeSlot) {
         // looping over each order
         for (Order order :
                 timeslotOrders) {
@@ -62,20 +75,19 @@ public class BoxContentReportGenerator {
             // order items descending by item volume
             List<OrderItem> orderItemsSortedByVolume = order.getItemsSortedDesc();
 
-            totalOrderVolume = getTotalOrderVolume(order);
+            totalOrderVolume = order.getTotalOrderVolume();
 
             // fills order items in boxes
-            fillAllOrderItems(orderItemsSortedByVolume);
-            System.out.println("Delivery fee: "+boxesCostPerOrder + "\n Order Type: "+order.getOrderType().toString());
-            // set delivery fee for order
+            fillAllOrderItems(orderItemsSortedByVolume, timeSlot);
+
+            // set delivery fee for order and update db with order fee
             order.setDeliveryFee(boxesCostPerOrder);
-            System.out.println("Fee after discount: "+order.getDeliveryFee());
-            System.out.println();
+            inventory.setOrderDeliveryFee(order.getId(), order.getDeliveryFee());
 
         }
     }
 
-    private void fillAllOrderItems(List<OrderItem> orderItemsSortedByVolume) {
+    private void fillAllOrderItems(List<OrderItem> orderItemsSortedByVolume, TimeSlots timeSlot) {
 
         // refactor this method further,
         // method to return the suitable box volume
@@ -94,7 +106,7 @@ public class BoxContentReportGenerator {
             boxVolRemaining = getBoxVol(totalOrderVolume);
 
             // fills a box with items
-            fillBoxWithItems(orderItemsSortedByVolume);
+            fillBoxWithItems(orderItemsSortedByVolume, timeSlot);
 
             this.boxVolumesIndex = 0;
         }
@@ -117,11 +129,11 @@ public class BoxContentReportGenerator {
 
     }
 
-    private void fillBoxWithItems(List<OrderItem> orderItemsSortedByVolume) {
+    private void fillBoxWithItems(List<OrderItem> orderItemsSortedByVolume, TimeSlots timeSlots) {
 
         Box box = new Box(boxID, inventory.getBoxDescriptionFromVolume(boxVolRemaining));
         // creating and adding box to list
-        boxList.add(box);
+        timeslotBoxMap.get(timeSlots).add(box);
         boxID++;
 
         boxesCostPerOrder+= inventory.getBoxDescriptionFromVolume(boxVolRemaining).getBoxRate();
@@ -143,15 +155,7 @@ public class BoxContentReportGenerator {
 
     }
 
-    private double getTotalOrderVolume(Order order) {
-        // get total volume of order
-        double orderVolume = 0;
-        for (OrderItem item :
-                order.getItems()) {
-            orderVolume += item.getCategory().getVolume();
-        }
-        return orderVolume;
-    }
+
 
     private void deferExtraOrders(int timeslotMaxOrders, List<Order> orders) {
         int timeslotOrders = orders.size();
@@ -161,7 +165,9 @@ public class BoxContentReportGenerator {
 
 
             for (int i = timeslotOrders; i > timeslotOrders - numOfExtraOrders; i--) {
-                reportGenerator.getUnaccommodatedOrders().add(orders.remove(i));
+                Order orderToRemove = orders.remove(i - 1);
+                reportGenerator.getUnaccommodatedOrders().put(orderToRemove.getId(), new ArrayList<>());
+
             }
         }
     }
