@@ -121,6 +121,34 @@ public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
         return order;
     }
 
+    public void setDeliveryFeeByID(int orderID, double deliveryFee){
+        String sql = "UPDATE \"Order\" SET Delivery_Fee = ? WHERE ID = ?";
+
+        try (Connection One = this.connect();
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setDouble(1, deliveryFee);
+            pstmt.setInt(2, orderID);
+
+            pstmt.executeUpdate();
+
+            // loop through the result set
+//            while (rs.next()) {
+//                order = new Order(
+//                        rs.getInt("ID"),
+//                        Customer.getById(rs.getInt("Customer_ID")),
+//                        OrderType.valueOf(rs.getString("Order_Type")),
+//                        TimeSlots.valueOf(rs.getString("Time_Slot")),
+//                        orderItemDAO.getOrderItemsByOrderId(pk)
+//                );
+//
+//            }
+            closeConnection(One);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     @Override
     public List<Order> getAll() {
         String sql = "SELECT * FROM \"Order\"";
@@ -168,4 +196,5 @@ public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
             System.out.println(e.getMessage());
         }
     }
+
 }
