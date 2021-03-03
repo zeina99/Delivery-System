@@ -1,6 +1,5 @@
 package delivery.domain;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,12 +28,30 @@ public class Order {
         this.items = items;
     }
 
-    // TODO: set delivery fee when order items are added to boxes
-    public Double setDeliveryFee(double deliveryFee) {
-        // if order type is STORE, apply discount, else no discount
-        return this.deliveryFee =  OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
+    public Order(int id, Customer customer, OrderType orderType, TimeSlots timeSlot, List<OrderItem> items, double deliveryFee) {
+        this.id =id;
+        this.customer = customer;
+        this.orderType = orderType;
+        this.timeSlot = timeSlot;
+        this.items = items;
+        this.deliveryFee = deliveryFee;
     }
 
+    // TODO: set delivery fee when order items are added to boxes
+    public void setDeliveryFee(double deliveryFee) {
+        // if order type is STORE, apply discount, else no discount
+        this.deliveryFee = OrderType.STORE == this.orderType ? deliveryFee * 0.85 : deliveryFee;
+    }
+    public double getTotalOrderVolume() {
+        // get total volume of order
+        double orderVolume = 0;
+        for (OrderItem item :
+                items) {
+            orderVolume += item.getCategory().getVolume();
+
+        }
+        return orderVolume;
+    }
     public double getDeliveryFee() {
         return deliveryFee;
     }

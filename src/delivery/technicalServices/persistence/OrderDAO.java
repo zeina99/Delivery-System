@@ -109,7 +109,9 @@ public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
                         Customer.getById(rs.getInt("Customer_ID")),
                         OrderType.valueOf(rs.getString("Order_Type")),
                         TimeSlots.valueOf(rs.getString("Time_Slot")),
-                        orderItemDAO.getOrderItemsByOrderId(pk)
+                        orderItemDAO.getOrderItemsByOrderId(pk),
+                        rs.getDouble("Delivery_Fee")
+
                 );
 
             }
