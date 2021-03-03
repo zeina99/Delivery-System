@@ -1,0 +1,238 @@
+Unaccommodated Orders: 
+Order ID: 64 - All Items - 
+Order ID: 65
+    - Box ID: 280
+        - Item ID: 565, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 568, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 566, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 569, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 572, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 570, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 573, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 567, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 562, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 563, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 571, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 68
+    - Box ID: 286
+        - Item ID: 597, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 594, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 595, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 596, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 598, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 599, Category: Category{id=7, type='Arts', volume=10.0}
+Order ID: 73
+    - Box ID: 290
+        - Item ID: 657, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 656, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 652, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 659, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 660, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 651, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 661, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 655, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 654, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 658, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 74 - All Items - 
+Order ID: 77
+    - Box ID: 139
+        - Item ID: 682, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 679, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 688, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 684, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 685, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 683, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 686, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 78
+    - Box ID: 296
+        - Item ID: 691, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 694, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 697, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 693, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 696, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 699, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 690, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 692, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 695, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 698, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 700, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 79
+    - Box ID: 141
+        - Item ID: 708, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 709, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 705, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 707, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 704, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 706, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 80
+    - Box ID: 299
+        - Item ID: 713, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 712, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 710, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 82
+    - Box ID: 144
+        - Item ID: 725, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 726, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 727, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 723, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 729, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 83
+    - Box ID: 63
+        - Item ID: 730, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 731, Category: Category{id=4, type='Handmade Items', volume=1.0}
+Order ID: 84
+    - Box ID: 65
+        - Item ID: 735, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 740, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 743, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 734, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 741, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 742, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 737, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 738, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 739, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 744, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 85
+    - Box ID: 301
+        - Item ID: 747, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 748, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 753, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 755, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 749, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 752, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 754, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 745, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 746, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 751, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 750, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 86
+    - Box ID: 146
+        - Item ID: 758, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 757, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 759, Category: Category{id=6, type='Personal Care', volume=3.0}
+Order ID: 87
+    - Box ID: 68
+        - Item ID: 768, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 766, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 765, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 764, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 769, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 770, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 771, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 772, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 761, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 762, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 763, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 88
+    - Box ID: 305
+        - Item ID: 786, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 775, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 783, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 785, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 773, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 780, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 781, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 779, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 774, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 784, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 777, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 778, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 782, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 89
+    - Box ID: 72
+        - Item ID: 791, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 787, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 789, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 91
+    - Box ID: 204
+        - Item ID: 807, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 812, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 806, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 805, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 808, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 810, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 811, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 92 - All Items - 
+Order ID: 93
+    - Box ID: 311
+        - Item ID: 824, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 814, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 817, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 818, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 823, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 816, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 821, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 815, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 825, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 819, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 822, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 826, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 94
+    - Box ID: 74
+        - Item ID: 836, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 839, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 827, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 831, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 837, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 832, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 828, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 829, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 830, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 834, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 835, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 838, Category: Category{id=4, type='Handmade Items', volume=1.0}
+Order ID: 95 - All Items - 
+Order ID: 96 - All Items - 
+Order ID: 97 - All Items - 
+Order ID: 98 - All Items - 
+Order ID: 99
+    - Box ID: 317
+        - Item ID: 845, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 847, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 854, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 855, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 846, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 848, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 849, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 850, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 852, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 853, Category: Category{id=4, type='Handmade Items', volume=1.0}
+Order ID: 100
+    - Box ID: 320
+        - Item ID: 856, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 860, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 861, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 857, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 859, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 52
+    - Box ID: 265
+        - Item ID: 448, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 450, Category: Category{id=7, type='Arts', volume=10.0}
+        - Item ID: 451, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 449, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 442, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 53 - All Items - 
+Order ID: 59
+    - Box ID: 268
+        - Item ID: 512, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 510, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 511, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 515, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 514, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 517, Category: Category{id=4, type='Handmade Items', volume=1.0}
+        - Item ID: 513, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 518, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 60
+    - Box ID: 271
+        - Item ID: 522, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 526, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 527, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 530, Category: Category{id=5, type='Toys', volume=37.0}
+        - Item ID: 520, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 524, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 528, Category: Category{id=2, type='Outdoor House Items', volume=20.0}
+        - Item ID: 529, Category: Category{id=3, type='Sports', volume=13.0}
+        - Item ID: 523, Category: Category{id=6, type='Personal Care', volume=3.0}
+        - Item ID: 519, Category: Category{id=1, type='Books', volume=0.5}
+        - Item ID: 525, Category: Category{id=1, type='Books', volume=0.5}
+Order ID: 63 - All Items - 
