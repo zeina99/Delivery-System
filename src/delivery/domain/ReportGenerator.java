@@ -16,6 +16,8 @@ public class ReportGenerator {
     private Inventory inventory = new Inventory();
     Map<TimeSlots, List<Van>> vanLoadingMap;
 
+
+
     public ReportGenerator() {
 
         this.customerList = new ArrayList<>();
@@ -55,6 +57,20 @@ public class ReportGenerator {
 
 
     }
+    public void generateRevenueReport(){
+        double dayRevenueTotal;
+        DayRevenue dayRevenue = new DayRevenue(this, vanLoadingMap);
+
+        dayRevenueTotal =dayRevenue.getRevenueForTheDay();
+
+        try (FileWriter revenueWrite = new FileWriter(new File("Reports", "Revenue.txt"))){
+
+            revenueWrite.write(String.format("Revenue for the day: %.3f", dayRevenueTotal));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void generateBoxContentReport() {
 
@@ -90,15 +106,12 @@ public class ReportGenerator {
 
     }
 
-    public void generateRevenueReport() {
-
-
-
-    }
-
     public void generateUnaccommodatedReport() {
+
         try (FileWriter unaccomodatedListWriter = new FileWriter(new File("Reports", "Unaccomodated Orders.txt"))) {
+
             unaccomodatedListWriter.write("Unaccommodated Orders: \n");
+
             for (Map.Entry<Integer, List<Box>> order :
                     unaccommodatedOrders.entrySet()) {
 
@@ -130,19 +143,63 @@ public class ReportGenerator {
     }
 
     public void generateVanScheduleReport() {
-
+        try (FileWriter vanScheduleWriter = new FileWriter(new File("Reports", "Van Schedule.txt"))) {
+            for (TimeSlots timeslot :
+                    vanLoadingMap.keySet()) {
+                List<Van> vanList = vanLoadingMap.get(timeslot);
+                vanScheduleWriter.write(String.format("Time slot: %s\n", timeslot));
+                for (Van van :
+                        vanList) {
+                    String timings = getVanArrivalLeavingTime(timeslot);
+                    String[] arrivalLeaving = timings.split("-");
+                    vanScheduleWriter.write(String.format("Van ID: %d\n", van.getId()));
+                    vanScheduleWriter.write(String.format("    - Arrival time: %s\n    - Leaving time: %s\n", arrivalLeaving[0], arrivalLeaving[1]));
+                    vanScheduleWriter.write(String.format("Assigned to: %s\n\n", inventory.getDriverById(van.getDriver_id())));
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private String getVanArrivalLeavingTime(TimeSlots timeslot) {
+        String timings;
+        switch (timeslot){
+            case NINE_TWELVE:
+                timings = "8:50-11:40";
+                break;
+            case TWELVE_THREE:
+                timings = "11:50-2:40";
+                break;
+            case THREE_SIX:
+                timings = "2:50-5:40";
+                break;
+            case SIX_NINE:
+                timings = "5:50-9";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + timeslot);
+        }
+        return timings;
+    }
+
 
     public static void main(String[] args) {
         ReportGenerator reportGenerator = new ReportGenerator();
         reportGenerator.generateBoxContentReport();
         reportGenerator.generateVanLoadingReport();
         reportGenerator.generateUnaccommodatedReport();
+        reportGenerator.generateRevenueReport();
+        reportGenerator.generateVanScheduleReport();
 //        System.out.println(reportGenerator.getUnaccommodatedOrders());
     }
 
     public Map<TimeSlots, List<Box>> getBoxMap() {
         return boxMap;
+    }
+    public Map<TimeSlots, List<Van>> getVanLoadingMap() {
+        return vanLoadingMap;
     }
 
     public Map<TimeSlots, List<Order>> getOrderMap() {

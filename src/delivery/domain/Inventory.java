@@ -231,4 +231,14 @@ public class Inventory {
         OrderDAO orderDAO = new OrderDAO();
         return orderDAO.getById(orderID);
     }
+
+    public void setOrderDeliveryFee(int id, double deliveryFee) {
+        OrderDAO orderDAO = new OrderDAO();
+        orderDAO.setDeliveryFeeByID(id, deliveryFee);
+    }
+
+    public Driver getDriverById(int driver_id) {
+        DriverDAO driverDAO = new DriverDAO();
+        return driverDAO.getById(driver_id);
+    }
 }
