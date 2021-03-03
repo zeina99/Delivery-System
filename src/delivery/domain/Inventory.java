@@ -3,6 +3,7 @@ package delivery.domain;
 import delivery.technicalServices.persistence.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Inventory {
 
@@ -193,6 +194,7 @@ public class Inventory {
     }
 
     // return a sorted list by volume, descending order
+    // TODO: make this return BoxDesc objects sorted
     public List<Double> getAllBoxVolumesSorted() {
         List<BoxDescription> boxDescriptionList = this.getAllBoxDescriptions();
 
@@ -214,8 +216,19 @@ public class Inventory {
         return boxDescriptionDAO.getBoxDescriptionFromVol(boxVolToUse);
     }
 
-    public static void main(String[] args) {
-        Inventory inventory = new Inventory();
 
+
+    public List<Van> getAllVansSortedByVolume() {
+        List<Van> vanList = getAllVans();
+
+        Collections.sort(vanList);
+        Collections.reverse(vanList);
+
+        return vanList;
+    }
+
+    public Order getOrderByID(int orderID) {
+        OrderDAO orderDAO = new OrderDAO();
+        return orderDAO.getById(orderID);
     }
 }
