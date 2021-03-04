@@ -38,7 +38,10 @@ public class ManagerDb extends JFrame {
 
         // i dont get the issue here
         // Initializing the JTable
-        EmployeeTbl(data, columnNames);// why is this not working
+        EmployeeTbl = new JTable(data, columnNames); // why is this not working
+
+//        EmployeeTbl.addColumn(new TableColumn().columnNames);
+
         EmployeeTbl.setBounds(30, 40, 200, 300);
 
 // gotta fix above issue to add shit to buttons

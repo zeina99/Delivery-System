@@ -25,7 +25,7 @@ public class ViewReport extends JFrame{
             public void inputMethodTextChanged(InputMethodEvent inputMethodEvent) {
                 // if driver read this file
                 //else if read this file etc
-                readFile(); // read file (Add some file to read)
+                //readFile(); // read file (Add some file to read)
             }
 
             @Override
@@ -49,7 +49,11 @@ public class ViewReport extends JFrame{
             e.printStackTrace();
         } finally {
             if(reader != null){
-                reader.close();
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return content;

@@ -1,10 +1,12 @@
 package delivery.UI.swing;
 
 import delivery.domain.SystemController;
+
 import javax.swing.*;
 
 public class Main {
     // initialize the controller from domain layer
+    // then in the main Jframe (start page) initialization pass in the controller object
     SystemController controller = new SystemController();
 
     public static void main(String[] args) {
@@ -12,7 +14,6 @@ public class Main {
         JFrame login = new Login("Login");
         login.setSize(400, 700);
         login.setVisible(true);
-        // then in the main Jframe (start page) initialization pass in the controller object
 
         JFrame ManCh = new ManagerChoice("Manager Choice");
         ManCh.setSize(400,700);

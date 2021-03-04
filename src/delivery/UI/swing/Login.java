@@ -35,16 +35,16 @@ public class Login extends JFrame {
                 if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
                     if (UserDropDown.getSelectedItem().equals("Driver"))
                         // why is this thinking im trying to equate string to int
-                        correctPIN = "123";
+                        correctPIN = 123;
 
                     else if (UserDropDown.getSelectedItem().equals("Loader"))
-                        correctPIN = "456";
+                        correctPIN = 456;
 
                     else if (UserDropDown.getSelectedItem().equals("Picker"))
-                        correctPIN = "789";
+                        correctPIN = 789;
 
                     else if (UserDropDown.getSelectedItem().equals("Manager"))
-                        correctPIN = "101";
+                        correctPIN = 101;
                 }
             }
         });
@@ -52,13 +52,26 @@ public class Login extends JFrame {
         loginbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int pswrd = password.getText();
+
+               // user did not enter a password
+                if (password.getText().equals("")){
+                    JOptionPane.showMessageDialog(panel1, "Enter a password");
+
+                }
+                // user entered a password
+                else  {
+                     int pswrd = Integer.parseInt(password.getText());
+
+                    if (pswrd == correctPIN) {
+                        JOptionPane.showMessageDialog(panel1, "you have logged in");
+                    } else
+                        JOptionPane.showMessageDialog(panel1, "Wrong password");
+                }
+                }
+
                 // why is it always false wth
-                if (pswrd == correctPIN) {
-                    JOptionPane.showMessageDialog(panel1, "you have logged in");
-                } else
-                    JOptionPane.showMessageDialog(panel1, "you have not logged in");
-            }
+
+
         });
     }
 

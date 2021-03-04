@@ -15,25 +15,41 @@ public class ManagerChoice extends JFrame  {
 
     public ManagerChoice(String title) {
         super(title);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ManagerChoicePanel);
+        this.pack();
     }
 
     public ManagerChoice() {
         EmpDbBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                this.dispose;
+                dispose();
                 //ManagerDb lol = new ManagerDb();  // wtf does it want in here what argument in the brackets omg
                 //lol.setVisible(true); // added this just to see if initializing was prob
-                new ManagerDb().setVisible(true);
+                new ManagerDb("Manage Employee Data").setVisible(true);
             }
+
+
         });
         ViewReportbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                this.dispose; // find why dispose isnt working
-                new ViewReport().setVisible(true);
+                dispose(); // find why dispose isnt working
+                new ViewReport("View report").setVisible(true);
             }
+        });
+
+        ViewRevbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
+                //ManagerDb lol = new ManagerDb();  // wtf does it want in here what argument in the brackets omg
+                //lol.setVisible(true); // added this just to see if initializing was prob
+                new ManagerDb("Revenue Data").setVisible(true);
+            }
+
+
         });
     }
 }
