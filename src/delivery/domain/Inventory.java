@@ -3,49 +3,14 @@ package delivery.domain;
 import delivery.technicalServices.persistence.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Inventory {
 
-//    private List<Van> allVans;
-//    private List<VanDescription> vanDescriptionList;
-//    private List<Customer> customerList;
-//
-//    private List<BoxDescription> boxDescriptionList;
-//    private List<Category> categoryList;
-//
-//    // employees
-//    private List<Loader> loaderList;
-//    private List<Driver> driverList;
-//    private List<Picker> pickerList;
-//    private List<Manager> managerList;
-//
-//    // orders and orderitems
-//    private Map<TimeSlots, List<Order>> orders;
-//    private List<OrderItem> orderItems;
 
-//  remove fetch functions??? and make DAO calls in each get method? or leave as is since all calls will be done once program is started.
+    //  remove fetch functions??? and make DAO calls in each get method? or leave as is since all calls will be done once program is started.
     // but this might cause memory issues, incase of large data -- dont want to keep the whole database in memory!!!!
     public Inventory() {
 
-        // vans
-//        this.allVans = getAllVans();
-//        this.vanDescriptionList = getVanDescriptions();
-//
-//        // box description
-//        this.boxDescriptionList = getAllBoxDescriptions();
-//
-//        // orders, categories, customers
-//        this.orders = getAllOrdersMap();
-//        this.orderItems = getAllOrderItems();
-//        this.categoryList = getAllCategories();
-//        this.customerList = getAllCustomers();
-//
-//        // employees
-//        this.loaderList = getAllLoaders();
-//        this.managerList = getAllManagers();
-//        this.pickerList = getAllPickers();
-//        this.driverList = getAllDrivers();
     }
 
     // fetching from DAO classes
@@ -217,7 +182,6 @@ public class Inventory {
     }
 
 
-
     public List<Van> getAllVansSortedByVolume() {
         List<Van> vanList = getAllVans();
 
@@ -241,4 +205,62 @@ public class Inventory {
         DriverDAO driverDAO = new DriverDAO();
         return driverDAO.getById(driver_id);
     }
+
+    public void manageEmployee(String actionToDo, Employee employee) {
+
+
+        boolean isInstanceOfDriver = employee instanceof Driver;
+        boolean isInstanceOfPicker = employee instanceof Picker;
+        boolean isInstanceOfLoader = employee instanceof Loader;
+        boolean isInstanceOfManager = employee instanceof Manager;
+
+        DriverDAO driverDAO = new DriverDAO();
+        LoaderDAO loaderDAO = new LoaderDAO();
+        PickerDAO pickerDAO = new PickerDAO();
+        ManagerDAO managerDAO = new ManagerDAO();
+
+
+        switch (actionToDo) {
+
+            case "insert":
+                if (isInstanceOfDriver) {
+                    driverDAO.insert((Driver) employee);
+                } else if (isInstanceOfLoader) {
+                    loaderDAO.insert((Loader) employee);
+                } else if (isInstanceOfPicker) {
+                    pickerDAO.insert((Picker) employee);
+                } else if (isInstanceOfManager) {
+                    managerDAO.insert((Manager) employee);
+                }
+                break;
+
+            case "update":
+                if (isInstanceOfDriver) {
+                    driverDAO.update((Driver) employee);
+                } else if (isInstanceOfLoader) {
+                    loaderDAO.update((Loader) employee);
+                } else if (isInstanceOfPicker) {
+                    pickerDAO.update((Picker) employee);
+                } else if (isInstanceOfManager) {
+                    managerDAO.update((Manager) employee);
+                }
+                break;
+
+            case "delete":
+                if (isInstanceOfDriver) {
+                    driverDAO.delete(employee.getId());
+                } else if (isInstanceOfLoader) {
+                    loaderDAO.delete(employee.getId());
+                } else if (isInstanceOfPicker) {
+                    pickerDAO.delete(employee.getId());
+                } else {
+                    managerDAO.delete(employee.getId());
+                }
+                break;
+
+        }
+
+    }
+
+
 }
