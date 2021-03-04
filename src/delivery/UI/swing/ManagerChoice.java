@@ -5,10 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// this class should let the manager choose between reading report or viewing db
+
 public class ManagerChoice extends JFrame  {
     private JButton EmpDbBtn;
     private JPanel ManagerChoicePanel;
     private JButton ViewReportbtn;
+    private JButton ViewRevbtn;
 
     public ManagerChoice(String title) {
         super(title);

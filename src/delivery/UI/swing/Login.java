@@ -33,16 +33,17 @@ public class Login extends JFrame {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
                 if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
-                    if (UserDropDown.getSelectedItem().toString().equals("Driver"))
+                    if (UserDropDown.getSelectedItem().equals("Driver"))
+                        // why is this thinking im trying to equate string to int
                         correctPIN = "123";
 
-                    else if (UserDropDown.getSelectedItem().toString().equals("Loader"))
+                    else if (UserDropDown.getSelectedItem().equals("Loader"))
                         correctPIN = "456";
 
-                    else if (UserDropDown.getSelectedItem().toString().equals("Picker"))
+                    else if (UserDropDown.getSelectedItem().equals("Picker"))
                         correctPIN = "789";
 
-                    else if (UserDropDown.getSelectedItem().toString().equals("Manager"))
+                    else if (UserDropDown.getSelectedItem().equals("Manager"))
                         correctPIN = "101";
                 }
             }
@@ -52,8 +53,8 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int pswrd = password.getText();
-
-                if (pswrd.equals(correctPIN)) {
+                // why is it always false wth
+                if (pswrd == correctPIN) {
                     JOptionPane.showMessageDialog(panel1, "you have logged in");
                 } else
                     JOptionPane.showMessageDialog(panel1, "you have not logged in");
