@@ -1,17 +1,20 @@
 package delivery.UI.swing;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class Login extends JFrame {
     private JPanel panel1;
     private JPasswordField password;
-    private JTextField username;
     private JButton loginbtn;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JLabel loginLabel;
-    //private JOptionPane feedback;
+    private JComboBox UserDropDown;
+    private int correctPIN;
 
     public Login(String title) {
         super(title);
@@ -20,24 +23,42 @@ public class Login extends JFrame {
         this.setContentPane(panel1);
         this.pack();
 
+
+        UserDropDown.addItem("Driver");
+        UserDropDown.addItem("Loader");
+        UserDropDown.addItem("Picker");
+        UserDropDown.addItem("Manager");
+
+        UserDropDown.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+                    if (UserDropDown.getSelectedItem().toString().equals("Driver"))
+                        correctPIN = "123";
+
+                    else if (UserDropDown.getSelectedItem().toString().equals("Loader"))
+                        correctPIN = "456";
+
+                    else if (UserDropDown.getSelectedItem().toString().equals("Picker"))
+                        correctPIN = "789";
+
+                    else if (UserDropDown.getSelectedItem().toString().equals("Manager"))
+                        correctPIN = "101";
+                }
+            }
+        });
+
         loginbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String uname = username.getText();
-                String pswrd = password.getText();
+                int pswrd = password.getText();
 
-                if (uname.equals("name") && pswrd.equals("password")) {
+                if (pswrd.equals(correctPIN)) {
                     JOptionPane.showMessageDialog(panel1, "you have logged in");
                 } else
                     JOptionPane.showMessageDialog(panel1, "you have not logged in");
             }
         });
     }
-/*
-    public static void main(String[] args) {
-        JFrame login = new LogIn("Login");
-        login.setSize(400, 700);
-        login.setVisible(true);
-    }
-*/
+
 }
