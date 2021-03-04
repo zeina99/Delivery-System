@@ -1,7 +1,6 @@
 package delivery.UI.swing;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +9,7 @@ import java.awt.event.ActionListener;
 public class ManagerChoice extends JFrame  {
     private JButton EmpDbBtn;
     private JPanel ManagerChoicePanel;
-    private JButton ViewReportbtn;
+    private JButton viewUnaccomoatedReportButton;
     private JButton ViewRevbtn;
 
     public ManagerChoice(String title) {
@@ -18,9 +17,7 @@ public class ManagerChoice extends JFrame  {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ManagerChoicePanel);
         this.pack();
-    }
 
-    public ManagerChoice() {
         EmpDbBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -32,11 +29,14 @@ public class ManagerChoice extends JFrame  {
 
 
         });
-        ViewReportbtn.addActionListener(new ActionListener() {
+        viewUnaccomoatedReportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose(); // find why dispose isnt working
-                new ViewReport("View report").setVisible(true);
+                ViewReport viewReport = new ViewReport("View report", "Manager");
+                viewReport.setVisible(true);
+                viewReport.setSize(400, 500);
+
             }
         });
 
@@ -46,7 +46,11 @@ public class ManagerChoice extends JFrame  {
                 dispose();
                 //ManagerDb lol = new ManagerDb();  // wtf does it want in here what argument in the brackets omg
                 //lol.setVisible(true); // added this just to see if initializing was prob
-                new ManagerDb("Revenue Data").setVisible(true);
+                //new ManagerDb("Revenue Data").setVisible(true);
+                ViewReport viewReport = new ViewReport("Revenue Data", "Manager");
+                viewReport.setVisible(true);
+                viewReport.setSize(400, 500);
+
             }
 
 

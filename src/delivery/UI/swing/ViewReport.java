@@ -10,16 +10,19 @@ import java.io.IOException;
 public class ViewReport extends JFrame{
     private JTextArea FileText;
     private JPanel ReportView;
+    private JLabel reportTitle;
     private String content;
+    private String employeeType;
 
 
-
-    public ViewReport(String title) {
+    public ViewReport(String title, String employeeType /*String reportName*/) {
         super(title);
-
+        this.employeeType = employeeType;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ReportView);
         this.pack();
+        this.reportTitle = new JLabel(title);
+
         FileText.addInputMethodListener(new InputMethodListener() {
             @Override
             public void inputMethodTextChanged(InputMethodEvent inputMethodEvent) {

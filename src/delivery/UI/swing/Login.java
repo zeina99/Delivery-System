@@ -1,12 +1,16 @@
 package delivery.UI.swing;
+
+import delivery.domain.SystemController;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Objects;
 
 public class Login extends JFrame {
+    private SystemController systemController;
     private JPanel panel1;
     private JPasswordField password;
     private JButton loginbtn;
@@ -16,9 +20,9 @@ public class Login extends JFrame {
     private JComboBox UserDropDown;
     private int correctPIN;
 
-    public Login(String title) {
+    public Login(String title, SystemController systemController) {
         super(title);
-
+        this.systemController = systemController;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(panel1);
         this.pack();
@@ -53,23 +57,65 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-               // user did not enter a password
-                if (password.getText().equals("")){
+                boolean isValid;
+
+                // user did not enter a password
+                if (password.getText().equals("")) {
                     JOptionPane.showMessageDialog(panel1, "Enter a password");
+
+                    isValid = false;
 
                 }
                 // user entered a password
-                else  {
-                     int pswrd = Integer.parseInt(password.getText());
+                else {
+                    int pswrd = Integer.parseInt(password.getText());
 
                     if (pswrd == correctPIN) {
-                        JOptionPane.showMessageDialog(panel1, "you have logged in");
-                    } else
+
+                        JOptionPane.showMessageDialog(panel1, "you have logged in", "Successful", 1);
+                        isValid = true;
+                    } else {
                         JOptionPane.showMessageDialog(panel1, "Wrong password");
-                }
+                        isValid = false;
+                    }
                 }
 
-                // why is it always false wth
+                if (isValid) {
+                    switch (Objects.requireNonNull(UserDropDown.getSelectedItem()).toString()) {
+                        case "Manager":
+                            dispose();
+                            JFrame ManCh = new ManagerChoice("Manager Choice");
+                            ManCh.setSize(400, 700);
+                            ManCh.setVisible(true);
+                            break;
+
+                        case "Loader":
+                            dispose();
+                            JFrame ReportView = new ViewReport("View Report", "Loader");
+                            ReportView.setSize(400, 700);
+                            ReportView.setVisible(true);
+                            break;
+
+                        case "Picker":
+                            dispose();
+                            ReportView = new ViewReport("View Report", "Picker");
+                            ReportView.setSize(400, 700);
+                            ReportView.setVisible(true);
+                            break;
+
+                        case "Driver":
+                            dispose();
+                            ReportView = new ViewReport("View Report", "Driver");
+                            ReportView.setSize(400, 700);
+                            ReportView.setVisible(true);
+                            break;
+                    }
+                }
+
+
+            }
+
+            // why is it always false wth
 
 
         });

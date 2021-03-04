@@ -1,7 +1,8 @@
 package delivery.UI.swing;
 
+import delivery.domain.Employee;
+
 import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,8 +16,9 @@ public class ManagerDb extends JFrame {
     private JTable EmployeeTbl;
     private JButton Addbtn;
     private JButton Removebtn;
-    private JButton SaveChangesbtn;
+    private JButton deleteBtn;
     private JButton UpdateFields;
+    private JComboBox employeeType;
     //private TableColumn Employee;
 
     public ManagerDb(String title) {
@@ -29,18 +31,17 @@ public class ManagerDb extends JFrame {
 
         // Data to be displayed in the JTable
         String[][] data = {
-            { "Kundan Kumar Jha", "4031", "CSE" },
-            { "Anand Jha", "6014", "IT" }
+                {"Kundan Kumar Jha", "4031", "CSE"},
+                {"Anand Jha", "6014", "IT"}
         };
 
         // Column Names
-        String[] columnNames = { "Name", "Roll Number", "Department" };
+        String[] columnNames = {"Name", "Roll Number", "Department"};
 
         // i dont get the issue here
         // Initializing the JTable
         EmployeeTbl = new JTable(data, columnNames); // why is this not working
 
-//        EmployeeTbl.addColumn(new TableColumn().columnNames);
 
         EmployeeTbl.setBounds(30, 40, 200, 300);
 
@@ -49,15 +50,18 @@ public class ManagerDb extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+                insertEmployee();
+
             }
         });
         Removebtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+
             }
         });
-        SaveChangesbtn.addActionListener(new ActionListener() {
+        deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -66,10 +70,85 @@ public class ManagerDb extends JFrame {
         UpdateFields.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                updateEmployee();
             }
         });
+
+
     }
 
+    private void insertEmployee() {
+
+        JTextField name = new JTextField();
+        JTextField pin = new JTextField();
+
+        Object[] fields = {
+                "Enter a Name: ", name,
+                "Enter a PIN: ", pin
+        };
+
+        int input = JOptionPane.showConfirmDialog(null, fields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+        System.out.println("Name: " + name.getText() + "PIN: " + pin.getText());
+
+        if (input == JOptionPane.OK_OPTION) {
+            //TODO: add methods here
+            switch (employeeType.getSelectedItem().toString()) {
+
+                case "Driver":
+                    System.out.println("Insert Driver to db");
+                    break;
+
+                case "Loader":
+                    System.out.println("Insert Loader to db");
+                    break;
+
+                case "Picker":
+                    System.out.println("Insert Picker to db");
+                    break;
+
+                case "Manager":
+                    System.out.println("Insert Manager to db");
+                    break;
+            }
+        }
+
+    }
+
+    private void updateEmployee() {
+
+        JTextField name = new JTextField();
+        JTextField pin = new JTextField();
+
+        Object[] fields = {
+                "Enter a Name: ", name,
+                "Enter a PIN: ", pin
+        };
+
+        int input = JOptionPane.showConfirmDialog(null, fields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+        System.out.println("Name: " + name.getText() + "PIN: " + pin.getText());
+
+        if (input == JOptionPane.OK_OPTION) {
+
+            switch (employeeType.getSelectedItem().toString()) {
+                //TODO: add methods here
+                case "Driver":
+                    System.out.println("Update Driver to db");
+                    break;
+
+                case "Loader":
+                    System.out.println("Update Loader to db");
+                    break;
+
+                case "Picker":
+                    System.out.println("Update Picker to db");
+                    break;
+
+                case "Manager":
+                    System.out.println("Update Manager to db");
+                    break;
+            }
+        }
+
+    }
 
 }
