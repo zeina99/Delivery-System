@@ -162,4 +162,28 @@ public class ManagerDAO extends ConnectionFactory implements GenericDAO<Manager>
         System.out.println("Updated a row in the database");
         System.out.println("______________________________________");
     }
+
+    public boolean validateManager(int pinEntered) {
+        String sql = "SELECT ID, Name, PIN FROM Manager WHERE PIN = ?";
+
+        boolean doesExist = false;
+        try (Connection One = this.connect();
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setInt(1, pinEntered);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+                doesExist = true;
+
+
+
+            closeConnection(One);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return doesExist;
+    }
 }

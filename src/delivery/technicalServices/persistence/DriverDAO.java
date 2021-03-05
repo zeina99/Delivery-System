@@ -42,13 +42,11 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
             Pstmt.setString(1, object.getName());
-            Pstmt.setInt(2,object.getPin());
+            Pstmt.setInt(2, object.getPin());
             Pstmt.executeUpdate();
 
             closeConnection(New);
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -98,17 +96,17 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
         String sql = "SELECT ID, Name, PIN FROM Driver WHERE ID = ?";
         Driver driver = null;
         try (Connection One = this.connect();
-             PreparedStatement pstmt  = One.prepareStatement(sql)){
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
 
             // set the value
-            pstmt.setInt(1,pk);
-            ResultSet rs  = pstmt.executeQuery();
+            pstmt.setInt(1, pk);
+            ResultSet rs = pstmt.executeQuery();
 
-                driver = new Driver(
-                        rs.getInt("ID"),
-                        rs.getString("Name"),
-                        rs.getInt("PIN")
-                );
+            driver = new Driver(
+                    rs.getInt("ID"),
+                    rs.getString("Name"),
+                    rs.getInt("PIN")
+            );
 
 
             closeConnection(One);
@@ -122,11 +120,11 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
     @Override
     public List<Driver> getAll() {
         String sql = "SELECT * FROM Driver";
-        List<Driver> DriverList  = new ArrayList<>();
+        List<Driver> DriverList = new ArrayList<>();
 
         try (Connection ALL = this.connect();
-             Statement stmt  = ALL.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+             Statement stmt = ALL.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             // loop through the result set
             while (rs.next()) {
@@ -166,6 +164,30 @@ public class DriverDAO extends ConnectionFactory implements GenericDAO<Driver> {
 //        System.out.println("Updated a row in the database");
 //        System.out.println("______________________________________");
 
+    }
+
+    public boolean validateDriver(int pinEntered) {
+        String sql = "SELECT ID, Name, PIN FROM Driver WHERE PIN = ?";
+
+        boolean doesExist = false;
+        try (Connection One = this.connect();
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setInt(1, pinEntered);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+                doesExist = true;
+
+
+
+            closeConnection(One);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return doesExist;
     }
 }
 

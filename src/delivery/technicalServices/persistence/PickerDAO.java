@@ -160,4 +160,27 @@ public class PickerDAO extends ConnectionFactory implements GenericDAO<Picker> {
 
     }
 
+    public boolean validatePicker(int pinEntered) {
+        String sql = "SELECT ID, Name, PIN FROM PICKER WHERE PIN = ?";
+
+        boolean doesExist = false;
+        try (Connection One = this.connect();
+             PreparedStatement pstmt = One.prepareStatement(sql)) {
+
+            // set the value
+            pstmt.setInt(1, pinEntered);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+                doesExist = true;
+
+
+
+            closeConnection(One);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return doesExist;
+    }
 }

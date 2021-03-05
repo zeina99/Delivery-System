@@ -33,6 +33,7 @@ public class Login extends JFrame {
         UserDropDown.addItem("Picker");
         UserDropDown.addItem("Manager");
 
+        // TODO: remove all this, on click of login, get the entered pin and selected employee type and check if pin exists
         UserDropDown.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
@@ -68,23 +69,22 @@ public class Login extends JFrame {
                 }
                 // user entered a password
                 else {
+
                     int pswrd = Integer.parseInt(password.getText());
 
-                    if (pswrd == correctPIN) {
+                    isValid = validateUser(UserDropDown.getSelectedItem().toString(), pswrd);
 
-                        JOptionPane.showMessageDialog(panel1, "you have logged in", "Successful", 1);
-                        isValid = true;
-                    } else {
-                        JOptionPane.showMessageDialog(panel1, "Wrong password");
-                        isValid = false;
-                    }
                 }
 
+                // display  frames depending on employee type
                 if (isValid) {
+
+                    JOptionPane.showMessageDialog(panel1, "you have logged in", "Successful", 1);
+
                     switch (Objects.requireNonNull(UserDropDown.getSelectedItem()).toString()) {
                         case "Manager":
                             dispose();
-                            JFrame ManCh = new ManagerChoice("Manager Choice");
+                            JFrame ManCh = new ManagerView("Manager Choice", systemController);
                             ManCh.setSize(400, 700);
                             ManCh.setVisible(true);
                             break;
@@ -110,6 +110,8 @@ public class Login extends JFrame {
                             ReportView.setVisible(true);
                             break;
                     }
+                } else {
+                    JOptionPane.showMessageDialog(panel1, "Wrong password");
                 }
 
 
@@ -121,4 +123,11 @@ public class Login extends JFrame {
         });
     }
 
+    ;
+
+
+    private boolean validateUser(String employeeType, int pinEntered) {
+
+        return systemController.validateUser(employeeType, pinEntered);
+    }
 }

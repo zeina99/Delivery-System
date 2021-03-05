@@ -263,4 +263,30 @@ public class Inventory {
     }
 
 
+    public boolean validateEmployee(String employeeType, int pinEntered) {
+        boolean isValid = false;
+
+        switch (employeeType){
+            case "Driver":
+                DriverDAO driverDAO = new DriverDAO();
+                isValid = driverDAO.validateDriver(pinEntered);
+                break;
+            case "Loader":
+                LoaderDAO loaderDAO = new LoaderDAO();
+                isValid = loaderDAO.validateLoader(pinEntered);
+                break;
+
+            case "Picker":
+                PickerDAO pickerDAO = new PickerDAO();
+                isValid = pickerDAO.validatePicker(pinEntered);
+                break;
+
+            case "Manager":
+                ManagerDAO managerDAO = new ManagerDAO();
+                isValid = managerDAO.validateManager(pinEntered);
+                break;
+
+        }
+        return isValid;
+    }
 }

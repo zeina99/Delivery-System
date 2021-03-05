@@ -5,8 +5,8 @@ import java.util.List;
 public class SystemController {
     Inventory inventory;
 
-    public SystemController(Inventory inventory) {
-        this.inventory = inventory;
+    public SystemController() {
+        this.inventory = new Inventory();
     }
 
     public String getBoxContentReport() {
@@ -48,4 +48,12 @@ public class SystemController {
     public List<Driver> getAllDrivers() {
         return inventory.getAllDrivers();
     }
+
+    public boolean validateUser(String employeeType, int pinEntered) {
+
+        boolean isValid = inventory.validateEmployee(employeeType, pinEntered);
+
+        return isValid;
+    }
 }
+
