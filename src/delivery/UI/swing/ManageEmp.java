@@ -1,16 +1,20 @@
 package delivery.UI.swing;
 
-import delivery.domain.Employee;
+import delivery.domain.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.List;
 
 // This class should Show the table holding the emplyee db info, and the add button should
 // add a row, remove button should remove chosen row, etc.
 
 
-public class ManagerDb extends JFrame {
+public class ManageEmp extends JFrame {
     private JPanel MngrDbview;
     private JScrollPane Scrollpane;
     private JTable EmployeeTbl;
@@ -19,33 +23,82 @@ public class ManagerDb extends JFrame {
     private JButton deleteBtn;
     private JButton UpdateFields;
     private JComboBox employeeType;
+    private SystemController systemController;
+    private DefaultTableModel tableModel = new DefaultTableModel();
     //private TableColumn Employee;
 
-    public ManagerDb(String title) {
+    public ManageEmp(String title, SystemController systemController) {
         super(title);
-
+        this.systemController = systemController;
+        this.setSize(400, 500);
+//        this.setBounds();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(MngrDbview);
         this.pack();
 
 
         // Data to be displayed in the JTable
-        String[][] data = {
-                {"Kundan Kumar Jha", "4031", "CSE"},
-                {"Anand Jha", "6014", "IT"}
-        };
+//        String[][] data = {
+//                {"Kundan Kumar Jha", "4031", "CSE"},
+//                {"Anand Jha", "6014", "IT"}
+//        };
 
         // Column Names
-        String[] columnNames = {"Name", "Roll Number", "Department"};
+        //String[] columnNames = {"Name", "Roll Number", "Department"};
 
         // i dont get the issue here
         // Initializing the JTable
-        EmployeeTbl = new JTable(data, columnNames); // why is this not working
+        //String[] columnNames = {"ID", "Name", "PIN"};
 
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Name");
+        tableModel.addColumn("PIN");
+
+        //EmployeeTbl = new JTable(); // why is this not working
+        EmployeeTbl.setModel(tableModel);
 
         EmployeeTbl.setBounds(30, 40, 200, 300);
 
-// gotta fix above issue to add shit to buttons
+        // IMPORTANT: Table has to have Driver as first option
+        // fill table with data
+        List<Driver> driverList = systemController.getAllDrivers();
+        fillTableWithData(driverList);
+
+        employeeType.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                if (employeeType.getSelectedItem().equals("Driver")) {
+
+                    // clear table data
+                    resetTable();
+
+                    // fill table with data
+                    List<Driver> driverList = systemController.getAllDrivers();
+                    fillTableWithData(driverList);
+                } else if (employeeType.getSelectedItem().equals("Loader")) {
+
+                    resetTable();
+
+                    List<Loader> loaderList = systemController.getAllLoaders();
+                    fillTableWithData(loaderList);
+                } else if (employeeType.getSelectedItem().equals("Picker")) {
+
+                    resetTable();
+
+                    List<Picker> pickerList = systemController.getAllPickers();
+                    fillTableWithData(pickerList);
+                } else if (employeeType.getSelectedItem().equals("Manager")) {
+
+                    resetTable();
+
+                    List<Manager> managerList = systemController.getAllManagers();
+                    fillTableWithData(managerList);
+                }
+            }
+        });
+
+
+        // gotta fix above issue to add shit to buttons
         Addbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -54,6 +107,7 @@ public class ManagerDb extends JFrame {
 
             }
         });
+
         Removebtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -61,12 +115,14 @@ public class ManagerDb extends JFrame {
 
             }
         });
+
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
             }
         });
+
         UpdateFields.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -74,6 +130,18 @@ public class ManagerDb extends JFrame {
             }
         });
 
+
+    }
+
+    private void resetTable() {
+        tableModel.setRowCount(0);
+    }
+
+    private void fillTableWithData(List<? extends Employee> employeeList) {
+
+        for (int i = 0; i < employeeList.size(); i++) {
+            tableModel.insertRow(i, new Object[]{employeeList.get(i).getId(), employeeList.get(i).getName(), employeeList.get(i).getPin()});
+        }
 
     }
 
@@ -150,5 +218,6 @@ public class ManagerDb extends JFrame {
         }
 
     }
+
 
 }
