@@ -1,11 +1,11 @@
 package delivery.domain;
 
-public abstract class Employee {
+public class Employee {
     private int id;
     private String name;
     private int pin;
 
-    protected Employee(int id, String name, int pin) {
+    public Employee(int id, String name, int pin) {
         this.id = id;
         this.name = name;
         this.pin = pin;
