@@ -28,7 +28,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="aa4af" class="javax.swing.JTextArea" binding="FileText">
+          <component id="aa4af" class="javax.swing.JTextArea" binding="fileTextArea">
             <constraints/>
             <properties>
               <text value=""/>

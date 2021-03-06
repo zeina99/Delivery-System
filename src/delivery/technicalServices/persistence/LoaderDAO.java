@@ -9,29 +9,6 @@ import java.util.List;
 
 public class LoaderDAO extends EmployeeDAO implements GenericDAO<Loader> {
 
-//    private Connection connect() {
-//        // SQLite connection string
-//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-//
-//        Connection conn = null;
-//        try {
-//            conn = DriverManager.getConnection(url);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return conn;
-//    }
-//
-//    public void closeConnection(Connection conn){
-//        try {
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//    }
-
     @Override
     public void insert(Loader object) {
         String sql = "INSERT INTO Loader(Name,PIN) VALUES(?,?)";

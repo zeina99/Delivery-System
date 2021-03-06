@@ -9,29 +9,6 @@ import java.util.List;
 
 public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
 
-
-//    private Connection connect() {
-//        // SQLite connection string
-//        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-//
-//        Connection conn = null;
-//        try {
-//            conn = DriverManager.getConnection(url);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return conn;
-//    }
-//    public void closeConnection(Connection conn){
-//        try {
-//            if (conn != null) {
-//                conn.close();
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//    }
-
     @Override
     public void insert(Order object) {
         String sql = "INSERT INTO \"Order\" (Customer_ID,Order_Type,Time_Slot) VALUES(?,?,?)";
@@ -135,17 +112,6 @@ public class OrderDAO extends ConnectionFactory implements GenericDAO<Order> {
 
             pstmt.executeUpdate();
 
-            // loop through the result set
-//            while (rs.next()) {
-//                order = new Order(
-//                        rs.getInt("ID"),
-//                        Customer.getById(rs.getInt("Customer_ID")),
-//                        OrderType.valueOf(rs.getString("Order_Type")),
-//                        TimeSlots.valueOf(rs.getString("Time_Slot")),
-//                        orderItemDAO.getOrderItemsByOrderId(pk)
-//                );
-//
-//            }
             closeConnection(One);
         } catch (SQLException e) {
             System.out.println(e.getMessage());

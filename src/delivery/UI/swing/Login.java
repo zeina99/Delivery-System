@@ -5,8 +5,6 @@ import delivery.domain.SystemController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.Objects;
 
 public class Login extends JFrame {
@@ -17,8 +15,7 @@ public class Login extends JFrame {
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JLabel loginLabel;
-    private JComboBox UserDropDown;
-    private int correctPIN;
+    private JComboBox userDropDown;
 
     public Login(String title, SystemController systemController) {
         super(title);
@@ -28,31 +25,13 @@ public class Login extends JFrame {
         this.pack();
 
 
-        UserDropDown.addItem("Driver");
-        UserDropDown.addItem("Loader");
-        UserDropDown.addItem("Picker");
-        UserDropDown.addItem("Manager");
+        userDropDown.addItem("Driver");
+        userDropDown.addItem("Loader");
+        userDropDown.addItem("Picker");
+        userDropDown.addItem("Manager");
 
         // TODO: remove all this, on click of login, get the entered pin and selected employee type and check if pin exists
-        UserDropDown.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent itemEvent) {
-                if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
-                    if (UserDropDown.getSelectedItem().equals("Driver"))
-                        // why is this thinking im trying to equate string to int
-                        correctPIN = 123;
 
-                    else if (UserDropDown.getSelectedItem().equals("Loader"))
-                        correctPIN = 456;
-
-                    else if (UserDropDown.getSelectedItem().equals("Picker"))
-                        correctPIN = 789;
-
-                    else if (UserDropDown.getSelectedItem().equals("Manager"))
-                        correctPIN = 101;
-                }
-            }
-        });
 
         loginbtn.addActionListener(new ActionListener() {
             @Override
@@ -67,12 +46,12 @@ public class Login extends JFrame {
                     isValid = false;
 
                 }
-                // user entered a password
+                // user entered a password, validate user
                 else {
 
                     int pswrd = Integer.parseInt(password.getText());
 
-                    isValid = validateUser(UserDropDown.getSelectedItem().toString(), pswrd);
+                    isValid = validateUser(userDropDown.getSelectedItem().toString(), pswrd);
 
                 }
 
@@ -81,7 +60,7 @@ public class Login extends JFrame {
 
                     JOptionPane.showMessageDialog(panel1, "you have logged in", "Successful", 1);
 
-                    switch (Objects.requireNonNull(UserDropDown.getSelectedItem()).toString()) {
+                    switch (Objects.requireNonNull(userDropDown.getSelectedItem()).toString()) {
                         case "Manager":
                             dispose();
                             JFrame ManCh = new ManagerView("Manager Choice", systemController);
@@ -117,7 +96,7 @@ public class Login extends JFrame {
 
             }
 
-            // why is it always false wth
+
 
 
         });

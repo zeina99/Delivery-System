@@ -1,9 +1,8 @@
 package delivery.technicalServices.persistence;
 
-import delivery.domain.Driver;
+
 import delivery.domain.Employee;
-import delivery.domain.Loader;
-import delivery.domain.Picker;
+
 
 import java.sql.*;
 import java.util.ArrayList;

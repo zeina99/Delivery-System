@@ -31,7 +31,6 @@ public class ManageEmp extends JFrame {
         super(title);
         this.systemController = systemController;
         this.setSize(400, 500);
-//        this.setBounds();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(MngrDbview);
         this.pack();
@@ -64,7 +63,6 @@ public class ManageEmp extends JFrame {
         });
 
 
-
         Addbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -80,7 +78,8 @@ public class ManageEmp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-               deleteEmp();
+                deleteEmp();
+                fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
 
@@ -88,6 +87,7 @@ public class ManageEmp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateEmp();
+                fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
 
@@ -95,16 +95,16 @@ public class ManageEmp extends JFrame {
     }
 
 
-
     private void resetTable() {
         tableModel.setRowCount(0);
     }
+
     private List<? extends Employee> fillTableWithData(String employeeType) {
         List<? extends Employee> employeeList;
-        switch (employeeType){
+        switch (employeeType) {
             case "Driver":
-                 employeeList =  systemController.getAllDrivers();
-                 break;
+                employeeList = systemController.getAllDrivers();
+                break;
             case "Picker":
                 employeeList = systemController.getAllPickers();
                 break;
@@ -121,13 +121,6 @@ public class ManageEmp extends JFrame {
 
         return employeeList;
     }
-//    private void fillTableWithData(List<? extends Employee> employeeList) {
-//
-//        for (int i = 0; i < employeeList.size(); i++) {
-//            tableModel.insertRow(i, new Object[]{employeeList.get(i).getId(), employeeList.get(i).getName(), employeeList.get(i).getPin()});
-//        }
-//
-//    }
 
     private void insertEmp() {
         JTextField name = new JTextField();
@@ -224,7 +217,6 @@ public class ManageEmp extends JFrame {
     }
 
 
-
     // TODO: needs refactoring
 //    private void manageEmployee(String actionToDo) {
 //        JTextField id = new JTextField();
@@ -290,7 +282,7 @@ public class ManageEmp extends JFrame {
 //
 //        }
 
-    }
+}
 
 
 
