@@ -39,7 +39,7 @@ public class ManagerView extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                ViewReport viewReport = new ViewReport("View report", "Reports/Unaccomodated Orders.txt");
+                ViewReport viewReport = new ViewReport("View report", systemController.getUnaccomodatedOrdersReport());
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 
@@ -53,7 +53,7 @@ public class ManagerView extends JFrame  {
                 //ManageEmp lol = new ManageEmp();  // wtf does it want in here what argument in the brackets omg
                 //lol.setVisible(true); // added this just to see if initializing was prob
                 //new ManageEmp("Revenue Data").setVisible(true);
-                ViewReport viewReport = new ViewReport("Revenue Data", "Reports/Revenue.txt");
+                ViewReport viewReport = new ViewReport("Revenue Data", systemController.getRevenueReport());
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 

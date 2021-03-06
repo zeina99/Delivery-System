@@ -1,11 +1,7 @@
 package delivery.domain;
 
-import delivery.technicalServices.persistence.DriverDAO;
-import delivery.technicalServices.persistence.LoaderDAO;
-import delivery.technicalServices.persistence.ManagerDAO;
-import delivery.technicalServices.persistence.PickerDAO;
 
-import javax.swing.*;
+
 import java.util.List;
 
 public class SystemController {
