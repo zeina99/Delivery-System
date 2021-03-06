@@ -51,7 +51,6 @@ public class CustomerDAO extends ConnectionFactory implements GenericDAO<Custome
 
     @Override
 	public void update(Customer object) {
-		// TODO Auto-generated method stub
 	    String sql = "UPDATE Customer SET Name = ?  WHERE ID = ?";
 
         try (Connection up = this.connect();

@@ -91,21 +91,21 @@ public class Login extends JFrame {
 
                         case "Loader":
                             dispose();
-                            JFrame ReportView = new ViewReport("View Report", "Loader");
+                            JFrame ReportView = new ViewReport("View Report", "Reports/Van-Loading.txt");
                             ReportView.setSize(400, 700);
                             ReportView.setVisible(true);
                             break;
 
                         case "Picker":
                             dispose();
-                            ReportView = new ViewReport("View Report", "Picker");
+                            ReportView = new ViewReport("View Report", "Reports/Box-Content.txt");
                             ReportView.setSize(400, 700);
                             ReportView.setVisible(true);
                             break;
 
                         case "Driver":
                             dispose();
-                            ReportView = new ViewReport("View Report", "Driver");
+                            ReportView = new ViewReport("View Report", "Reports/Van Schedule.txt");
                             ReportView.setSize(400, 700);
                             ReportView.setVisible(true);
                             break;

@@ -19,7 +19,7 @@ public class ManageEmp extends JFrame {
     private JScrollPane Scrollpane;
     private JTable EmployeeTbl;
     private JButton Addbtn;
-    private JButton Removebtn;
+
     private JButton deleteBtn;
     private JButton UpdateFields;
     private JComboBox employeeType;
@@ -37,187 +37,260 @@ public class ManageEmp extends JFrame {
         this.pack();
 
 
-        // Data to be displayed in the JTable
-//        String[][] data = {
-//                {"Kundan Kumar Jha", "4031", "CSE"},
-//                {"Anand Jha", "6014", "IT"}
-//        };
-
-        // Column Names
-        //String[] columnNames = {"Name", "Roll Number", "Department"};
-
-        // i dont get the issue here
-        // Initializing the JTable
-        //String[] columnNames = {"ID", "Name", "PIN"};
-
+        // columns
         tableModel.addColumn("ID");
         tableModel.addColumn("Name");
         tableModel.addColumn("PIN");
 
-        //EmployeeTbl = new JTable(); // why is this not working
+
         EmployeeTbl.setModel(tableModel);
 
         EmployeeTbl.setBounds(30, 40, 200, 300);
 
-        // IMPORTANT: Table has to have Driver as first option
+        // IMPORTANT: Table has to have Driver as first option in dropdown
         // fill table with data
-        List<Driver> driverList = systemController.getAllDrivers();
-        fillTableWithData(driverList);
+        fillTableWithData(employeeType.getSelectedItem().toString());
+
 
         employeeType.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent itemEvent) {
-                if (employeeType.getSelectedItem().equals("Driver")) {
 
-                    // clear table data
-                    resetTable();
+                resetTable();
 
-                    // fill table with data
-                    List<Driver> driverList = systemController.getAllDrivers();
-                    fillTableWithData(driverList);
-                } else if (employeeType.getSelectedItem().equals("Loader")) {
+                fillTableWithData(employeeType.getSelectedItem().toString());
 
-                    resetTable();
-
-                    List<Loader> loaderList = systemController.getAllLoaders();
-                    fillTableWithData(loaderList);
-                } else if (employeeType.getSelectedItem().equals("Picker")) {
-
-                    resetTable();
-
-                    List<Picker> pickerList = systemController.getAllPickers();
-                    fillTableWithData(pickerList);
-                } else if (employeeType.getSelectedItem().equals("Manager")) {
-
-                    resetTable();
-
-                    List<Manager> managerList = systemController.getAllManagers();
-                    fillTableWithData(managerList);
-                }
             }
         });
 
 
-        // gotta fix above issue to add shit to buttons
+
         Addbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                insertEmployee();
+                insertEmp();
 
+                fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
 
-        Removebtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-
-
-            }
-        });
 
         deleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+               deleteEmp();
             }
         });
 
         UpdateFields.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                updateEmployee();
+                updateEmp();
             }
         });
 
 
     }
 
+
+
     private void resetTable() {
         tableModel.setRowCount(0);
     }
+    private List<? extends Employee> fillTableWithData(String employeeType) {
+        List<? extends Employee> employeeList;
+        switch (employeeType){
+            case "Driver":
+                 employeeList =  systemController.getAllDrivers();
+                 break;
+            case "Picker":
+                employeeList = systemController.getAllPickers();
+                break;
+            case "Loader":
+                employeeList = systemController.getAllLoaders();
+                break;
+            case "Manager":
+                employeeList = systemController.getAllManagers();
+                break;
 
-    private void fillTableWithData(List<? extends Employee> employeeList) {
-
-        for (int i = 0; i < employeeList.size(); i++) {
-            tableModel.insertRow(i, new Object[]{employeeList.get(i).getId(), employeeList.get(i).getName(), employeeList.get(i).getPin()});
+            default:
+                throw new IllegalStateException("Unexpected value: " + employeeType);
         }
 
+        return employeeList;
     }
+//    private void fillTableWithData(List<? extends Employee> employeeList) {
+//
+//        for (int i = 0; i < employeeList.size(); i++) {
+//            tableModel.insertRow(i, new Object[]{employeeList.get(i).getId(), employeeList.get(i).getName(), employeeList.get(i).getPin()});
+//        }
+//
+//    }
 
-    private void insertEmployee() {
-
+    private void insertEmp() {
         JTextField name = new JTextField();
         JTextField pin = new JTextField();
 
-        Object[] fields = {
+        Object[] insertFields = {
+
                 "Enter a Name: ", name,
                 "Enter a PIN: ", pin
         };
 
-        int input = JOptionPane.showConfirmDialog(null, fields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
-        System.out.println("Name: " + name.getText() + "PIN: " + pin.getText());
+        int input = JOptionPane.showConfirmDialog(null, insertFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
 
         if (input == JOptionPane.OK_OPTION) {
-            //TODO: add methods here
+
+            if (name.getText().equals("") || pin.getText().equals(""))
+                JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+
+
             switch (employeeType.getSelectedItem().toString()) {
-
                 case "Driver":
-                    System.out.println("Insert Driver to db");
+                    systemController.manageEmp("insert", new Driver(name.getText(), Integer.parseInt(pin.getText())));
                     break;
-
                 case "Loader":
-                    System.out.println("Insert Loader to db");
+                    systemController.manageEmp("insert", new Loader(name.getText(), Integer.parseInt(pin.getText())));
                     break;
-
-                case "Picker":
-                    System.out.println("Insert Picker to db");
-                    break;
-
                 case "Manager":
-                    System.out.println("Insert Manager to db");
+                    systemController.manageEmp("insert", new Manager(name.getText(), Integer.parseInt(pin.getText())));
+                    break;
+                case "Picker":
+                    systemController.manageEmp("insert", new Picker(name.getText(), Integer.parseInt(pin.getText())));
                     break;
             }
-        }
 
+        }
     }
 
-    private void updateEmployee() {
-
+    private void updateEmp() {
+        JTextField id = new JTextField();
         JTextField name = new JTextField();
         JTextField pin = new JTextField();
 
-        Object[] fields = {
+        Object[] updateFields = {
+                "Enter Employee ID: ", id,
                 "Enter a Name: ", name,
                 "Enter a PIN: ", pin
         };
 
-        int input = JOptionPane.showConfirmDialog(null, fields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
-        System.out.println("Name: " + name.getText() + "PIN: " + pin.getText());
+        int input = JOptionPane.showConfirmDialog(null, updateFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
 
         if (input == JOptionPane.OK_OPTION) {
 
+            if (name.getText().equals("") || pin.getText().equals("") || id.getText().equals(""))
+                JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+
             switch (employeeType.getSelectedItem().toString()) {
-                //TODO: add methods here
                 case "Driver":
-                    System.out.println("Update Driver to db");
+                    systemController.manageEmp("update", new Driver(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
                     break;
-
                 case "Loader":
-                    System.out.println("Update Loader to db");
+                    systemController.manageEmp("update", new Loader(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
                     break;
-
-                case "Picker":
-                    System.out.println("Update Picker to db");
-                    break;
-
                 case "Manager":
-                    System.out.println("Update Manager to db");
+                    systemController.manageEmp("update", new Manager(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
+                    break;
+                case "Picker":
+                    systemController.manageEmp("update", new Picker(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
                     break;
             }
+
+        }
+    }
+
+    private void deleteEmp() {
+        JTextField id = new JTextField();
+
+        Object[] deleteFields = {
+                "Enter Employee ID: ", id,
+
+        };
+
+        int input = JOptionPane.showConfirmDialog(null, deleteFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+
+        if (input == JOptionPane.OK_OPTION) {
+
+            if (id.getText().equals(""))
+                JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+
+
+            systemController.deleteEmp(Integer.parseInt(id.getText()), employeeType.getSelectedItem().toString());
+
         }
 
     }
 
 
-}
+
+    // TODO: needs refactoring
+//    private void manageEmployee(String actionToDo) {
+//        JTextField id = new JTextField();
+//        JTextField name = new JTextField();
+//        JTextField pin = new JTextField();
+//
+//        Object[] insertFields = {
+//
+//                "Enter a Name: ", name,
+//                "Enter a PIN: ", pin
+//        };
+//        Object[] updateFields = {
+//                "Enter Employee ID: ", id,
+//                "Enter a Name: ", name,
+//                "Enter a PIN: ", pin
+//        };
+//
+//        Object[] deleteFields = {
+//                "Enter Employee ID: ", id,
+//        };
+//        int input;
+//        switch (actionToDo) {
+//
+//            case "insert":
+//                input = JOptionPane.showConfirmDialog(null, insertFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+//
+//                if (name.getText().equals("") || pin.getText().equals(""))
+//                    JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+//
+//                break;
+//
+//            case "update":
+//                input = JOptionPane.showConfirmDialog(null, updateFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+//
+//                if (name.getText().equals("") || pin.getText().equals("") || id.getText().equals("")) {
+//                    JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//
+//                break;
+//
+//            case "delete":
+//                input = JOptionPane.showConfirmDialog(null, deleteFields, "Enter details: ", JOptionPane.OK_CANCEL_OPTION);
+//
+//                if (id.getText().equals("")) {
+//                    JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
+//                }
+//
+//                break;
+//            default:
+//                throw new IllegalStateException("Unexpected value: " + actionToDo);
+//        }
+//
+//
+//        System.out.println("Name: " + name.getText() + "PIN: " + pin.getText());
+//
+//
+//        if (input == JOptionPane.OK_OPTION) {
+//            //TODO: add methods here
+//
+//
+//            //systemController.manageEmp(actionToDo, employeeType.getSelectedItem().toString(), Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText()));
+//
+//
+//        }
+
+    }
+
+
+

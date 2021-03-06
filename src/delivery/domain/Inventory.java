@@ -289,4 +289,28 @@ public class Inventory {
         }
         return isValid;
     }
+
+    public void deleteEmployee(int id, String employeeType) {
+        switch (employeeType){
+            case "Driver":
+                DriverDAO driverDAO = new DriverDAO();
+                driverDAO.delete(id);
+                break;
+            case "Loader":
+                LoaderDAO loaderDAO = new LoaderDAO();
+                loaderDAO.delete(id);
+                break;
+
+            case "Picker":
+                PickerDAO pickerDAO = new PickerDAO();
+                pickerDAO.delete(id);
+                break;
+
+            case "Manager":
+                ManagerDAO managerDAO = new ManagerDAO();
+                managerDAO.delete(id);
+                break;
+
+        }
+    }
 }

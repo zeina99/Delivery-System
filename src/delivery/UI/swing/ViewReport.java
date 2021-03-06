@@ -3,9 +3,7 @@ package delivery.UI.swing;
 import javax.swing.*;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class ViewReport extends JFrame{
     private JTextArea FileText;
@@ -15,13 +13,16 @@ public class ViewReport extends JFrame{
     private String employeeType;
 
 
-    public ViewReport(String title, String employeeType /*String reportName*/) {
+    public ViewReport(String title, String filename) {
         super(title);
         this.employeeType = employeeType;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ReportView);
         this.pack();
-        this.reportTitle = new JLabel(title);
+
+
+
+        readFileIntoView(filename);
 
         FileText.addInputMethodListener(new InputMethodListener() {
             @Override
@@ -37,6 +38,19 @@ public class ViewReport extends JFrame{
             }
         });
     }
+    void readFileIntoView(String filename)  {
+        try (FileReader fileReader = new FileReader(filename)){
+
+            FileText.read(fileReader, filename);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
     public String readFile(String filename)
     {
         String content = null;
@@ -48,6 +62,7 @@ public class ViewReport extends JFrame{
             reader.read(chars);
             content = new String(chars);
             reader.close();
+            FileText.read(reader, file);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

@@ -51,7 +51,7 @@ public class BoxDescriptionDAO extends ConnectionFactory implements GenericDAO<B
 
     @Override
     public void update(BoxDescription object) {
-        // TODO Auto-generated method stub
+
         String sql = "UPDATE Box_Description SET Size_Label = ? , Volume = ? , Rate = ? WHERE ID = ?";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {

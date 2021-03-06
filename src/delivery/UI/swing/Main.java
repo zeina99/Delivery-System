@@ -16,12 +16,12 @@ public class Main {
         login.setSize(400, 700);
         login.setVisible(true);
 
-//        JFrame ManCh = new ManagerChoice("Manager Choice");
+//        JFrame ManCh = new ManagerView("Manager Choice");
 //        ManCh.setSize(400,700);
 //        ManCh.setVisible(true);
 
         //show manager db view
-//        JFrame ManDb = new ManagerDb("Manager Database");
+//        JFrame ManDb = new ManageEmp("Manager Database");
 //        ManDb.setSize(400,700);
 //        ManDb.setVisible(true);
 //

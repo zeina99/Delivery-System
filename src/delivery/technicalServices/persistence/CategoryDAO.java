@@ -52,7 +52,6 @@ public class CategoryDAO extends ConnectionFactory implements GenericDAO<Categor
 
 	@Override
 	public void update(Category object) {
-		// TODO Auto-generated method stub
         String sql = "UPDATE Category SET Category_Type = ? , Volume = ? WHERE ID = ?";
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {

@@ -1,5 +1,11 @@
 package delivery.domain;
 
+import delivery.technicalServices.persistence.DriverDAO;
+import delivery.technicalServices.persistence.LoaderDAO;
+import delivery.technicalServices.persistence.ManagerDAO;
+import delivery.technicalServices.persistence.PickerDAO;
+
+import javax.swing.*;
 import java.util.List;
 
 public class SystemController {
@@ -54,6 +60,15 @@ public class SystemController {
         boolean isValid = inventory.validateEmployee(employeeType, pinEntered);
 
         return isValid;
+    }
+
+
+    public void deleteEmp(int id, String employeeType){
+        inventory.deleteEmployee(id, employeeType);
+    }
+    public void manageEmp(String actionToDo, Employee employee) {
+        inventory.manageEmployee(actionToDo, employee);
+
     }
 }
 

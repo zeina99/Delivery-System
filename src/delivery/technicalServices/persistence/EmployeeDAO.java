@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class EmployeeDAO extends ConnectionFactory {
+class EmployeeDAO extends ConnectionFactory {
 
-    public void insertEmp(Employee employee, String sql) {
+    void insertEmp(Employee employee, String sql) {
 
         try (Connection New = this.connect(); PreparedStatement Pstmt = New.prepareStatement(sql)) {
 
@@ -25,7 +25,7 @@ public abstract class EmployeeDAO extends ConnectionFactory {
         }
     }
 
-    public void updateEmp(Employee employee, String sql) {
+     void updateEmp(Employee employee, String sql) {
 
 
         try (Connection up = this.connect();
@@ -45,7 +45,7 @@ public abstract class EmployeeDAO extends ConnectionFactory {
         }
     }
 
-    public void deleteEmp(int dID, String sql) {
+    void deleteEmp(int dID, String sql) {
 
 
         try (Connection del = this.connect();
@@ -62,7 +62,7 @@ public abstract class EmployeeDAO extends ConnectionFactory {
         }
     }
 
-    public Employee getByEmpId(int pk, String sqlStatement) {
+    Employee getByEmpId(int pk, String sqlStatement) {
 
         Employee employee = null;
         try (Connection One = this.connect();
@@ -87,7 +87,7 @@ public abstract class EmployeeDAO extends ConnectionFactory {
         return employee;
     }
 
-    public List<Employee> getAllEmp(String sql) {
+    List<Employee> getAllEmp(String sql) {
 
         List<Employee> employeeList = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public abstract class EmployeeDAO extends ConnectionFactory {
         return employeeList;
     }
 
-    public boolean validateEmployee(int pinEntered, String sqlStatement) {
+    boolean validateEmployee(int pinEntered, String sqlStatement) {
 
         boolean doesExist = false;
         try (Connection One = this.connect();
