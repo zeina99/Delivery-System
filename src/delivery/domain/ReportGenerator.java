@@ -7,7 +7,6 @@ import java.util.*;
 
 public class ReportGenerator {
     private final BoxContentListGenerator boxContentListGenerator = new BoxContentListGenerator(this);
-    private List<Customer> customerList;
     private Map<TimeSlots, List<Order>> orderMap;
     private Map<TimeSlots, List<Box>> boxMap;
     private List<BoxDescription> boxDescriptionList;
@@ -20,7 +19,6 @@ public class ReportGenerator {
 
     public ReportGenerator() {
 
-        this.customerList = new ArrayList<>();
         this.orderMap = inventory.getAllOrdersMap();
         this.boxMap = new TreeMap<>();
 
@@ -185,15 +183,6 @@ public class ReportGenerator {
     }
 
 
-    public static void main(String[] args) {
-        ReportGenerator reportGenerator = new ReportGenerator();
-        reportGenerator.generateBoxContentReport();
-        reportGenerator.generateVanLoadingReport();
-        reportGenerator.generateUnaccommodatedReport();
-        reportGenerator.generateRevenueReport();
-        reportGenerator.generateVanScheduleReport();
-//        System.out.println(reportGenerator.getUnaccommodatedOrders());
-    }
 
     public Map<TimeSlots, List<Box>> getBoxMap() {
         return boxMap;

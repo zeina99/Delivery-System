@@ -79,10 +79,6 @@ public class OrderGenerator {
         gen.generateOrders();
         List<Order> or = gen.getOrders();
         System.out.println(gen.getOrders().size());
-       // gen.saveToDatabase();
-//        for (Order order :
-//                or) {
-//            System.out.println(order);
-//        }
+
     }
 }

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 // this class should let the manager choose between reading report or viewing db
 
 public class ManagerView extends JFrame  {
-    private final SystemController systemController;
     private JButton EmpDbBtn;
     private JPanel ManagerChoicePanel;
     private JButton viewUnaccomoatedReportButton;
@@ -17,8 +16,6 @@ public class ManagerView extends JFrame  {
 
     public ManagerView(String title, SystemController systemController) {
         super(title);
-
-        this.systemController = systemController;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ManagerChoicePanel);
@@ -28,8 +25,6 @@ public class ManagerView extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                //ManageEmp lol = new ManageEmp();  // wtf does it want in here what argument in the brackets omg
-                //lol.setVisible(true); // added this just to see if initializing was prob
                 new ManageEmp("Manage Employee Data", systemController).setVisible(true);
             }
 
