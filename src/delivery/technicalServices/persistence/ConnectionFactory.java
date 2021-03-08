@@ -7,8 +7,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
     public Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:/Users/zeinathabet/Downloads/DeliveryDB.db";
-        //jdbc:sqlite:C://Users/Lenovo/Desktop/Delivery/DeliveryDB.db
+        String url = "jdbc:sqlite:DeliveryDB.db";
 
         Connection conn = null;
         try {
