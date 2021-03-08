@@ -151,7 +151,7 @@ public class ReportGenerator {
                     String timings = getVanArrivalLeavingTime(timeslot);
                     String[] arrivalLeaving = timings.split("-");
                     vanScheduleWriter.write(String.format("Van ID: %d\n", van.getId()));
-                    vanScheduleWriter.write(String.format("    - Arrival time: %s\n    - Leaving time: %s\n", arrivalLeaving[0], arrivalLeaving[1]));
+                    vanScheduleWriter.write(String.format("    - Leaving time: %s\n    - Arrival time: %s\n", arrivalLeaving[0], arrivalLeaving[1]));
                     vanScheduleWriter.write(String.format("Assigned to: %s\n\n", inventory.getDriverById(van.getDriver_id())));
                 }
             }

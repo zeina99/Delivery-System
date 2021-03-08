@@ -1,124 +1,124 @@
 Time slot: NINE_TWELVE
 Van ID: 6
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=6, name='Gil'}
 
 Van ID: 3
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=1, name='Jones'}
 
 Van ID: 5
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=3, name='Benjamin'}
 
 Van ID: 1
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=5, name='Mark'}
 
 Van ID: 4
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=4, name='Lucas'}
 
 Van ID: 2
-    - Arrival time: 8:50
-    - Leaving time: 11:40
+    - Leaving time: 8:50
+    - Arrival time: 11:40
 Assigned to: Driver {id=2, name='Oliver'}
 
 Time slot: TWELVE_THREE
 Van ID: 6
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=6, name='Gil'}
 
 Van ID: 3
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=1, name='Jones'}
 
 Van ID: 5
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=3, name='Benjamin'}
 
 Van ID: 1
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=5, name='Mark'}
 
 Van ID: 4
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=4, name='Lucas'}
 
 Van ID: 2
-    - Arrival time: 11:50
-    - Leaving time: 2:40
+    - Leaving time: 11:50
+    - Arrival time: 2:40
 Assigned to: Driver {id=2, name='Oliver'}
 
 Time slot: THREE_SIX
 Van ID: 6
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=6, name='Gil'}
 
 Van ID: 3
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=1, name='Jones'}
 
 Van ID: 5
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=3, name='Benjamin'}
 
 Van ID: 1
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=5, name='Mark'}
 
 Van ID: 4
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=4, name='Lucas'}
 
 Van ID: 2
-    - Arrival time: 2:50
-    - Leaving time: 5:40
+    - Leaving time: 2:50
+    - Arrival time: 5:40
 Assigned to: Driver {id=2, name='Oliver'}
 
 Time slot: SIX_NINE
 Van ID: 6
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=6, name='Gil'}
 
 Van ID: 3
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=1, name='Jones'}
 
 Van ID: 5
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=3, name='Benjamin'}
 
 Van ID: 1
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=5, name='Mark'}
 
 Van ID: 4
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=4, name='Lucas'}
 
 Van ID: 2
-    - Arrival time: 5:50
-    - Leaving time: 9
+    - Leaving time: 5:50
+    - Arrival time: 9
 Assigned to: Driver {id=2, name='Oliver'}
 
