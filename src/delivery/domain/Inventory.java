@@ -129,7 +129,7 @@ public class Inventory {
         Random random = new Random();
 
         // return category with randomly chosen index
-        int chosenCategory = random.nextInt(categoryLength);
+        int chosenCategory = random.nextInt(categoryLength) + 1;
         return categoryList.get(chosenCategory);
     }
 

@@ -78,7 +78,7 @@ public class OrderGenerator {
         OrderGenerator gen = new OrderGenerator();
         gen.generateOrders();
         List<Order> or = gen.getOrders();
-        System.out.println(gen.getOrders().size());
+        System.out.println(gen.getOrders());
 
     }
 }
