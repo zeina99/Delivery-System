@@ -1,2 +1,9 @@
 .idea
+/lib
 .gradle
+/out
+*.iml
+.DS_Store
+DeliveryDB.db
+sqlite-jdbc-3.32.3.2.jar
+

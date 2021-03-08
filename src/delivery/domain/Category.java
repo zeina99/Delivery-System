@@ -1,11 +1,12 @@
+
 package delivery.domain;
 
 public class Category {
     private int id;
     private String type;
-    private int volume;
+    private double volume;
 
-    public Category(int id, String type, int volume) {
+    public Category(int id, String type, double volume) {
         this.id = id;
         this.type = type;
         this.volume = volume;
@@ -27,11 +28,20 @@ public class Category {
         this.type = type;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(double volume) {
         this.volume = volume;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", volume=" + volume +
+                '}';
     }
 }

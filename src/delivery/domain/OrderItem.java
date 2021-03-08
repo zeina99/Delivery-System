@@ -4,11 +4,27 @@ public class OrderItem {
     private int id;
     private int orderID;
     private Category category;
+    private double volume;
 
-    public OrderItem(int id, int orderID, Category category){
+    public OrderItem(int id, int orderID, Category category) {
         this.id = id;
         this.orderID = orderID;
         this.category = category;
+        this.volume = this.setVolume();
+    }
+
+    public OrderItem(int orderID, Category category) {
+        this.orderID = orderID;
+        this.category = category;
+        this.volume = this.setVolume();
+    }
+
+    private double setVolume() {
+        return this.category.getVolume();
+    }
+
+    public double getVolume() {
+        return volume;
     }
 
     public Category getCategory() {
@@ -33,5 +49,15 @@ public class OrderItem {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "\nOrderItem{" +
+                "id=" + id +
+                ", orderID=" + orderID +
+                ", category=" + category +
+                ", volume=" + volume +
+                '}';
     }
 }

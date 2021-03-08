@@ -1,18 +1,25 @@
+
 package delivery.domain;
 
 public class BoxDescription {
     private int id;
-    private String size_label;
-    private int volume;
+    private String sizeLabel;
+    private double volume;
+    private final double boxRate;
 
 
-    public BoxDescription(int id, String size_label, int volume){
+    public BoxDescription(int id, String sizeLabel, double volume, double boxRate){
         this.id = id;
-        this.size_label = size_label;
+        this.sizeLabel = sizeLabel;
         this.volume = volume;
+        this.boxRate = boxRate;
     }
 
-    // getters and setters
+
+    public double getBoxRate() {
+        return boxRate;
+    }
+// getters and setters
 
     public int getId() {
         return id;
@@ -22,19 +29,29 @@ public class BoxDescription {
         this.id = id;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(double volume) {
         this.volume = volume;
     }
 
-    public String getSize_label() {
-        return size_label;
+    public String getSizeLabel() {
+        return sizeLabel;
     }
 
-    public void setSize_label(String size_label) {
-        this.size_label = size_label;
+    public void setSize_label(String sizeLabel) {
+        this.sizeLabel = sizeLabel;
+    }
+
+    @Override
+    public String toString() {
+        return "BoxDescription{" +
+                "id=" + id +
+                ", sizeLabel='" + sizeLabel + '\'' +
+                ", volume=" + volume +
+                ", boxRate=" + boxRate +
+                '}';
     }
 }

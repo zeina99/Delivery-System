@@ -1,12 +1,17 @@
 package delivery.domain;
 
-public abstract class Employee {
+public class Employee {
     private int id;
     private String name;
     private int pin;
 
     public Employee(int id, String name, int pin) {
         this.id = id;
+        this.name = name;
+        this.pin = pin;
+    }
+
+    protected Employee(String name, int pin) {
         this.name = name;
         this.pin = pin;
     }
@@ -33,5 +38,14 @@ public abstract class Employee {
 
     public void setPin(int pin) {
         this.pin = pin;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+
+                '}';
     }
 }

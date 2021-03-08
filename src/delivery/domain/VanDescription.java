@@ -34,4 +34,13 @@ public class VanDescription {
     public void setVolume(int volume) {
         this.volume = volume;
     }
+
+    @Override
+    public String toString() {
+        return "VanDescription{" +
+                "id=" + id +
+                ", size_label='" + size_label + '\'' +
+                ", volume=" + volume +
+                '}';
+    }
 }

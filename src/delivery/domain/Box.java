@@ -37,4 +37,15 @@ public class Box {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "\nBox{" +
+                "id=" + id +
+                ", boxDescription=" + boxDescription +
+                ", content=" + content +
+                "}\n";
+    }
+
+
 }
