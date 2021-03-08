@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 // this class should let the manager choose between reading report or viewing db
 
-public class ManagerView extends JFrame  {
+public class ManagerView extends JFrame {
     private JButton EmpDbBtn;
     private JPanel ManagerChoicePanel;
     private JButton viewUnaccomoatedReportButton;
@@ -34,7 +34,7 @@ public class ManagerView extends JFrame  {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                ViewReport viewReport = new ViewReport("View report", systemController.getUnaccomodatedOrdersReport());
+                ViewReport viewReport = new ViewReport("Unaccomodated Orders report", systemController.getUnaccomodatedOrdersReport());
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 
@@ -48,7 +48,7 @@ public class ManagerView extends JFrame  {
                 //ManageEmp lol = new ManageEmp();  // wtf does it want in here what argument in the brackets omg
                 //lol.setVisible(true); // added this just to see if initializing was prob
                 //new ManageEmp("Revenue Data").setVisible(true);
-                ViewReport viewReport = new ViewReport("Revenue Data", systemController.getRevenueReport());
+                ViewReport viewReport = new ViewReport("Revenue Data for the day", systemController.getRevenueReport());
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 

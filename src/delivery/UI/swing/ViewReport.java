@@ -1,18 +1,19 @@
 package delivery.UI.swing;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ViewReport extends JFrame {
     private JTextArea fileTextArea;
     private JPanel ReportView;
+    private JLabel title;
 
 
     public ViewReport(String title, String filename) {
         super(title);
 
+        this.title.setText(title);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(ReportView);
         this.pack();
