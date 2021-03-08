@@ -46,6 +46,7 @@ public class ManageEmp extends JFrame {
 
         EmployeeTbl.setBounds(30, 40, 200, 300);
 
+
         // IMPORTANT: Table has to have Driver as first option in dropdown
         // fill table with data
         fillTableWithData(employeeType.getSelectedItem().toString());
@@ -69,6 +70,8 @@ public class ManageEmp extends JFrame {
 
                 insertEmp();
 
+                resetTable();
+
                 fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
@@ -79,6 +82,9 @@ public class ManageEmp extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 deleteEmp();
+
+                resetTable();
+
                 fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
@@ -87,6 +93,9 @@ public class ManageEmp extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateEmp();
+
+                resetTable();
+
                 fillTableWithData(employeeType.getSelectedItem().toString());
             }
         });
@@ -99,7 +108,7 @@ public class ManageEmp extends JFrame {
         tableModel.setRowCount(0);
     }
 
-    private List<? extends Employee> fillTableWithData(String employeeType) {
+    private void fillTableWithData(String employeeType) {
         List<? extends Employee> employeeList;
         switch (employeeType) {
             case "Driver":
@@ -118,8 +127,10 @@ public class ManageEmp extends JFrame {
             default:
                 throw new IllegalStateException("Unexpected value: " + employeeType);
         }
+        for (int i = 0; i < employeeList.size(); i++) {
+            tableModel.insertRow(i, new Object[]{employeeList.get(i).getId(), employeeList.get(i).getName(), employeeList.get(i).getPin()});
+        }
 
-        return employeeList;
     }
 
     private void insertEmp() {
@@ -139,22 +150,22 @@ public class ManageEmp extends JFrame {
             if (name.getText().equals("") || pin.getText().equals(""))
                 JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
 
-
-            switch (employeeType.getSelectedItem().toString()) {
-                case "Driver":
-                    systemController.manageEmp("insert", new Driver(name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Loader":
-                    systemController.manageEmp("insert", new Loader(name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Manager":
-                    systemController.manageEmp("insert", new Manager(name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Picker":
-                    systemController.manageEmp("insert", new Picker(name.getText(), Integer.parseInt(pin.getText())));
-                    break;
+            else {
+                switch (employeeType.getSelectedItem().toString()) {
+                    case "Driver":
+                        systemController.manageEmp("insert", new Driver(name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Loader":
+                        systemController.manageEmp("insert", new Loader(name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Manager":
+                        systemController.manageEmp("insert", new Manager(name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Picker":
+                        systemController.manageEmp("insert", new Picker(name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                }
             }
-
         }
     }
 
@@ -175,22 +186,22 @@ public class ManageEmp extends JFrame {
 
             if (name.getText().equals("") || pin.getText().equals("") || id.getText().equals(""))
                 JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
-
-            switch (employeeType.getSelectedItem().toString()) {
-                case "Driver":
-                    systemController.manageEmp("update", new Driver(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Loader":
-                    systemController.manageEmp("update", new Loader(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Manager":
-                    systemController.manageEmp("update", new Manager(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
-                    break;
-                case "Picker":
-                    systemController.manageEmp("update", new Picker(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
-                    break;
+            else {
+                switch (employeeType.getSelectedItem().toString()) {
+                    case "Driver":
+                        systemController.manageEmp("update", new Driver(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Loader":
+                        systemController.manageEmp("update", new Loader(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Manager":
+                        systemController.manageEmp("update", new Manager(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                    case "Picker":
+                        systemController.manageEmp("update", new Picker(Integer.parseInt(id.getText()), name.getText(), Integer.parseInt(pin.getText())));
+                        break;
+                }
             }
-
         }
     }
 
@@ -209,9 +220,9 @@ public class ManageEmp extends JFrame {
             if (id.getText().equals(""))
                 JOptionPane.showMessageDialog(null, "You are missing fields", "Error", JOptionPane.ERROR_MESSAGE);
 
-
-            systemController.deleteEmp(Integer.parseInt(id.getText()), employeeType.getSelectedItem().toString());
-
+            else {
+                systemController.deleteEmp(Integer.parseInt(id.getText()), employeeType.getSelectedItem().toString());
+            }
         }
 
     }
