@@ -13,6 +13,7 @@ public class ManagerView extends JFrame {
     private JPanel ManagerChoicePanel;
     private JButton viewUnaccomoatedReportButton;
     private JButton ViewRevbtn;
+    private JButton backBtn;
 
     public ManagerView(String title, SystemController systemController) {
         super(title);
@@ -34,7 +35,7 @@ public class ManagerView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 dispose();
-                ViewReport viewReport = new ViewReport("Unaccomodated Orders report", systemController.getUnaccomodatedOrdersReport());
+                ViewReport viewReport = new ViewReport("Unaccomodated Orders report", systemController.getUnaccomodatedOrdersReport(), systemController);
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 
@@ -48,13 +49,22 @@ public class ManagerView extends JFrame {
                 //ManageEmp lol = new ManageEmp();  // wtf does it want in here what argument in the brackets omg
                 //lol.setVisible(true); // added this just to see if initializing was prob
                 //new ManageEmp("Revenue Data").setVisible(true);
-                ViewReport viewReport = new ViewReport("Revenue Data for the day", systemController.getRevenueReport());
+                ViewReport viewReport = new ViewReport("Revenue Data for the day", systemController.getRevenueReport(), systemController);
                 viewReport.setVisible(true);
                 viewReport.setSize(400, 500);
 
             }
 
 
+        });
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
+                Login login = new Login("login", systemController);
+                login.setSize(400, 700);
+                login.setVisible(true);
+            }
         });
     }
 }

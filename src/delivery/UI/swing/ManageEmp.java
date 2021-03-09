@@ -23,6 +23,7 @@ public class ManageEmp extends JFrame {
     private JButton deleteBtn;
     private JButton UpdateFields;
     private JComboBox employeeType;
+    private JButton backButton;
     private SystemController systemController;
     private DefaultTableModel tableModel = new DefaultTableModel();
     //private TableColumn Employee;
@@ -101,6 +102,16 @@ public class ManageEmp extends JFrame {
         });
 
 
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
+                JFrame ManCh = new ManagerView("Manager Choice", systemController);
+                ManCh.setSize(400, 700);
+                ManCh.setVisible(true);
+
+            }
+        });
     }
 
 
